@@ -1,0 +1,16 @@
+.container {
+  position: relative;
+}
+
+.jshs-item {
+  position: absolute;
+}
+
+.jshs-bg {
+  position: absolute;
+  background-image: url(/public/logo.png);
+  background-size: 50%;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.75;
+}

@@ -1,0 +1,19 @@
+@font-face {
+    font-family: "BMDohyeon";
+    src: url(/src/assets/fonts/BMDOHYEON.woff) format('woff');
+}
+
+@font-face {
+    font-family: "NanumSquareR";
+    src: url(/src/assets/fonts/NanumSquareR.woff) format('woff');
+}
+
+@font-face {
+    font-family: "DesignHouseB";
+    src: url(/src/assets/fonts/designhouseBold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: "DesignHouseL";
+    src: url(/src/assets/fonts/designhouseLight.ttf) format('truetype');
+}
