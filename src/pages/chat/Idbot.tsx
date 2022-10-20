@@ -1,14 +1,14 @@
 import { Box, Divider, Paper, Typography } from "@mui/material";
 import axios from "axios";
-import { ChatController, MuiChat } from "chat-ui-react";
+// import { ChatController, MuiChat } from "chat-ui-react";
 // import MetaTag from "../../components/MetaTag"
-import React from "react"
-import "../../styles/ChatStyle.css"
+import React from "react";
+import "../../styles/ChatStyle.css";
 
-const BOT_NAME = "이디봇"
+const BOT_NAME = "이디봇";
 
 function Idbot() {
-    const [chatCtl] = React.useState(
+    /* const [chatCtl] = React.useState(
         new ChatController({
             showDateTime: true,
         }))
@@ -16,10 +16,10 @@ function Idbot() {
     React.useMemo(async () => {
         const addBotMessage = async (content) => {
             await chatCtl.addMessage({
-                type: 'jsx',
+                type: "jsx",
                 content: <div dangerouslySetInnerHTML={{ __html: content }}></div>,
                 self: false,
-                avatar: '/logo.png',
+                avatar: "/logo.png",
                 username: BOT_NAME,
             })
         }
@@ -32,17 +32,17 @@ function Idbot() {
         - 상수표: 상수표 보여줘<br>
         - 그 외: 조졸조진 어떻게 해?/점심시간은 몇시야?/특별실 어떻게 써?/학활실 이디저디에서 써도 돼?`)
         chatCtl.setActionRequest(
-            { type: 'text', always: true, addMessage: false, placeholder: '메시지를 입력해 주세요.' },
+            { type: "text", always: true, addMessage: false, placeholder: "메시지를 입력해 주세요." },
             (response) => {
                 // console.log({
                 // chat_input: response.value
                 // })
                 chatCtl.addMessage({
-                    type: 'text',
+                    type: "text",
                     content: response.value,
                     self: true,
-                    avatar: 'https://cdn-icons-png.flaticon.com/512/1177/1177594.png',
-                    username: '나',
+                    avatar: "https://cdn-icons-png.flaticon.com/512/1177/1177594.png",
+                    username: "나",
                 });
                 axios.get(`https://api.이디저디.com/v1/idbot?chat_input=${response.value}`)
                     .then((res) => {
@@ -56,30 +56,35 @@ function Idbot() {
     // Only one component used for display
     return (
         <>
-            {/* <MetaTag title="이디봇과 소통해요!"/> */}
-            <Box sx={{ height: '100%', backgroundImage: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }}>
+            {/* <MetaTag title="이디봇과 소통해요!"/> }
+            <Box sx={{ height: "100%", backgroundImage: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)" }}>
                 <Paper
                     sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: '100%',
-                        maxWidth: '640px',
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                        bgcolor: 'background.default',
+                        display: "flex",
+                        flexDirection: "column",
+                        height: "100%",
+                        maxWidth: "640px",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        bgcolor: "background.default",
                     }}
                     elevation={3}
                 >
-                    <Typography sx={{ p: 1, textAlign: 'center' }}>
+                    <Typography sx={{ p: 1, textAlign: "center" }}>
                         {BOT_NAME}과 소통해요 :D
                     </Typography>
                     <Divider />
-                    <Box sx={{ flex: '1 1 0%', minHeight: 0 }}>
+                    <Box sx={{ flex: "1 1 0%", minHeight: 0 }}>
                         <MuiChat chatController={chatCtl} />
                     </Box>
                 </Paper>
             </Box>
-        </>)
+        </>)*/
+    return (
+        <React.Fragment>
+            지금 사용 불가능합니다. 사용에 불편을 드려 죄송합니다.
+        </React.Fragment>
+    );
 }
 
-export default Idbot
+export default Idbot;

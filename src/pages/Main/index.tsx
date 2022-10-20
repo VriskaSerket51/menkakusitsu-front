@@ -1,26 +1,24 @@
-import React from "react"
-import LoginPanel from "../../components/panel/LoginPanel"
-import SpecialroomInfo from "../../components/SpecialroomInfo"
-import { Container, Typography, Grid, Link } from "@mui/material"
-import { getUserInfo } from "../../utils/Utility"
-import Teacher from "./Teacher"
-import Student from "./Student"
-import MealPanel from "../../components/MealPanel"
+import React from "react";
+import { SpecialroomInfoPanel, MealPanel, LoginPanel } from "../../components";
+import { Container, Typography, Grid, Link } from "@mui/material";
+import { getUserInfo } from "../../utils/Utility";
+import Teacher from "./Teacher";
+import Student from "./Student";
 
 function Main() {
-    const accessToken = localStorage.getItem('access-token')
+    const accessToken = localStorage.getItem("access-token");
 
     if (accessToken) {
-        const userInfo = getUserInfo()
-        if (userInfo.isTeacher === 1) {
-            return <Teacher />
+        const userInfo = getUserInfo();
+        if (userInfo.isTeacher) {
+            return <Teacher />;
         } else {
-            return <Student />
+            return <Student />;
         }
     }
 
     return (
-        <>
+        <React.Fragment>
             <Typography
                 variant="h3"
                 noWrap
@@ -28,18 +26,23 @@ function Main() {
                 sx={{
                     mr: 2,
                     fontWeight: 500,
-                    fontFamily: 'DesignHouseB',
-                    margin: '50px auto 30px',
+                    fontFamily: "DesignHouseB",
+                    margin: "50px auto 30px",
                 }}
             >
-                <Link href="/" underline="none" color='#279023'>{import.meta.env.VITE_WEB_TITLE}</Link>
+                <Link href="/" underline="none" color="#279023">
+                    {import.meta.env.VITE_WEB_TITLE}
+                </Link>
             </Typography>
-            <Container maxWidth="xl" sx={{
-                margin: '30px auto 50px'
-            }}>
+            <Container
+                maxWidth="xl"
+                sx={{
+                    margin: "30px auto 50px",
+                }}
+            >
                 <Grid container spacing={3}>
                     <Grid item xs={8}>
-                        <SpecialroomInfo />
+                        <SpecialroomInfoPanel />
                     </Grid>
                     <Grid item xs={4}>
                         <LoginPanel />
@@ -47,8 +50,8 @@ function Main() {
                     </Grid>
                 </Grid>
             </Container>
-        </>
-    )
+        </React.Fragment>
+    );
 }
 
-export default Main
+export default Main;

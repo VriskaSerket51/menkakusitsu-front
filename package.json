@@ -1,7 +1,8 @@
 {
-  "name": "jshs-webserver-ts",
+  "name": "menkakusitsu-front",
+  "author": "VriskaSerket51",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host --port 3000",
@@ -9,15 +10,15 @@
     "preview": "vite preview --host --port 3000"
   },
   "dependencies": {
+    "@common-jshs/menkakusitsu-lib": "^1.0.1",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@loadable/component": "^5.15.2",
     "@mui/icons-material": "^5.10.6",
     "@mui/material": "^5.10.8",
-    "@mui/styles": "^5.10.8",
     "@types/loadable__component": "^5.13.4",
     "axios": "^1.1.2",
-    "chat-ui-react": "^0.3.0",
+    "buffer": "^6.0.3",
     "firebase": "^9.11.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",

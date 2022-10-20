@@ -1,17 +1,17 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { logPageView } from "./FirebaseManager.js";
 
 function RouteTracker() {
-    const location = useLocation()
+    const location = useLocation();
 
     useEffect(() => {
-        if (!window.location.href.startsWith('localhost')) {
-            logPageView()
+        if (!window.location.href.startsWith("localhost")) {
+            logPageView();
         }
-    }, [location])
+    }, [location]);
 
-    return (<></>)
+    return <React.Fragment></React.Fragment>;
 }
 
-export default RouteTracker
+export default RouteTracker;

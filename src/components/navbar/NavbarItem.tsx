@@ -5,13 +5,17 @@ import { useNavigate } from "react-router-dom";
 import { getPermissionLevel } from "../../utils/Utility";
 
 interface NavbarItemProps {
-    permission: number,
-    href: string,
-    color?: string,
-    title: string,
+    permission: number;
+    href: string;
+    color?: string;
+    title: string;
 }
 
-export function NavbarMenu(props: { title: string, color: string, menu: NavbarItemProps[] }) {
+export function NavbarMenu(props: {
+    title: string;
+    color: string;
+    menu: NavbarItemProps[];
+}) {
     const navigate = useNavigate();
 
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -31,11 +35,13 @@ export function NavbarMenu(props: { title: string, color: string, menu: NavbarIt
             style={{
                 display: "inline-block",
                 marginLeft: "64px",
-            }}>
-            <Button
-                onClick={onMouseOver}
-            >
-                <Typography sx={{ fontFamily: "DesignHouseB", fontSize: "32px" }} color={props.color} >
+            }}
+        >
+            <Button onClick={onMouseOver}>
+                <Typography
+                    sx={{ fontFamily: "DesignHouseB", fontSize: "32px" }}
+                    color={props.color}
+                >
                     {props.title}
                 </Typography>
             </Button>
@@ -44,16 +50,22 @@ export function NavbarMenu(props: { title: string, color: string, menu: NavbarIt
                 open={Boolean(anchorEl)}
                 onClose={onMouseLeave}
             >
-                {
-                    props.menu.map((menu => {
-                        if (getPermissionLevel() >= menu.permission) {
-                            return (<MenuItem key={menu.title} onClick={() => { navigate(menu.href) }}>{menu.title}</MenuItem>);
-                        }
-                        else {
-                            return (<div key={menu.title}></div>);
-                        }
-                    }))
-                }
+                {props.menu.map((menu) => {
+                    if (getPermissionLevel() >= menu.permission) {
+                        return (
+                            <MenuItem
+                                key={menu.title}
+                                onClick={() => {
+                                    navigate(menu.href);
+                                }}
+                            >
+                                {menu.title}
+                            </MenuItem>
+                        );
+                    } else {
+                        return <div key={menu.title}></div>;
+                    }
+                })}
             </Menu>
         </Box>
     );
@@ -68,20 +80,23 @@ export function NavbarButton(props: NavbarItemProps) {
                 style={{
                     display: "inline-block",
                     marginLeft: "64px",
-                }}>
+                }}
+            >
                 <Button
                     onClick={() => {
-                        navigate(props.href)
+                        navigate(props.href);
                     }}
                 >
-                    <Typography sx={{ fontFamily: "DesignHouseB", fontSize: "32px" }} color={props.color} >
+                    <Typography
+                        sx={{ fontFamily: "DesignHouseB", fontSize: "32px" }}
+                        color={props.color}
+                    >
                         {props.title}
                     </Typography>
                 </Button>
             </Box>
         );
-    }
-    else {
-        return (<React.Fragment></React.Fragment>);
+    } else {
+        return <React.Fragment></React.Fragment>;
     }
 }

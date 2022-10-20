@@ -9,13 +9,13 @@ import {
 } from "@mui/material";
 import React, { ReactNode } from "react";
 import { TransitionProps } from "@mui/material/transitions";
-import { DialogProps } from "./DialogBase";
+import { defaultCallback, DialogProps } from ".";
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement<any, any>;
     },
-    ref: React.Ref<unknown>,
+    ref: React.Ref<unknown>
 ) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -44,9 +44,7 @@ const YesNoDialog = () => {
             }}
         >
             <DialogTitle>{title}</DialogTitle>
-            <DialogContent>
-                {content}
-            </DialogContent>
+            <DialogContent>{content}</DialogContent>
             <DialogActions>
                 <Button
                     onClick={() => {
@@ -71,11 +69,16 @@ const YesNoDialog = () => {
             </DialogActions>
         </Dialog>
     );
-}
+};
 
-export default YesNoDialog
+export default YesNoDialog;
 
-export const openYesNoDialog = (title: ReactNode, content: ReactNode, onYes: Function, onNo: Function) => {
+export const openYesNoDialog = (
+    title: ReactNode,
+    content: ReactNode,
+    onYes: Function = defaultCallback,
+    onNo: Function = defaultCallback
+) => {
     useYesNoDialogStore.setState({
         title: title,
         content: content,

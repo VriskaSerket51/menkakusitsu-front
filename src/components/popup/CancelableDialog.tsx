@@ -9,13 +9,13 @@ import {
 import React, { ReactNode } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { TransitionProps } from "@mui/material/transitions";
-import { DialogProps } from "./DialogBase";
+import { defaultCallback, DialogProps } from ".";
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement<any, any>;
     },
-    ref: React.Ref<unknown>,
+    ref: React.Ref<unknown>
 ) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -34,9 +34,9 @@ const CancelableDialog = () => {
             open={Boolean(onYes)}
             onClose={() => {
                 if (onYes) {
-                    onYes()
+                    onYes();
                 }
-                close()
+                close();
             }}
             maxWidth="sm"
             TransitionComponent={Transition}
@@ -44,28 +44,32 @@ const CancelableDialog = () => {
         >
             <DialogTitle>
                 {title}
-                <IconButton onClick={() => {
-                    if (onYes) {
-                        onYes()
-                    }
-                    close()
-                }}>
+                <IconButton
+                    onClick={() => {
+                        if (onYes) {
+                            onYes();
+                        }
+                        close();
+                    }}
+                >
                     <CloseIcon />
                 </IconButton>
             </DialogTitle>
-            <DialogContent>
-                {content}
-            </DialogContent>
+            <DialogContent>{content}</DialogContent>
         </Dialog>
-    )
-}
+    );
+};
 
-export default CancelableDialog
+export default CancelableDialog;
 
-export const openCancelableDialog = (title: ReactNode, content: ReactNode, onYes: Function) => {
+export const openCancelableDialog = (
+    title: ReactNode,
+    content: ReactNode,
+    onYes: Function = defaultCallback
+) => {
     useCancelableDialogStore.setState({
         title: title,
         content: content,
         onYes: onYes,
-    })
-}
+    });
+};
