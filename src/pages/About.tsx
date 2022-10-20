@@ -6,10 +6,12 @@ function About() {
     return (
         <React.Fragment>
             <FixedNavbar />
-            <Container maxWidth="xl" sx={{
-                margin: "30px auto 50px"
-            }}>
-            </Container>
+            <Container
+                maxWidth="xl"
+                sx={{
+                    margin: "30px auto 50px",
+                }}
+            ></Container>
         </React.Fragment>
     );
 }

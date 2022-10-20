@@ -5,18 +5,19 @@ import {
     Grid,
     Paper,
     TextField,
-    Typography
+    Typography,
 } from "@mui/material";
 
 function Create() {
     return (
         <React.Fragment>
-            <Container maxWidth="md" sx={{
-                margin: "30px auto 50px"
-            }}>
-                <Paper
-                    elevation={3}
-                >
+            <Container
+                maxWidth="md"
+                sx={{
+                    margin: "30px auto 50px",
+                }}
+            >
+                <Paper elevation={3}>
                     <Typography
                         variant="h3"
                         noWrap
@@ -30,12 +31,14 @@ function Create() {
                     >
                         이디저디
                     </Typography>
-                    <Box component="form" onSubmit={() => { }} sx={{ mt: 1, padding: "auto" }}>
+                    <Box
+                        component="form"
+                        onSubmit={() => {}}
+                        sx={{ mt: 1, padding: "auto" }}
+                    >
                         <Grid container spacing={3}>
                             <Grid item xs={12} margin="30px">
-                                <Typography>
-                                    Title
-                                </Typography>
+                                <Typography>Title</Typography>
                                 <TextField
                                     margin="normal"
                                     required
@@ -45,9 +48,7 @@ function Create() {
                                     name="title"
                                 />
                             </Grid>
-                            <Grid item xs={3}>
-
-                            </Grid>
+                            <Grid item xs={3}></Grid>
                         </Grid>
                     </Box>
                 </Paper>

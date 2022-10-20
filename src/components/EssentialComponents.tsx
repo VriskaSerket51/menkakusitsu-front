@@ -1,8 +1,10 @@
 import React from "react";
-import ConfirmDialog from "./popup/ConfirmDialog";
-import WaitDialog from "./popup/WaitDialog";
-import CancelableDialog from "./popup/CancelableDialog";
-import YesNoDialog from "./popup/YesNoDialog";
+import {
+    ConfirmDialog,
+    WaitDialog,
+    CancelableDialog,
+    YesNoDialog,
+} from "./popup";
 
 function EssentialComponents() {
     return (

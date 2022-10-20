@@ -1,13 +1,13 @@
-import React from "react"
+import React from "react";
 
 function PreventUnload() {
     React.useMemo(() => {
-        window.addEventListener('beforeunload', (event) => {
-            event.preventDefault()
-            event.returnValue = ''
-        })
-    }, [])
-    return <></>
+        window.addEventListener("beforeunload", (event) => {
+            event.preventDefault();
+            event.returnValue = "";
+        });
+    }, []);
+    return <React.Fragment></React.Fragment>;
 }
 
-export default PreventUnload
+export default PreventUnload;

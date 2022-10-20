@@ -1,11 +1,11 @@
 import { Box, Divider, Paper, Typography } from "@mui/material";
-import { ChatController, MuiChat } from "chat-ui-react";
-import React from "react"
-import io from "socket.io-client"
-import "../../styles/ChatStyle.css"
+// import { ChatController, MuiChat } from "chat-ui-react";
+import React from "react";
+import io from "socket.io-client";
+import "../../styles/ChatStyle.css";
 
 function RandomChat() {
-    const [chatCtl] = React.useState(
+    /*const [chatCtl] = React.useState(
         new ChatController({
             showDateTime: true,
         }))
@@ -75,7 +75,12 @@ function RandomChat() {
                     </Box>
                 </Paper>
             </Box>
-        </>)
+        </>)*/
+    return (
+        <React.Fragment>
+            지금 사용 불가능합니다. 사용에 불편을 드려 죄송합니다.
+        </React.Fragment>
+    );
 }
 
-export default RandomChat
+export default RandomChat;

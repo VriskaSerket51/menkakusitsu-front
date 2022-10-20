@@ -1,4 +1,4 @@
-import create from "zustand"
+import create from "zustand";
 import {
     Dialog,
     DialogTitle,
@@ -9,13 +9,13 @@ import {
 } from "@mui/material";
 import React, { ReactNode } from "react";
 import { TransitionProps } from "@mui/material/transitions";
-import { DialogProps } from "./DialogBase";
+import { defaultCallback, DialogProps } from ".";
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement<any, any>;
     },
-    ref: React.Ref<unknown>,
+    ref: React.Ref<unknown>
 ) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -37,37 +37,39 @@ const ConfirmDialog = () => {
             fullWidth
             onClose={() => {
                 if (onYes) {
-                    onYes()
+                    onYes();
                 }
-                close()
+                close();
             }}
         >
             <DialogTitle>{title}</DialogTitle>
-            <DialogContent>
-                {content}
-            </DialogContent>
+            <DialogContent>{content}</DialogContent>
             <DialogActions>
                 <Button
                     onClick={() => {
                         if (onYes) {
-                            onYes()
+                            onYes();
                         }
-                        close()
+                        close();
                     }}
                 >
                     확인
                 </Button>
             </DialogActions>
         </Dialog>
-    )
-}
+    );
+};
 
-export default ConfirmDialog
+export default ConfirmDialog;
 
-export const openConfirmDialog = (title: ReactNode, content: ReactNode, onYes: Function) => {
+export const openConfirmDialog = (
+    title: ReactNode,
+    content: ReactNode,
+    onYes: Function = defaultCallback
+) => {
     useConfirmDialogStore.setState({
         title: title,
         content: content,
         onYes: onYes,
-    })
-}
+    });
+};

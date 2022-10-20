@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
 export const TITLE = {
     Info: "알림",
@@ -9,22 +9,22 @@ export const TITLE = {
 
 export const theme = createTheme({
     typography: {
-        fontFamily: "'NanumSquareR'"
+        fontFamily: "'NanumSquareR'",
     },
     palette: {
         background: {
-            default: "#EDEDED"
+            default: "#EDEDED",
         },
         primary: {
-            main: '#279023',
-            light: '#5fc152',
-            dark: '#006100',
-            contrastText: '#ffffff'
+            main: "#279023",
+            light: "#5fc152",
+            dark: "#006100",
+            contrastText: "#ffffff",
         },
         secondary: {
-            main: '#4db6ac',
-            light: '#82e9de',
-            dark: '#00867d',
-        }
-    }
+            main: "#4db6ac",
+            light: "#82e9de",
+            dark: "#00867d",
+        },
+    },
 });

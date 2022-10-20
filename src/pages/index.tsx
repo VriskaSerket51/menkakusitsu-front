@@ -1,23 +1,19 @@
-import loadable from '@loadable/component';
+export { default as Main } from "./Main";
 
-export const Main = loadable(() => import('./Main'));
+export { default as AttendanceDownload } from "./attendance/Download";
+export { default as AttendanceInfo } from "./attendance/Info";
 
-export const AttendanceDownload = loadable(() => import('./attendance/Download'));
-export const AttendanceInfo = loadable(() => import('./attendance/Info'));
+export { default as ChatIdbot } from "./chat/Idbot";
+export { default as ChatRandom } from "./chat/RandomChat";
 
-export const ChatIdbot = loadable(() => import('./chat/Idbot'));
-export const ChatRandom = loadable(() => import('./chat/RandomChat'));
+export { default as SpecialroomApply } from "./specialroom/Apply";
+export { default as SpecialroomStatus } from "./specialroom/Status";
+export { default as SpecialroomManagement } from "./specialroom/Management";
 
-export const SpecialroomApply = loadable(() => import('./specialroom/Apply'));
-export const SpecialroomStatus = loadable(() => import('./specialroom/Status'));
-export const SpecialroomManagement = loadable(() => import('./specialroom/Management'));
+export { default as SurveyCreate } from "./survey/Create";
 
-export const SurveyCreate = loadable(() => import('./survey/Create'));
+export { default as About } from "./About";
 
-export const About = loadable(() => import('./About'));
+export { default as Account } from "./Account";
 
-export const Account = loadable(() => import('./Account'));
-
-export const NotFound = loadable(() => import('./NotFound'));
-
-
+export { default as NotFound } from "./NotFound";

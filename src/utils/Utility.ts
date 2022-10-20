@@ -3,9 +3,33 @@ import axios from "axios";
 import { openConfirmDialog } from "../components/popup";
 import { TITLE } from "./Constant";
 import { checkTokenExpiration, onTokenExpired } from "./AuthManager";
+import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
+import uuid from "react-uuid";
+import { Buffer } from "buffer";
 
-export const getParameter = (key: string) => {
-    return new URLSearchParams(window.location.search).get(key);
+export interface BackendResponse {
+    data: DefaultResponse;
+}
+
+export const getDeviceUuid = (): string => {
+    const deviceUUid = localStorage.getItem("device-id");
+    if (!deviceUUid) {
+        localStorage.setItem("device-id", uuid());
+        return getDeviceUuid();
+    }
+    return deviceUUid;
+};
+
+export const getParameter = (
+    key: string,
+    defaultValue: string = ""
+): string => {
+    const result = new URLSearchParams(window.location.search).get(key);
+    if (result) {
+        return result;
+    } else {
+        return defaultValue;
+    }
 };
 
 export const openInNewTab = (url: string) => {
@@ -31,9 +55,10 @@ export const isLogined = () => {
 
 export const parseJWT = (token: string) => {
     try {
-        return JSON.parse(atob(token.split(".")[1]));
-    }
-    catch (e) {
+        return JSON.parse(
+            Buffer.from(token.split(".")[1], "base64").toString("utf-8")
+        );
+    } catch (e) {
         console.error(e);
         return null;
     }
@@ -44,11 +69,10 @@ export const getUserInfo = () => {
     if (!accessToken) {
         return null;
     }
-    const sub = parseJWT(accessToken).sub;
-    return sub;
+    return parseJWT(accessToken);
 };
 
-export const redirecToHome = () => {
+export const redirectToHome = () => {
     window.location.href = "/";
 };
 
@@ -63,7 +87,7 @@ export const SHA3_512 = (input: string) => {
     return hash.digest("hex");
 };
 
-export const apiGET = async (path: string) => {
+export const apiGet = async (path: string) => {
     const url = import.meta.env.VITE_API_PREFIX + path;
     let accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
@@ -72,25 +96,26 @@ export const apiGET = async (path: string) => {
     await checkTokenExpiration(accessToken);
     accessToken = localStorage.getItem("access-token");
     accessToken = `Bearer ${accessToken}`;
-    return axios.get(url, {
-        headers: {
-            Authorization: accessToken
-        }
-    })
+    return axios
+        .get(url, {
+            headers: {
+                Authorization: accessToken,
+            },
+        })
         .then(onTokenExpired)
         .then((resp) => {
             const result = resp.data;
             if (result.status < 0) {
                 openConfirmDialog(TITLE.Alert, result.message, () => {
                     clearTokens();
-                    redirecToHome();
+                    redirectToHome();
                 });
             }
             return resp;
         });
 };
 
-export const apiPOST = async (path: string, body: any = null) => {
+export const apiPost = async (path: string, body: any = null) => {
     const url = import.meta.env.VITE_API_PREFIX + path;
     let accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
@@ -98,25 +123,26 @@ export const apiPOST = async (path: string, body: any = null) => {
     }
     await checkTokenExpiration(accessToken);
     accessToken = `Bearer ${accessToken}`;
-    return axios.post(url, body, {
-        headers: {
-            Authorization: accessToken
-        }
-    })
+    return axios
+        .post(url, body, {
+            headers: {
+                Authorization: accessToken,
+            },
+        })
         .then(onTokenExpired)
         .then((resp) => {
             const result = resp.data;
             if (result.status < 0) {
                 openConfirmDialog(TITLE.Alert, result.message, () => {
                     clearTokens();
-                    redirecToHome();
+                    redirectToHome();
                 });
             }
             return resp;
         });
 };
 
-export const apiPUT = async (path: string, body: any = null) => {
+export const apiPut = async (path: string, body: any = null) => {
     const url = import.meta.env.VITE_API_PREFIX + path;
     let accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
@@ -124,25 +150,26 @@ export const apiPUT = async (path: string, body: any = null) => {
     }
     await checkTokenExpiration(accessToken);
     accessToken = `Bearer ${accessToken}`;
-    return axios.put(url, body, {
-        headers: {
-            Authorization: accessToken
-        }
-    })
+    return axios
+        .put(url, body, {
+            headers: {
+                Authorization: accessToken,
+            },
+        })
         .then(onTokenExpired)
         .then((resp) => {
             const result = resp.data;
             if (result.status < 0) {
                 openConfirmDialog(TITLE.Alert, result.message, () => {
                     clearTokens();
-                    redirecToHome();
+                    redirectToHome();
                 });
             }
             return resp;
         });
 };
 
-export const apiDELETE = async (path: string, body: any = null) => {
+export const apiDelete = async (path: string, body: any = null) => {
     const url = import.meta.env.VITE_API_PREFIX + path;
     let accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
@@ -150,19 +177,20 @@ export const apiDELETE = async (path: string, body: any = null) => {
     }
     await checkTokenExpiration(accessToken);
     accessToken = `Bearer ${accessToken}`;
-    return axios.delete(url, {
-        data: body,
-        headers: {
-            Authorization: accessToken
-        }
-    })
+    return axios
+        .delete(url, {
+            data: body,
+            headers: {
+                Authorization: accessToken,
+            },
+        })
         .then(onTokenExpired)
         .then((resp) => {
             const result = resp.data;
             if (result.status < 0) {
                 openConfirmDialog(TITLE.Alert, result.message, () => {
                     clearTokens();
-                    redirecToHome();
+                    redirectToHome();
                 });
             }
             return resp;

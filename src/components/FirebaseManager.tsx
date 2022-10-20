@@ -1,11 +1,19 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics, logEvent } from "firebase/analytics";
-import { deleteToken, getMessaging, getToken, onMessage } from "firebase/messaging";
-import { apiDELETE, apiPUT } from "../utils/Utility";
-import { useEffect } from "react";
+import {
+    deleteToken,
+    getMessaging,
+    getToken,
+    onMessage,
+} from "firebase/messaging";
+import { getDeviceUuid } from "../utils/Utility";
+import React, { useEffect } from "react";
 import { useSnackbar } from "notistack";
 import { DefaultSnackbar } from "./snackbar";
+import { putUserPush, deleteUserPush } from "../utils/Api";
+import { openConfirmDialog } from "./popup";
+import { TITLE } from "../utils/Constant";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -18,7 +26,7 @@ const firebaseConfig = {
     storageBucket: "menkakusitsu-2d69d.appspot.com",
     messagingSenderId: "382894730110",
     appId: "1:382894730110:web:ebf27b97399bec80c2612f",
-    measurementId: "G-TE638S9GQ9"
+    measurementId: "G-TE638S9GQ9",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -29,40 +37,70 @@ function FirebaseManager() {
     const { enqueueSnackbar } = useSnackbar();
     useEffect(() => {
         onMessage(messaging, (payload) => {
-            enqueueSnackbar('fcm', {
+            enqueueSnackbar("fcm", {
                 variant: "default",
-                content: (key) => <DefaultSnackbar id={key} payload={payload} />
-            })
-        })
+                content: (key) => (
+                    <DefaultSnackbar id={key} payload={payload} />
+                ),
+            });
+        });
     }, [enqueueSnackbar]);
-    return (<></>);
+    return <React.Fragment></React.Fragment>;
 }
 
-export default FirebaseManager
+export default FirebaseManager;
 
-export const getPushToken = (onFinish: Function) => {
-    getToken(messaging, { vapidKey: "BG_LNhZiWNMNjuR-PTiY8pLm0SJ8itD0lVcEr3cRtkhBEOtzcDbiUVVQ3i5ZERbsmw5Q8kPDqJ1KpvvYF7nKcbk" })
+export const getPushToken = (onFinish: (successed: boolean) => any) => {
+    getToken(messaging, {
+        vapidKey:
+            "BG_LNhZiWNMNjuR-PTiY8pLm0SJ8itD0lVcEr3cRtkhBEOtzcDbiUVVQ3i5ZERbsmw5Q8kPDqJ1KpvvYF7nKcbk",
+    })
         .then((token) => {
             if (token) {
-                apiPUT("/v1/user/push", { 'pushToken': token, 'deviceID': localStorage.getItem('device-id') })
-                    .catch((err) => {
-                        console.log(err);
-                    })
-                onFinish();
+                putUserPush(
+                    {
+                        pushToken: token,
+                        deviceId: getDeviceUuid(),
+                    },
+                    () => {}
+                );
+                onFinish(true);
+            } else {
+                onFinish(false);
             }
         })
-}
+        .catch((e) => {
+            console.log(e);
+            openConfirmDialog(
+                TITLE.Alert,
+                "Failed to get FCM token for reason: " + e
+            );
+        });
+};
 
-export const deletePushToken = (onFinish: Function) => {
+export const deletePushToken = (onFinish: (successed: boolean) => any) => {
     deleteToken(messaging)
         .then((result) => {
             if (result) {
-                apiDELETE("/v1/user/push", { 'deviceID': localStorage.getItem('device-id') });
-                onFinish();
+                deleteUserPush(
+                    {
+                        devcieId: getDeviceUuid(),
+                    },
+                    () => {}
+                );
+                onFinish(true);
+            } else {
+                onFinish(false);
             }
+        })
+        .catch((e) => {
+            console.log(e);
+            openConfirmDialog(
+                TITLE.Alert,
+                "Failed to delete FCM token for reason: " + e
+            );
         });
-}
-
+};
 
 export const logPageView = () => {
     logEvent(analytics, "screen_view", {
@@ -74,4 +112,4 @@ export const logPageView = () => {
         page_location: window.location.pathname,
         page_path: window.location.pathname,
     });
-}
+};

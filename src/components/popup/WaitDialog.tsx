@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import React, { ReactNode } from "react"
 import { TransitionProps } from "@mui/material/transitions";
-import { DialogProps } from "./DialogBase";
+import { DialogProps } from ".";
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -55,6 +55,9 @@ export const openWaitDialog = (title: ReactNode, content: ReactNode) => {
 };
 
 export const closeWaitDialog = () => {
-    const { close } = useWaitDialogStore();
-    close();
+    useWaitDialogStore.setState({
+        title: "",
+        content: "",
+        isOpened: false
+    });
 };

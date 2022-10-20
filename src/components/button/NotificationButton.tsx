@@ -1,92 +1,82 @@
-import { NotificationsActive, NotificationsOff } from "@mui/icons-material"
-import { CircularProgress, ListItemIcon, MenuItem } from "@mui/material"
-import { useEffect } from "react"
-import { useState } from "react"
-import { unstable_batchedUpdates } from "react-dom"
-import uuid from "react-uuid"
-import { deletePushToken, getPushToken } from "../../FirebaseManager"
-import { getPushApproved, setPushApproved } from "../../../utils/Utility"
+import { NotificationsActive, NotificationsOff } from "@mui/icons-material";
+import { CircularProgress, ListItemIcon, MenuItem } from "@mui/material";
+import React from "react";
+import { useState } from "react";
+import { unstable_batchedUpdates } from "react-dom";
+import { deletePushToken, getPushToken } from "../FirebaseManager";
+import { getPushApproved, setPushApproved } from "../../utils/PushManager";
 
 function NotificationButton() {
-    const [isLoading, setIsLoading] = useState(false)
-    const [isNotificationOn, setIsNotificationOn] = useState(getPushApproved())
-
-    useEffect(() => {
-        if (!localStorage.getItem('device-id')) {
-            localStorage.setItem('device-id', uuid())
-        }
-    }, [])
+    const [isLoading, setIsLoading] = useState(false);
+    const [isNotificationOn, setIsNotificationOn] = useState(getPushApproved());
 
     return (
         <MenuItem
             onClick={() => {
                 if (isLoading) {
-                    return
+                    return;
                 }
-                setIsLoading(true)
+                setIsLoading(true);
                 if (isNotificationOn) {
                     unstable_batchedUpdates(() => {
-                        deletePushToken(() => {
-                            setPushApproved(false)
-                            setIsNotificationOn(false)
-                            setIsLoading(false)
-                        })
-                    })
-                }
-                else {
+                        deletePushToken((successed) => {
+                            if (successed) {
+                                setPushApproved(false);
+                                setIsNotificationOn(false);
+                            }
+                            setIsLoading(false);
+                        });
+                    });
+                } else {
                     unstable_batchedUpdates(() => {
-                        getPushToken(() => {
-                            setPushApproved(true)
-                            setIsNotificationOn(true)
-                            setIsLoading(false)
-                        })
-                    })
+                        getPushToken((successed) => {
+                            if (successed) {
+                                setPushApproved(true);
+                                setIsNotificationOn(true);
+                            }
+                            setIsLoading(false);
+                        });
+                    });
                 }
             }}
         >
-            {
-                isNotificationOn
-                    ?
-                    <>
-                        <ListItemIcon>
-                            {
-                                isLoading
-                                    ?
-                                    <CircularProgress
-                                        size={24}
-                                        sx={{
-                                            color: "primary.dark",
-                                            zIndex: 1,
-                                        }}
-                                    />
-                                    :
-                                    <NotificationsActive fontSize="small" />
-                            }
-                        </ListItemIcon>
-                        알림 켜짐
-                    </>
-                    :
-                    <>
-                        <ListItemIcon>
-                            {
-                                isLoading
-                                    ?
-                                    <CircularProgress
-                                        size={24}
-                                        sx={{
-                                            color: "primary.dark",
-                                            zIndex: 1,
-                                        }}
-                                    />
-                                    :
-                                    <NotificationsOff fontSize="small" />
-                            }
-                        </ListItemIcon>
-                        알림 꺼짐
-                    </>
-            }
+            {isNotificationOn ? (
+                <React.Fragment>
+                    <ListItemIcon>
+                        {isLoading ? (
+                            <CircularProgress
+                                size={24}
+                                sx={{
+                                    color: "primary.dark",
+                                    zIndex: 1,
+                                }}
+                            />
+                        ) : (
+                            <NotificationsActive fontSize="small" />
+                        )}
+                    </ListItemIcon>
+                    알림 켜짐
+                </React.Fragment>
+            ) : (
+                <React.Fragment>
+                    <ListItemIcon>
+                        {isLoading ? (
+                            <CircularProgress
+                                size={24}
+                                sx={{
+                                    color: "primary.dark",
+                                    zIndex: 1,
+                                }}
+                            />
+                        ) : (
+                            <NotificationsOff fontSize="small" />
+                        )}
+                    </ListItemIcon>
+                    알림 꺼짐
+                </React.Fragment>
+            )}
         </MenuItem>
-    )
+    );
 }
 
-export default NotificationButton
+export default NotificationButton;
