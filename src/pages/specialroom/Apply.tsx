@@ -277,7 +277,7 @@ function Apply() {
         const data = new FormData(event.currentTarget);
         const location = data.get("location");
         if (!location) {
-            openConfirmDialog(
+            (
                 TITLE.Alert,
                 "사용 장소 선택을 하지 않으셨습니다."
             );

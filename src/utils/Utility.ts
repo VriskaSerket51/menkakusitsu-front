@@ -93,7 +93,9 @@ export const apiGet = async (path: string) => {
     if (!accessToken) {
         return axios.get(url);
     }
-    await checkTokenExpiration(accessToken);
+    if (await checkTokenExpiration(accessToken)) {
+        throw new Error("Token expired.");
+    }
     accessToken = localStorage.getItem("access-token");
     accessToken = `Bearer ${accessToken}`;
     return axios
@@ -102,7 +104,7 @@ export const apiGet = async (path: string) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenError)
+        .then(onTokenError);
 };
 
 export const apiPost = async (path: string, body: any = null) => {
@@ -111,7 +113,9 @@ export const apiPost = async (path: string, body: any = null) => {
     if (!accessToken) {
         return axios.post(url, body);
     }
-    await checkTokenExpiration(accessToken);
+    if (await checkTokenExpiration(accessToken)) {
+        throw new Error("Token expired.");
+    }
     accessToken = `Bearer ${accessToken}`;
     return axios
         .post(url, body, {
@@ -119,7 +123,7 @@ export const apiPost = async (path: string, body: any = null) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenError)
+        .then(onTokenError);
 };
 
 export const apiPut = async (path: string, body: any = null) => {
@@ -128,7 +132,9 @@ export const apiPut = async (path: string, body: any = null) => {
     if (!accessToken) {
         return axios.put(url);
     }
-    await checkTokenExpiration(accessToken);
+    if (await checkTokenExpiration(accessToken)) {
+        throw new Error("Token expired.");
+    }
     accessToken = `Bearer ${accessToken}`;
     return axios
         .put(url, body, {
@@ -136,7 +142,7 @@ export const apiPut = async (path: string, body: any = null) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenError)
+        .then(onTokenError);
 };
 
 export const apiDelete = async (path: string, body: any = null) => {
@@ -145,7 +151,9 @@ export const apiDelete = async (path: string, body: any = null) => {
     if (!accessToken) {
         return axios.delete(url);
     }
-    await checkTokenExpiration(accessToken);
+    if (await checkTokenExpiration(accessToken)) {
+        throw new Error("Token expired.");
+    }
     accessToken = `Bearer ${accessToken}`;
     return axios
         .delete(url, {
@@ -154,5 +162,5 @@ export const apiDelete = async (path: string, body: any = null) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenError)
+        .then(onTokenError);
 };
