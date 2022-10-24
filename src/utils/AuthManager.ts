@@ -1,35 +1,43 @@
 import axios from "axios";
 import { openConfirmDialog } from "../components/popup";
 import { TITLE } from "./Constant";
-import { BackendResponse, clearTokens, parseJWT, redirectToHome } from "./Utility";
+import {
+    BackendResponse,
+    clearTokens,
+    parseJWT,
+    redirectToHome,
+} from "./Utility";
 import { PostRefreshResponse } from "@common-jshs/menkakusitsu-lib/v1";
 
 export const onTokenError = (resp: BackendResponse) => {
     const result = resp.data;
+    if (result.status >= 0) {
+        return resp;
+    }
     if (result.status === -1972) {
         openConfirmDialog(TITLE.Alert, "세션이 만료됐습니다!", () => {
             clearTokens();
             redirectToHome();
         });
-    }else if (result.status === -1973) {
+    } else if (result.status === -1973) {
         openConfirmDialog(TITLE.Alert, "손상된 토큰입니다!", () => {
             clearTokens();
             redirectToHome();
         });
     }
-    return resp;
+    throw new Error(result.message);
 };
 
 export const checkTokenExpiration = async (accessToken: string) => {
     const parsedJWT = parseJWT(accessToken);
     if (!parsedJWT) {
-        return;
+        return false;
     }
     const exp = parsedJWT.exp;
     if (exp - Date.now() / 1000 < 60) {
         const refreshToken = localStorage.getItem("refresh-token");
         if (!refreshToken || !parseJWT(refreshToken)) {
-            return;
+            return true;
         }
         const authHeader = `Bearer ${refreshToken}`;
         const resp: BackendResponse = await axios({
@@ -44,11 +52,13 @@ export const checkTokenExpiration = async (accessToken: string) => {
             clearTokens();
             localStorage.setItem("access-token", result.accessToken);
             localStorage.setItem("refresh-token", result.refreshToken);
+            return false;
         } else {
             openConfirmDialog(TITLE.Alert, result.message, () => {
                 clearTokens();
                 redirectToHome();
             });
+            return true;
         }
     }
 };
