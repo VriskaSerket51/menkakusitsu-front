@@ -205,7 +205,7 @@ function Management() {
             >
                 <Paper>
                     <Box sx={{ padding: "50px 30px 30px 30px" }}>
-                        <PaperTitle title="특별실 신청 관리" />
+                        <PaperTitle>특별실 신청 관리</PaperTitle>
                         <SpecialroomInfoPanel />
                         <Grid container spacing={2} sx={{ marginTop: "32px" }}>
                             <Grid item xs={7}>

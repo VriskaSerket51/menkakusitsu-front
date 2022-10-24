@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-    Box,
-    CircularProgress,
     Paper,
     Table,
     TableBody,
@@ -12,7 +10,6 @@ import {
 } from "@mui/material";
 import { useCallback } from "react";
 import { getSpecialroomInfo } from "../../utils/Api";
-import { unstable_batchedUpdates } from "react-dom";
 import { SpecialroomInfo } from "@common-jshs/menkakusitsu-lib/v1";
 
 function SpecialroomInfoPanel({

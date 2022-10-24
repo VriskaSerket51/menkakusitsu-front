@@ -1,4 +1,5 @@
 import React from "react";
+import { LazyAction } from "./lazyload";
 import {
     ConfirmDialog,
     WaitDialog,
@@ -13,6 +14,7 @@ function EssentialComponents() {
             <WaitDialog />
             <YesNoDialog />
             <CancelableDialog />
+            <LazyAction />
         </React.Fragment>
     );
 }

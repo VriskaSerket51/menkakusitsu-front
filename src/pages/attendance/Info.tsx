@@ -33,7 +33,7 @@ function Info() {
             >
                 <Paper>
                     <Box sx={{ padding: "50px 30px 30px 30px" }}>
-                        <PaperTitle title="출석부 다운로드 안내" />
+                        <PaperTitle>출석부 다운로드 안내</PaperTitle>
                         <List
                             sx={{ width: "100%", bgcolor: "background.paper" }}
                         >

@@ -27,7 +27,7 @@ const useCancelableDialogStore = create<DialogProps>((set) => ({
     close: () => set({ onYes: undefined }),
 }));
 
-const CancelableDialog = () => {
+function CancelableDialog() {
     const { title, content, onYes, close } = useCancelableDialogStore();
     return (
         <Dialog

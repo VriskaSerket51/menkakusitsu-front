@@ -197,7 +197,7 @@ function Status() {
                         component="form"
                         sx={{ padding: "50px 30px 30px 30px" }}
                     >
-                        <PaperTitle title="특별실 신청 현황" />
+                        <PaperTitle>특별실 신청 현황</PaperTitle>
                         <Box sx={{ padding: "30px 90px 30px" }}>
                             <Typography variant="h5">
                                 몇 차 면학으로 신청하셨나요?

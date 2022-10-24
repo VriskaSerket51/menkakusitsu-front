@@ -27,8 +27,7 @@ const useYesNoDialogStore = create<DialogProps>((set) => ({
     onNo: undefined,
     close: () => set({ onYes: undefined, onNo: undefined }),
 }));
-
-const YesNoDialog = () => {
+function YesNoDialog() {
     const { title, content, onYes, onNo, close } = useYesNoDialogStore();
     return (
         <Dialog
@@ -69,7 +68,7 @@ const YesNoDialog = () => {
             </DialogActions>
         </Dialog>
     );
-};
+}
 
 export default YesNoDialog;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "@mui/material";
 
-function PaperTitle(props) {
+function PaperTitle({ children }: { children: React.ReactNode }) {
     return (
         <Typography
             sx={{
@@ -12,7 +12,7 @@ function PaperTitle(props) {
                 marginBottom: "20px",
             }}
         >
-            {props.title}
+            {children}
         </Typography>
     );
 }
