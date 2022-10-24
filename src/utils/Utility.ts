@@ -2,7 +2,7 @@ import { SHA3 } from "sha3";
 import axios from "axios";
 import { openConfirmDialog } from "../components/popup";
 import { TITLE } from "./Constant";
-import { checkTokenExpiration, onTokenExpired } from "./AuthManager";
+import { checkTokenExpiration, onTokenError } from "./AuthManager";
 import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
 import uuid from "react-uuid";
 import { Buffer } from "buffer";
@@ -102,17 +102,7 @@ export const apiGet = async (path: string) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenExpired)
-        .then((resp) => {
-            const result = resp.data;
-            if (result.status < 0) {
-                openConfirmDialog(TITLE.Alert, result.message, () => {
-                    clearTokens();
-                    redirectToHome();
-                });
-            }
-            return resp;
-        });
+        .then(onTokenError)
 };
 
 export const apiPost = async (path: string, body: any = null) => {
@@ -129,17 +119,7 @@ export const apiPost = async (path: string, body: any = null) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenExpired)
-        .then((resp) => {
-            const result = resp.data;
-            if (result.status < 0) {
-                openConfirmDialog(TITLE.Alert, result.message, () => {
-                    clearTokens();
-                    redirectToHome();
-                });
-            }
-            return resp;
-        });
+        .then(onTokenError)
 };
 
 export const apiPut = async (path: string, body: any = null) => {
@@ -156,17 +136,7 @@ export const apiPut = async (path: string, body: any = null) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenExpired)
-        .then((resp) => {
-            const result = resp.data;
-            if (result.status < 0) {
-                openConfirmDialog(TITLE.Alert, result.message, () => {
-                    clearTokens();
-                    redirectToHome();
-                });
-            }
-            return resp;
-        });
+        .then(onTokenError)
 };
 
 export const apiDelete = async (path: string, body: any = null) => {
@@ -184,15 +154,5 @@ export const apiDelete = async (path: string, body: any = null) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenExpired)
-        .then((resp) => {
-            const result = resp.data;
-            if (result.status < 0) {
-                openConfirmDialog(TITLE.Alert, result.message, () => {
-                    clearTokens();
-                    redirectToHome();
-                });
-            }
-            return resp;
-        });
+        .then(onTokenError)
 };

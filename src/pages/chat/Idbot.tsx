@@ -4,10 +4,12 @@ import axios from "axios";
 // import MetaTag from "../../components/MetaTag"
 import React from "react";
 import "../../styles/ChatStyle.css";
+import Construct from "../Construct";
 
 const BOT_NAME = "이디봇";
 
 function Idbot() {
+    return <Construct />;
     /* const [chatCtl] = React.useState(
         new ChatController({
             showDateTime: true,
@@ -80,11 +82,6 @@ function Idbot() {
                 </Paper>
             </Box>
         </>)*/
-    return (
-        <React.Fragment>
-            지금 사용 불가능합니다. 사용에 불편을 드려 죄송합니다.
-        </React.Fragment>
-    );
 }
 
 export default Idbot;

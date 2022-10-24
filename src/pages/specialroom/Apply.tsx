@@ -353,7 +353,7 @@ function Apply() {
                         onSubmit={onPostApply}
                         sx={{ padding: "50px 30px 30px 30px" }}
                     >
-                        <PaperTitle title="특별실 신청하기" />
+                        <PaperTitle>특별실 신청하기</PaperTitle>
                         <SpecialroomInfoPanel />
                         <Stepper
                             activeStep={activeStep}

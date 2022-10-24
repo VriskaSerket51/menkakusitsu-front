@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Paper } from "@mui/material";
 import FixedNavbar from "../../components/navbar";
+import { TimetablePanel } from "../../components";
+import { runAction } from "../../components/lazyload/LazyAction";
 
 function Student() {
+    useEffect(() => {
+        runAction("test");
+    }, []);
     return (
         <React.Fragment>
             <FixedNavbar />
@@ -12,7 +17,7 @@ function Student() {
                     margin: "30px auto 50px",
                 }}
             >
-                <Paper></Paper>
+                <TimetablePanel />
             </Container>
         </React.Fragment>
     );

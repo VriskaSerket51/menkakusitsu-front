@@ -27,7 +27,7 @@ const useConfirmDialogStore = create<DialogProps>((set) => ({
     close: () => set({ onYes: undefined }),
 }));
 
-const ConfirmDialog = () => {
+function ConfirmDialog() {
     const { title, content, onYes, close } = useConfirmDialogStore();
     return (
         <Dialog
@@ -58,7 +58,7 @@ const ConfirmDialog = () => {
             </DialogActions>
         </Dialog>
     );
-};
+}
 
 export default ConfirmDialog;
 
