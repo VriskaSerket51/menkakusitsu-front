@@ -14,7 +14,6 @@ import { getPushToken } from "../FirebaseManager";
 import { getPushApproved } from "../../utils/PushManager";
 import { PostLoginResponse } from "@common-jshs/menkakusitsu-lib/v1";
 import { postLogin } from "../../utils/Api";
-import { pushAction } from "../lazyload/LazyAction";
 
 const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,9 +30,6 @@ const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
 const onLoginSuccessed = (result: PostLoginResponse) => {
     localStorage.setItem("access-token", result.accessToken);
     localStorage.setItem("refresh-token", result.refreshToken);
-    pushAction("test", () => {
-        console.log("test");
-    });
     if (getPushApproved()) {
         getPushToken(() => {
             window.location.reload();

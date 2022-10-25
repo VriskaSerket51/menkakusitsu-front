@@ -10,6 +10,7 @@ const useActionStore = create<{
 
 function LazyAction() {
     const { actions, currentKey } = useActionStore();
+    console.log(actions)
     useEffect(() => {
         if (currentKey && actions[currentKey]) {
             actions[currentKey]();
@@ -24,6 +25,7 @@ function LazyAction() {
 export default LazyAction;
 
 export const pushAction = (key: string, action: Function) => {
+    console.log({ [key]: action })
     useActionStore.setState((state) => {
         return {
             actions: { ...state.actions, [key]: action },
