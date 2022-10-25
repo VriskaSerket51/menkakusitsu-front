@@ -27,9 +27,7 @@ import RouteTracker from "./components/RouteTracker";
 import { SnackbarProvider } from "notistack";
 import FirebaseManager from "./components/FirebaseManager";
 
-const root = ReactDOM.createRoot(
-    document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
     <ThemeProvider theme={theme}>
         <CssBaseline />

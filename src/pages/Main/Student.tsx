@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container } from "@mui/material";
 import FixedNavbar from "../../components/navbar";
 import { TimetablePanel } from "../../components";
