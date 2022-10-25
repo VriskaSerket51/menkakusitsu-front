@@ -31,7 +31,7 @@ function Main() {
                 }}
             >
                 <Link href="/" underline="none" color="#279023">
-                    {process.env.REACT_APP_WEB_TITLE}
+                    {import.meta.env.VITE_WEB_TITLE}
                 </Link>
             </Typography>
             <Container

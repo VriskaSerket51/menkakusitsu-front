@@ -35,6 +35,7 @@ import {
     openWaitDialog,
 } from "../../components/popup";
 import { SpecialroomInfo } from "@common-jshs/menkakusitsu-lib/v1";
+import { unstable_batchedUpdates } from "react-dom";
 
 const ColorlibConnector = styled(StepConnector)<{ isapproved: number }>(
     ({ theme, isapproved }) => ({

@@ -18,7 +18,7 @@ function LazyAction() {
                 currentKey: undefined,
             });
         }
-    }, [actions, currentKey]);
+    }, [currentKey]);
     return <React.Fragment></React.Fragment>;
 }
 

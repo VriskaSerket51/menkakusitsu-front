@@ -3,12 +3,10 @@ import axios from "axios";
 import { ChatController, MuiChat } from "../../components/chat-ui-react";
 import React from "react";
 import "../../styles/ChatStyle.css";
-// import Construct from "../Construct";
 
 const BOT_NAME = "이디봇";
 
 function Idbot() {
-    // return <Construct />;
     const [chatCtl] = React.useState(
         new ChatController({
             showDateTime: true,
@@ -65,7 +63,6 @@ function Idbot() {
         );
     }, [chatCtl]);
 
-    // Only one component used for display
     return (
         <React.Fragment>
             <Box
