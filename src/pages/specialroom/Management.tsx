@@ -37,7 +37,7 @@ function Management() {
         });
     }, []);
     const renderInfo = useCallback(
-        (state) => {
+        (state: number) => {
             if (information) {
                 let count = 0;
                 const final: SpecialroomInfo[] = [];

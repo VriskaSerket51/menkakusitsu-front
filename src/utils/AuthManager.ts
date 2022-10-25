@@ -42,7 +42,7 @@ export const checkTokenExpiration = async (accessToken: string) => {
         const authHeader = `Bearer ${refreshToken}`;
         const resp: BackendResponse = await axios({
             method: "POST",
-            url: import.meta.env.VITE_API_PREFIX + "/v1/auth/refresh",
+            url: process.env.REACT_APP_API_PREFIX + "/v1/auth/refresh",
             headers: {
                 Authorization: authHeader,
             },

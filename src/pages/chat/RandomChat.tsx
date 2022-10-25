@@ -1,8 +1,8 @@
-import { Box, Divider, Paper, Typography } from "@mui/material";
+// import { Box, Divider, Paper, Typography } from "@mui/material";
 // import { ChatController, MuiChat } from "chat-ui-react";
-import React from "react";
-import io from "socket.io-client";
-import "../../styles/ChatStyle.css";
+// import React from "react";
+// import io from "socket.io-client";
+// import "../../styles/ChatStyle.css";
 import Construct from "../Construct";
 
 function RandomChat() {

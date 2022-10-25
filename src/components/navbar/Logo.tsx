@@ -15,7 +15,7 @@ function Logo() {
                         sx={{ fontFamily: "DesignHouseB", fontSize: "32px" }}
                         color="primary.main"
                     >
-                        {import.meta.env.VITE_WEB_TITLE}
+                        {process.env.REACT_APP_WEB_TITLE}
                     </Typography>
                     <Box
                         sx={{
