@@ -25,7 +25,6 @@ function LazyAction() {
 export default LazyAction;
 
 export const pushAction = (key: string, action: Function) => {
-    console.log({ [key]: action })
     useActionStore.setState((state) => {
         return {
             actions: { ...state.actions, [key]: action },
