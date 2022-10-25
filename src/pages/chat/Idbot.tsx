@@ -1,12 +1,12 @@
-import { Box, Divider, Paper, Typography } from "@mui/material";
-import axios from "axios";
+// import { Box, Divider, Paper, Typography } from "@mui/material";
+// import axios from "axios";
 // import { ChatController, MuiChat } from "chat-ui-react";
 // import MetaTag from "../../components/MetaTag"
-import React from "react";
-import "../../styles/ChatStyle.css";
+// import React from "react";
+// import "../../styles/ChatStyle.css";
 import Construct from "../Construct";
 
-const BOT_NAME = "이디봇";
+// const BOT_NAME = "이디봇";
 
 function Idbot() {
     return <Construct />;

@@ -71,12 +71,11 @@ function Download() {
     const when = parseInt(getParameter("when", "1"));
 
     useEffect(() => {
-        console.log(new Date());
         getAttendanceList({ when: when }, (result) => {
             setAttendanceInfo(result.list);
             setIsLoading(false);
         });
-    }, []);
+    }, [when]);
 
     useEffect(() => {
         if (!isLoading) {

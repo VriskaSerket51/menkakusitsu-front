@@ -272,12 +272,12 @@ function Apply() {
         });
     }, []);
 
-    const onPostApply = (event) => {
+    const onPostApply = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const location = data.get("location");
         if (!location) {
-            (
+            openConfirmDialog(
                 TITLE.Alert,
                 "사용 장소 선택을 하지 않으셨습니다."
             );
@@ -328,7 +328,7 @@ function Apply() {
                             title: "학생들이 특별실을 신청했습니다.",
                             body: purpose.toString(),
                             link: `${
-                                import.meta.env.VITE_WEB_PREFIX
+                                process.env.REACT_APP_WEB_PREFIX
                             }/specialroom/management`,
                         },
                     },

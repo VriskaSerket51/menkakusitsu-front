@@ -7,7 +7,7 @@ import * as v1 from "@common-jshs/menkakusitsu-lib/v1";
 import { closeWaitDialog, openConfirmDialog } from "../components/popup";
 import { TITLE } from "./Constant";
 
-const onApiError = (e) => {
+const onApiError = (e: any) => {
     console.log(e);
 };
 

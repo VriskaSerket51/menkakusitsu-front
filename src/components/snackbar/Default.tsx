@@ -9,7 +9,6 @@ import {
 import { SnackbarContent, useSnackbar } from "notistack";
 import React, { forwardRef, Ref } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate } from "react-router-dom";
 import { MessagePayload } from "firebase/messaging";
 
 interface SnackbarProps {
@@ -21,7 +20,6 @@ export const DefaultSnackbar = forwardRef(
     (props: SnackbarProps, ref: Ref<HTMLDivElement>) => {
         const { id, payload } = props;
         const { closeSnackbar } = useSnackbar();
-        const navigate = useNavigate();
 
         const onClose = () => {
             closeSnackbar(id);

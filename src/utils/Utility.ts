@@ -1,7 +1,5 @@
 import { SHA3 } from "sha3";
 import axios from "axios";
-import { openConfirmDialog } from "../components/popup";
-import { TITLE } from "./Constant";
 import { checkTokenExpiration, onTokenError } from "./AuthManager";
 import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
 import uuid from "react-uuid";
@@ -88,7 +86,7 @@ export const SHA3_512 = (input: string) => {
 };
 
 export const apiGet = async (path: string) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
+    const url = process.env.REACT_APP_API_PREFIX + path;
     let accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
         return axios.get(url);
@@ -108,7 +106,7 @@ export const apiGet = async (path: string) => {
 };
 
 export const apiPost = async (path: string, body: any = null) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
+    const url = process.env.REACT_APP_API_PREFIX + path;
     let accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
         return axios.post(url, body);
@@ -127,7 +125,7 @@ export const apiPost = async (path: string, body: any = null) => {
 };
 
 export const apiPut = async (path: string, body: any = null) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
+    const url = process.env.REACT_APP_API_PREFIX + path;
     let accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
         return axios.put(url);
@@ -146,7 +144,7 @@ export const apiPut = async (path: string, body: any = null) => {
 };
 
 export const apiDelete = async (path: string, body: any = null) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
+    const url = process.env.REACT_APP_API_PREFIX + path;
     let accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
         return axios.delete(url);
