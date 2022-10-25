@@ -7,7 +7,7 @@ import * as v1 from "@common-jshs/menkakusitsu-lib/v1";
 import { closeWaitDialog, openConfirmDialog } from "../components/popup";
 import { TITLE } from "./Constant";
 
-const onApiError = (e) => {
+const onApiError = (e: any) => {
     console.log(e);
 };
 
@@ -67,6 +67,25 @@ export const deleteLogout = (
             })
             .catch(onApiError);
     }
+};
+
+//Chat
+
+export const getIdbotChat = (
+    props: v1.GetIdbotChatRequest,
+    onFinish: (result: v1.GetIdbotChatResponse) => any
+) => {
+    apiGet(`/v1/chat/idbot/message?chatInput=${props.chatInput}`)
+        .then((resp) => {
+            const result: v1.GetIdbotChatResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
 };
 
 //Specialroom
