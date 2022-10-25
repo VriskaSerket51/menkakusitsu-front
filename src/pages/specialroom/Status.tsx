@@ -35,7 +35,6 @@ import {
     openWaitDialog,
 } from "../../components/popup";
 import { SpecialroomInfo } from "@common-jshs/menkakusitsu-lib/v1";
-import { unstable_batchedUpdates } from "react-dom";
 
 const ColorlibConnector = styled(StepConnector)<{ isapproved: number }>(
     ({ theme, isapproved }) => ({
@@ -222,9 +221,9 @@ function Status() {
                                     <MenuItem value={2}>2차 면학</MenuItem>
                                 </Select>
                             </FormControl>
-                            {!isLoading ? (
-                                <Box sx={{ padding: "16px 12px 0px" }}>
-                                    {applyStatus ? (
+                            <Box sx={{ padding: "16px 12px 0px" }}>
+                                {!isLoading ? (
+                                    applyStatus ? (
                                         <Typography
                                             noWrap
                                             variant="h6"
@@ -265,13 +264,13 @@ function Status() {
                                         >
                                             신청 안 함
                                         </Typography>
-                                    )}
-                                </Box>
-                            ) : (
-                                <Box sx={{ textAlign: "center" }}>
-                                    <CircularProgress />
-                                </Box>
-                            )}
+                                    )
+                                ) : (
+                                    <Box sx={{ textAlign: "center" }}>
+                                        <CircularProgress />
+                                    </Box>
+                                )}
+                            </Box>
                         </Box>
                         <Stack
                             sx={{ width: "100%", paddingBottom: "32px" }}
