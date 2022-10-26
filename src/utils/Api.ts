@@ -70,7 +70,6 @@ export const deleteLogout = (
 };
 
 //Chat
-
 export const getIdbotChat = (
     props: v1.GetIdbotChatRequest,
     onFinish: (result: v1.GetIdbotChatResponse) => any
@@ -78,6 +77,24 @@ export const getIdbotChat = (
     apiGet(`/v1/chat/idbot/message?chatInput=${props.chatInput}`)
         .then((resp) => {
             const result: v1.GetIdbotChatResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+//Timetable
+export const getMeal = (
+    props: v1.GetMealRequest,
+    onFinish: (result: v1.GetMealResponse) => any
+) => {
+    apiGet(`/v1/meal/${props.when}`)
+        .then((resp) => {
+            const result: v1.GetMealResponse = resp.data;
             if (isApiSuccessed(result)) {
                 onFinish(result);
             } else {
@@ -276,6 +293,42 @@ export const getSpecialroomTeacherInfo = (
         .catch(onApiError);
 };
 
+//Timetable
+export const getTimetable = (
+    props: v1.GetTimetableRequest,
+    onFinish: (result: v1.GetTimetableResponse) => any
+) => {
+    apiGet(`/v1/timetable/${props.when}`)
+        .then((resp) => {
+            const result: v1.GetTimetableResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+export const putTimetable = (
+    props: v1.PutTimetableRequest,
+    onFinish: (result: v1.PutTimetableResponse) => any
+) => {
+    apiPut(`/v1/timetable/${props.when}`, props)
+        .then((resp) => {
+            const result: v1.GetTimetableResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+//User
 export const postUserPush = (
     props: v1.PostPushRequest,
     onFinish: (result: v1.PostPushResponse) => any
