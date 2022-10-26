@@ -46,7 +46,6 @@ function Main() {
                     </Grid>
                     <Grid item xs={4}>
                         <LoginPanel />
-                        <MealPanel />
                     </Grid>
                 </Grid>
             </Container>
