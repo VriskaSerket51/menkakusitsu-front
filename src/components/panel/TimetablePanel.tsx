@@ -12,13 +12,13 @@ import {
     Input,
     FormControl,
     SxProps,
+    Theme
 } from "@mui/material";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { getTimetable, putTimetable } from "../../utils/Api";
 import { SubmitButton } from "../button";
 import * as v1 from "@common-jshs/menkakusitsu-lib/v1";
-import { Theme } from "@mui/system";
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
