@@ -20,11 +20,11 @@ const MealInfo = (props: MealInfoProps) => {
             break;
         case "lunch":
             mealName = "점심";
-            highlitedMeal = currentHour >= 13 && currentHour < 19;
+            highlitedMeal = currentHour < 13;
             break;
         case "dinner":
             mealName = "저녁";
-            highlitedMeal = currentHour < 13;
+            highlitedMeal = currentHour >= 13 && currentHour < 19;
             break;
     }
     const sx: SxProps<Theme> = highlitedMeal
@@ -43,13 +43,14 @@ const MealInfo = (props: MealInfoProps) => {
     return (
         <Box sx={sx}>
             <Typography variant="h5">{mealName}</Typography>
-            {props.meals && props.meals.map((meal) => {
-                return (
-                    <Typography key={meal} variant="h6">
-                        - {meal}
-                    </Typography>
-                );
-            })}
+            {props.meals &&
+                props.meals.map((meal) => {
+                    return (
+                        <Typography key={meal} variant="h6">
+                            - {meal}
+                        </Typography>
+                    );
+                })}
         </Box>
     );
 };
@@ -83,7 +84,10 @@ function MealPanel() {
                     <Divider orientation="vertical" flexItem />
                     <MealInfo type="dinner" meals={mealInfo?.dinner.meals} />
                     <Divider orientation="vertical" flexItem />
-                    <MealInfo type="breakfast" meals={mealInfo?.breakfast.meals} />
+                    <MealInfo
+                        type="breakfast"
+                        meals={mealInfo?.breakfast.meals}
+                    />
                 </Paper>
             </Box>
         </React.Fragment>

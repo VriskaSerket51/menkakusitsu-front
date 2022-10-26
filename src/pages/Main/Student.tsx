@@ -13,8 +13,8 @@ function Student() {
                     margin: "30px auto 50px",
                 }}
             >
-                <TimetablePanel />
-                <br />
+                {/* <TimetablePanel /> */}
+                {/* <br /> */}
                 <MealPanel />
                 <br />
             </Container>
