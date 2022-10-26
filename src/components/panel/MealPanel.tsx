@@ -48,7 +48,7 @@ function MealPanel() {
                         }}
                     >
                         <Typography variant="h5">저녁</Typography>
-                        {mealInfo?.lunch.meals.map((meal) => {
+                        {mealInfo?.dinner.meals.map((meal) => {
                             return <Typography key={meal} variant="h6">- {meal}</Typography>;
                         })}
                     </Box>
@@ -60,7 +60,7 @@ function MealPanel() {
                         }}
                     >
                         <Typography variant="h5">아침</Typography>
-                        {mealInfo?.lunch.meals.map((meal) => {
+                        {mealInfo?.breakfast.meals.map((meal) => {
                             return <Typography key={meal} variant="h6">- {meal}</Typography>;
                         })}
                     </Box>
