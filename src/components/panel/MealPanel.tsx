@@ -30,7 +30,7 @@ const MealInfo = (props: MealInfoProps) => {
     const sx: SxProps<Theme> = highlitedMeal
         ? {
               display: "block",
-              padding: "50px 30px 30px 30px",
+              padding: "46px 30px 30px 30px",
               borderRadius: "1px",
               borderStyle: "solid none none none",
               borderColor: "primary.main",
