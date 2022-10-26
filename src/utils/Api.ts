@@ -92,7 +92,7 @@ export const getMeal = (
     props: v1.GetMealRequest,
     onFinish: (result: v1.GetMealResponse) => any
 ) => {
-    apiGet(`/v1/meal/${props.when}`)
+    apiGet(`/v1/meal/now`)
         .then((resp) => {
             const result: v1.GetMealResponse = resp.data;
             if (isApiSuccessed(result)) {
