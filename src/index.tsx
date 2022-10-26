@@ -26,6 +26,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import RouteTracker from "./components/RouteTracker";
 import { SnackbarProvider } from "notistack";
 import FirebaseManager from "./components/FirebaseManager";
+import { TimetablePanel } from "./components";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -67,12 +68,25 @@ root.render(
                         <Route index element={<NotFound />} />
                         <Route path="apply" element={<SpecialroomApply />} />
                         <Route path="status" element={<SpecialroomStatus />} />
+                    </Route>
+                    <Route
+                        path="timetable"
+                        element={<PrivateRoute permission={1} />}
+                    >
+                        <Route index element={<TimetablePanel />} />
+                    </Route>
+                    <Route
+                        path="management"
+                        element={<PrivateRoute permission={2} />}
+                    >
                         <Route
-                            path="management"
-                            element={<PrivateRoute permission={2} />}
-                        >
-                            <Route index element={<SpecialroomManagement />} />
-                        </Route>
+                            path="specialroom"
+                            element={<SpecialroomManagement />}
+                        />
+                        <Route
+                            path="timetable"
+                            element={<TimetablePanel edit />}
+                        />
                     </Route>
                     <Route
                         path="about"
