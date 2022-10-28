@@ -6,6 +6,7 @@ import {
     getMessaging,
     getToken,
     onMessage,
+    Messaging,
 } from "firebase/messaging";
 import { getDeviceUuid } from "../utils/Utility";
 import React, { useEffect } from "react";
@@ -31,7 +32,12 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const messaging = getMessaging();
+let messaging: Messaging;
+try {
+    messaging = getMessaging();
+} catch (error) {
+    console.log(`Error: Failed to initialize Firebase Messaging for ${error}`);
+}
 
 function FirebaseManager() {
     const { enqueueSnackbar } = useSnackbar();
