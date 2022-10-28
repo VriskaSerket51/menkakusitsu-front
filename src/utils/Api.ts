@@ -69,6 +69,130 @@ export const deleteLogout = (
     }
 };
 
+//BBS
+export const getBbsPostList = (
+    props: v1.GetBbsPostListRequest,
+    onFinish: (result: v1.GetBbsPostListResponse) => any
+) => {
+    apiGet(
+        `/v1/bbs/post/list?postPage=${props.postPage}&postListSize=${props.postListSize}`
+    )
+        .then((resp) => {
+            const result: v1.GetBbsPostListResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+export const getBbsPost = (
+    props: v1.GetBbsPostRequest,
+    onFinish: (result: v1.GetBbsPostResponse) => any
+) => {
+    apiGet(`/v1/bbs/post?id=${props.id}`)
+        .then((resp) => {
+            const result: v1.GetBbsPostResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message, onFinish);
+            }
+        })
+        .catch(onApiError);
+};
+
+export const postBbsPost = (
+    props: v1.PostBbsPostRequest,
+    onFinish: (result: v1.PostBbsPostResponse) => any
+) => {
+    apiPost(`/v1/bbs/post`, props)
+        .then((resp) => {
+            const result: v1.PostBbsPostResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+export const deleteBbsPost = (
+    props: v1.DeleteBbsPostRequest,
+    onFinish: (result: v1.DeleteBbsPostResponse) => any
+) => {
+    apiDelete(`/v1/bbs/post`, props)
+        .then((resp) => {
+            const result: v1.DeleteBbsPostResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+export const getBbsCommentList = (
+    props: v1.GetBbsCommentListRequest,
+    onFinish: (result: v1.GetBbsCommentListResponse) => any
+) => {
+    apiGet(
+        `/v1/bbs/comment/list?postId=${props.postId}&commentPage=${props.commentPage}&commentListSize=${props.commentListSize}`
+    )
+        .then((resp) => {
+            const result: v1.GetBbsCommentListResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+export const postBbsComment = (
+    props: v1.PostBbsCommentRequest,
+    onFinish: (result: v1.PostBbsCommentResponse) => any
+) => {
+    apiPost(`/v1/bbs/comment`, props)
+        .then((resp) => {
+            const result: v1.PostBbsCommentResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+export const deleteBbsComment = (
+    props: v1.DeleteBbsCommentRequest,
+    onFinish: (result: v1.DeleteBbsCommentResponse) => any
+) => {
+    apiDelete(`/v1/bbs/comment`, props)
+        .then((resp) => {
+            const result: v1.DeleteBbsCommentResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
 //Chat
 export const getIdbotChat = (
     props: v1.GetIdbotChatRequest,

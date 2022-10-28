@@ -17,6 +17,9 @@ import {
     About,
     Account,
     NotFound,
+    BbsList,
+    BbsPost,
+    BbsCreate,
 } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
@@ -54,6 +57,14 @@ root.render(
                         >
                             <Route index element={<NotFound />} />
                             <Route path="create" element={<SurveyCreate />} />
+                        </Route>
+                        <Route
+                            path="bbs"
+                            element={<PrivateRoute permission={1} />}
+                        >
+                            <Route path="post/create" element={<BbsCreate />} />
+                            <Route path="post/list" element={<BbsList />} />
+                            <Route path="post/:postId" element={<BbsPost />} />
                         </Route>
                         <Route
                             path="chat"

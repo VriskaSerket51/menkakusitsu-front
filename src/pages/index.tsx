@@ -3,6 +3,10 @@ export { default as Main } from "./Main";
 export { default as AttendanceDownload } from "./attendance/Download";
 export { default as AttendanceInfo } from "./attendance/Info";
 
+export { default as BbsCreate } from "./bbs/Create";
+export { default as BbsList } from "./bbs/List";
+export { default as BbsPost } from "./bbs/Post";
+
 export { default as ChatIdbot } from "./chat/Idbot";
 export { default as ChatRandom } from "./chat/RandomChat";
 

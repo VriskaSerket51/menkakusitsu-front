@@ -25,7 +25,7 @@ export const onTokenError = (resp: BackendResponse) => {
             redirectToHome();
         });
     }
-    throw new Error(result.message);
+    return resp;
 };
 
 export const checkTokenExpiration = async (accessToken: string) => {
