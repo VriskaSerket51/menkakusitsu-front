@@ -32,7 +32,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-let messaging: Messaging;
+let messaging: Messaging | undefined;
 try {
     messaging = getMessaging();
 } catch (error) {
@@ -42,14 +42,16 @@ try {
 function FirebaseManager() {
     const { enqueueSnackbar } = useSnackbar();
     useEffect(() => {
-        onMessage(messaging, (payload) => {
-            enqueueSnackbar("fcm", {
-                variant: "default",
-                content: (key) => (
-                    <DefaultSnackbar id={key} payload={payload} />
-                ),
+        if (messaging) {
+            onMessage(messaging, (payload) => {
+                enqueueSnackbar("fcm", {
+                    variant: "default",
+                    content: (key) => (
+                        <DefaultSnackbar id={key} payload={payload} />
+                    ),
+                });
             });
-        });
+        }
     }, [enqueueSnackbar]);
     return <React.Fragment></React.Fragment>;
 }
@@ -57,55 +59,59 @@ function FirebaseManager() {
 export default FirebaseManager;
 
 export const getPushToken = (onFinish: (successed: boolean) => any) => {
-    getToken(messaging, {
-        vapidKey:
-            "BG_LNhZiWNMNjuR-PTiY8pLm0SJ8itD0lVcEr3cRtkhBEOtzcDbiUVVQ3i5ZERbsmw5Q8kPDqJ1KpvvYF7nKcbk",
-    })
-        .then((token) => {
-            if (token) {
-                putUserPush(
-                    {
-                        pushToken: token,
-                        deviceId: getDeviceUuid(),
-                    },
-                    () => {}
-                );
-                onFinish(true);
-            } else {
-                onFinish(false);
-            }
+    if (messaging) {
+        getToken(messaging, {
+            vapidKey:
+                "BG_LNhZiWNMNjuR-PTiY8pLm0SJ8itD0lVcEr3cRtkhBEOtzcDbiUVVQ3i5ZERbsmw5Q8kPDqJ1KpvvYF7nKcbk",
         })
-        .catch((e) => {
-            console.log(e);
-            openConfirmDialog(
-                TITLE.Alert,
-                "Failed to get FCM token for reason: " + e
-            );
-        });
+            .then((token) => {
+                if (token) {
+                    putUserPush(
+                        {
+                            pushToken: token,
+                            deviceId: getDeviceUuid(),
+                        },
+                        () => {}
+                    );
+                    onFinish(true);
+                } else {
+                    onFinish(false);
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+                openConfirmDialog(
+                    TITLE.Alert,
+                    "Failed to get FCM token for reason: " + e
+                );
+            });
+    }
 };
 
 export const deletePushToken = (onFinish: (successed: boolean) => any) => {
-    deleteToken(messaging)
-        .then((result) => {
-            if (result) {
-                deleteUserPush(
-                    {
-                        devcieId: getDeviceUuid(),
-                    },
-                    () => {}
+    if (messaging) {
+        deleteToken(messaging)
+            .then((result) => {
+                if (result) {
+                    deleteUserPush(
+                        {
+                            devcieId: getDeviceUuid(),
+                        },
+                        () => {}
+                    );
+                    onFinish(true);
+                } else {
+                    onFinish(false);
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+                openConfirmDialog(
+                    TITLE.Alert,
+                    "Failed to delete FCM token for reason: " + e
                 );
-                onFinish(true);
-            } else {
-                onFinish(false);
-            }
-        })
-        .catch((e) => {
-            console.log(e);
-            openConfirmDialog(
-                TITLE.Alert,
-                "Failed to delete FCM token for reason: " + e
-            );
-        });
+            });
+    }
 };
 
 export const logPageView = () => {
