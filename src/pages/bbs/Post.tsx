@@ -7,21 +7,32 @@ import {
     Link,
     Pagination,
     Paper,
+    TextField,
     Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
-import { deleteBbsPost, getBbsCommentList, getBbsPost } from "../../utils/Api";
+import {
+    deleteBbsPost,
+    getBbsCommentList,
+    getBbsPost,
+    postBbsComment,
+} from "../../utils/Api";
 import ArticleIcon from "@mui/icons-material/Article";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserInfo } from "../../utils/Utility";
-import { openConfirmDialog } from "../../components";
+import {
+    closeWaitDialog,
+    openConfirmDialog,
+    openWaitDialog,
+} from "../../components";
 import { TITLE } from "../../utils/Constant";
 
 function Post() {
     const params = useParams();
+    const commentRef = useRef<HTMLTextAreaElement>(null);
     const navigate = useNavigate();
 
     const [post, setPost] = useState<BbsPost | null>(null);
@@ -29,7 +40,7 @@ function Post() {
     const [commentCount, setCommentCount] = useState(0);
     const [commentList, setCommentList] = useState<BbsComment[] | null>(null);
 
-    useEffect(() => {
+    const refresh = useCallback(() => {
         getBbsPost({ id: parseInt(params.postId!) }, (result) => {
             if (!result) {
                 navigate("/bbs/post/list");
@@ -45,11 +56,36 @@ function Post() {
                 (result) => {
                     setCommentCount(result.commentCount);
                     setCommentList(result.list);
-                    console.log(result);
                 }
             );
         });
-    }, []);
+    }, [commentPage]);
+
+    const onPostComment = useCallback(
+        (event: React.MouseEvent<HTMLFormElement>) => {
+            event.preventDefault();
+            const data = new FormData(event.currentTarget);
+            const comment = data.get("comment")?.toString();
+            if (!post || !comment) {
+                return;
+            }
+            openWaitDialog(TITLE.Info, "작성 중입니다...");
+            postBbsComment({ postId: post.id, content: comment }, (result) => {
+                if (commentRef?.current) {
+                    commentRef.current.value = "";
+                }
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Info, "작성이 완료되었습니다.", () => {
+                    refresh();
+                });
+            });
+        },
+        []
+    );
+
+    useEffect(() => {
+        refresh();
+    }, [refresh]);
 
     return (
         <React.Fragment>
@@ -63,6 +99,7 @@ function Post() {
                 <Paper>
                     <Box
                         component="form"
+                        onSubmit={onPostComment}
                         sx={{ padding: "50px 50px 30px 50px" }}
                     >
                         {post && (
@@ -124,7 +161,20 @@ function Post() {
                         <Typography variant="h6">
                             댓글 {commentCount}개
                         </Typography>
-                        <Typography>
+                        <Stack spacing={2} direction="row" display="flex">
+                            <TextField
+                                name="comment"
+                                inputRef={commentRef}
+                                fullWidth
+                                multiline
+                                placeholder="댓글"
+                            />
+                            <Button type="submit" variant="contained">
+                                작성
+                            </Button>
+                        </Stack>
+                        <br />
+                        <Stack spacing={2}>
                             {commentList &&
                                 commentList.map((comment) => (
                                     <Box key={comment.id}>
@@ -146,7 +196,7 @@ function Post() {
                                         </Typography>
                                     </Box>
                                 ))}
-                        </Typography>
+                        </Stack>
                         <br />
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Pagination
