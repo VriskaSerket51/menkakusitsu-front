@@ -26,16 +26,19 @@ function Footer() {
                         href="http://jeju-s.jje.hs.kr/jeju-s"
                         icon={<SchoolIcon />}
                         label="제주과학고 공식 홈페이지"
+                        newTab
                     />
                     <IconLink
                         href="https://www.instagram.com/jejuscience1999/"
                         icon={<InstagramIcon />}
                         label="제주과학고 공식 인스타그램"
+                        newTab
                     />
                     <IconLink
                         href="https://www.instagram.com/jshs_bamboo/"
                         icon={<InstagramIcon />}
                         label="제주과학고 대나무숲"
+                        newTab
                     />
                 </Stack>
                 <Typography>Made by 제주과학고 정보 동아리 COMMON</Typography>
