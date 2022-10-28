@@ -42,7 +42,7 @@ function Footer() {
                     />
                 </Stack>
                 <Typography>Made by 제주과학고 정보 동아리 COMMON</Typography>
-                <Typography fontSize="0.5rem">Contributors: 23기 고승한, 23기 선우준, 23기 박도현</Typography>
+                <Typography fontSize="0.5rem">Contributors: 23기 고승한, 23기 선우준</Typography>
             </Stack>
             <br />
         </React.Fragment>
