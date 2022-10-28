@@ -19,11 +19,13 @@ export const onTokenError = (resp: BackendResponse) => {
             clearTokens();
             redirectToHome();
         });
+        throw new Error(result.message);
     } else if (result.status === -1973) {
         openConfirmDialog(TITLE.Alert, "손상된 토큰입니다!", () => {
             clearTokens();
             redirectToHome();
         });
+        throw new Error(result.message);
     }
     return resp;
 };
