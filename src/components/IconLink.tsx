@@ -1,9 +1,10 @@
-import { Box, Divider, Link, Stack, Typography } from "@mui/material";
+import { Box, Link } from "@mui/material";
+import LinkIcon from "@mui/icons-material/Link";
 import React, { ReactNode } from "react";
 
 interface IconLinkProps {
     href: string;
-    icon: ReactNode;
+    icon?: ReactNode;
     label: string;
     newTab?: boolean;
 }
@@ -23,7 +24,7 @@ function IconLink(props: IconLinkProps) {
                     flexWrap: "wrap",
                 }}
             >
-                {props.icon}
+                {props.icon ? props.icon : <LinkIcon />}
                 {props.label}
             </Box>
         </Link>
