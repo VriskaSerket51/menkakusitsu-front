@@ -13,7 +13,7 @@ function IconLink(props: IconLinkProps) {
     return (
         <Link
             href={props.href}
-            underline="none"
+            underline="hover"
             target={props.newTab ? "_blank" : ""}
             rel={props.newTab ? "noopener" : ""}
         >
