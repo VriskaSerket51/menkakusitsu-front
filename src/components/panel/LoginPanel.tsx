@@ -23,7 +23,7 @@ const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
     if (!id || !password) {
         return;
     }
-    openWaitDialog("알림", "로그인 중입니다...");
+    openWaitDialog(TITLE.Info, "로그인 중입니다...");
     postLogin({ id: id, password: password }, onLoginSuccessed, onLoginFailed);
 };
 

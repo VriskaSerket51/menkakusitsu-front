@@ -41,8 +41,7 @@ import { SubmitButton } from "../../components/button";
 import {
     LocationInfo,
     PurposeInfo,
-    StudentInfo,
-    TeacherInfo,
+    UserInfo,
 } from "@common-jshs/menkakusitsu-lib/v1";
 import { unstable_batchedUpdates } from "react-dom";
 
@@ -51,12 +50,12 @@ function Apply() {
         []
     );
     const [purposeInfos, setPurposeInfos] = React.useState<PurposeInfo[]>([]);
-    const [studentInfos, setStudentInfos] = React.useState<StudentInfo[]>([]);
-    const [teacherInfos, setTeacherInfos] = React.useState<TeacherInfo[]>([]);
+    const [studentInfos, setStudentInfos] = React.useState<UserInfo[]>([]);
+    const [teacherInfos, setTeacherInfos] = React.useState<UserInfo[]>([]);
 
     const [when, setWhen] = React.useState(1);
-    const [applicants, setApplicants] = React.useState<StudentInfo[]>([]);
-    const [teacher, setTeacher] = React.useState<TeacherInfo | null>(null);
+    const [applicants, setApplicants] = React.useState<UserInfo[]>([]);
+    const [teacher, setTeacher] = React.useState<UserInfo | null>(null);
 
     const [activeStep, setActiveStep] = React.useState(0);
 
@@ -256,31 +255,29 @@ function Apply() {
     };
 
     React.useMemo(() => {
+        // ㅋㅋ 콜백 지옥 지리네
         unstable_batchedUpdates(() => {
             getSpecialroomLocationInfo({}, (result) => {
                 setLocationInfos(result.locationInfo);
-            });
-            getSpecialroomPurposeInfo({}, (result) => {
-                setPurposeInfos(result.purposeInfo);
-            });
-            getSpecialroomStudentInfo({}, (result) => {
-                setStudentInfos(result.studentInfo);
-            });
-            getSpecialroomTeacherInfo({}, (result) => {
-                setTeacherInfos(result.teacherInfo);
+                getSpecialroomPurposeInfo({}, (result) => {
+                    setPurposeInfos(result.purposeInfo);
+                    getSpecialroomStudentInfo({}, (result) => {
+                        setStudentInfos(result.studentInfo);
+                        getSpecialroomTeacherInfo({}, (result) => {
+                            setTeacherInfos(result.teacherInfo);
+                        });
+                    });
+                });
             });
         });
     }, []);
 
-    const onPostApply = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
+    const onPostApply = (e: React.MouseEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const data = new FormData(e.currentTarget);
         const location = data.get("location");
         if (!location) {
-            (
-                TITLE.Alert,
-                "사용 장소 선택을 하지 않으셨습니다."
-            );
+            TITLE.Alert, "사용 장소 선택을 하지 않으셨습니다.";
             setActiveStep(1);
             return;
         }
@@ -317,10 +314,7 @@ function Apply() {
             },
             () => {
                 closeWaitDialog();
-                openConfirmDialog(
-                    TITLE.Info,
-                    "특별실 신청에 성공했습니다."
-                );
+                openConfirmDialog(TITLE.Info, "특별실 신청에 성공했습니다.");
                 postUserPush(
                     {
                         targetUid: teacher.uid,

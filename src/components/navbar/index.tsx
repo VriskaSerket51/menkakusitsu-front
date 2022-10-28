@@ -44,8 +44,8 @@ const navbarItems = [
     },
     {
         color: "primary.main",
-        title: "도움말",
-        href: "/about",
+        title: "건의 게시판",
+        href: "/bbs/post/list",
         permission: 1,
     },
 ];
