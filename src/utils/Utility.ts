@@ -40,6 +40,9 @@ export const getPermissionLevel = () => {
     if (!getUserInfo()) {
         return 0;
     }
+    if (getUserInfo().isDev) {
+        return 10;
+    }
     if (getUserInfo().isTeacher) {
         return 2;
     }
