@@ -26,6 +26,9 @@ function Idbot() {
             });
         };
         // Chat content is displayed using ChatController
+        await addBotMessage(`${BOT_NAME} v1.0.2 Made by COMMON<br />
+        Contributors: 23기 이현석, 23기 고승한, 23기 박도현, 23기 선우준, 23기 이찬솔`);
+
         await addBotMessage(`안녕하세요! ${BOT_NAME}이에요. 저는 다음과 같은 기능을 할 수 있어요. 다음 예시문장으로 제 기능을 테스트 해 보세요!<br />
         - 과목별 교사 확인: 물리학 과목 선생님은 누가 있어?<br />
         - 급식표: 오늘 급식 알려줘<br />
