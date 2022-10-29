@@ -80,7 +80,7 @@ function Post() {
                 });
             });
         },
-        [commentRef]
+        [post, commentRef]
     );
 
     useEffect(() => {
