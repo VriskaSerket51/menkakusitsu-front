@@ -80,7 +80,7 @@ function Post() {
                 });
             });
         },
-        []
+        [commentRef]
     );
 
     useEffect(() => {
@@ -200,9 +200,7 @@ function Post() {
                         <br />
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Pagination
-                                count={
-                                    parseInt((commentCount / 10).toFixed()) + 1
-                                }
+                                count={Math.floor(commentCount / 20) + 1}
                                 page={commentPage}
                                 onChange={(
                                     event: React.ChangeEvent<unknown>,
