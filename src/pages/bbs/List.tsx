@@ -64,7 +64,7 @@ function List() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        getBbsPostList({ postPage: page, postListSize: 10 }, (result) => {
+        getBbsPostList({ postPage: page, postListSize: 20 }, (result) => {
             setPostCount(result.postCount);
             setPostList(result.list);
         });
@@ -107,7 +107,7 @@ function List() {
                         <br />
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Pagination
-                                count={parseInt((postCount / 10).toFixed()) + 1}
+                                count={Math.floor(postCount / 20) + 1}
                                 page={page}
                                 onChange={(
                                     event: React.ChangeEvent<unknown>,
