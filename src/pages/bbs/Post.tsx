@@ -116,9 +116,11 @@ function Post() {
                         )}
                         <Divider />
                         <br />
-                        {post && <Typography>{post.content}</Typography>}
-                        <br />
-                        <Divider />
+                        {post && (
+                            <Typography sx={{ whiteSpace: "pre-wrap" }}>
+                                {post.content}
+                            </Typography>
+                        )}
                         <br />
                         <Box sx={{ display: "flex", justifyContent: "right" }}>
                             <Stack spacing={2} direction="row">
@@ -197,7 +199,10 @@ function Post() {
                                                 {comment.createdDate}
                                             </Typography>
                                         </Box>
-                                        <Typography>
+                                        <Divider />
+                                        <Typography
+                                            sx={{ whiteSpace: "pre-wrap" }}
+                                        >
                                             {comment.content}
                                         </Typography>
                                     </Box>
