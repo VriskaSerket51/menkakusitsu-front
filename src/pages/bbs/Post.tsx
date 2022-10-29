@@ -4,7 +4,6 @@ import {
     Button,
     Container,
     Divider,
-    Link,
     Pagination,
     Paper,
     TextField,
@@ -13,20 +12,19 @@ import {
 import { Stack } from "@mui/system";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import FixedNavbar from "../../components/navbar";
-import PaperTitle from "../../components/PaperTitle";
 import {
     deleteBbsPost,
     getBbsCommentList,
     getBbsPost,
     postBbsComment,
 } from "../../utils/Api";
-import ArticleIcon from "@mui/icons-material/Article";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserInfo } from "../../utils/Utility";
 import {
     closeWaitDialog,
     openConfirmDialog,
     openWaitDialog,
+    openYesNoDialog,
 } from "../../components";
 import { TITLE } from "../../utils/Constant";
 
@@ -139,15 +137,21 @@ function Post() {
                                             variant="contained"
                                             color="error"
                                             onClick={() => {
-                                                deleteBbsPost(
-                                                    { id: post.id },
-                                                    (result) => {
-                                                        openConfirmDialog(
-                                                            TITLE.Info,
-                                                            "게시글이 삭제되었습니다.",
-                                                            () => {
-                                                                navigate(
-                                                                    "/bbs/post/list"
+                                                openYesNoDialog(
+                                                    TITLE.Alert,
+                                                    "정말 게시글을 삭제하실 건가요?",
+                                                    () => {
+                                                        deleteBbsPost(
+                                                            { id: post.id },
+                                                            (result) => {
+                                                                openConfirmDialog(
+                                                                    TITLE.Info,
+                                                                    "게시글이 삭제되었습니다.",
+                                                                    () => {
+                                                                        navigate(
+                                                                            "/bbs/post/list"
+                                                                        );
+                                                                    }
                                                                 );
                                                             }
                                                         );
