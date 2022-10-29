@@ -132,30 +132,32 @@ function Post() {
                                 >
                                     목록
                                 </Button>
-                                {post && getUserInfo().uid === post.owner.uid && (
-                                    <Button
-                                        variant="contained"
-                                        color="error"
-                                        onClick={() => {
-                                            deleteBbsPost(
-                                                { id: post.id },
-                                                (result) => {
-                                                    openConfirmDialog(
-                                                        TITLE.Info,
-                                                        "게시글이 삭제되었습니다.",
-                                                        () => {
-                                                            navigate(
-                                                                "/bbs/post/list"
-                                                            );
-                                                        }
-                                                    );
-                                                }
-                                            );
-                                        }}
-                                    >
-                                        삭제
-                                    </Button>
-                                )}
+                                {post &&
+                                    (getUserInfo().uid === post.owner.uid ||
+                                        getUserInfo().isDev) && (
+                                        <Button
+                                            variant="contained"
+                                            color="error"
+                                            onClick={() => {
+                                                deleteBbsPost(
+                                                    { id: post.id },
+                                                    (result) => {
+                                                        openConfirmDialog(
+                                                            TITLE.Info,
+                                                            "게시글이 삭제되었습니다.",
+                                                            () => {
+                                                                navigate(
+                                                                    "/bbs/post/list"
+                                                                );
+                                                            }
+                                                        );
+                                                    }
+                                                );
+                                            }}
+                                        >
+                                            삭제
+                                        </Button>
+                                    )}
                             </Stack>
                         </Box>
                         <Typography variant="h6">
