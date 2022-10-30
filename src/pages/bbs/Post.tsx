@@ -8,11 +8,14 @@ import {
     Paper,
     TextField,
     Typography,
+    Stack,
+    IconButton,
 } from "@mui/material";
-import { Stack } from "@mui/system";
+import CloseIcon from "@mui/icons-material/Close";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import FixedNavbar from "../../components/navbar";
 import {
+    deleteBbsComment,
     deleteBbsPost,
     getBbsCommentList,
     getBbsPost,
@@ -195,9 +198,50 @@ function Post() {
                                             <Typography>
                                                 {comment.owner.name}
                                             </Typography>
-                                            <Typography>
-                                                {comment.createdDate}
-                                            </Typography>
+                                            <Box
+                                                sx={{
+                                                    display: "flex",
+                                                    alignItems: "center",
+                                                    flexWrap: "wrap",
+                                                }}
+                                            >
+                                                <Typography>
+                                                    {comment.createdDate}
+                                                </Typography>
+                                                {(getUserInfo().uid ===
+                                                    comment.owner.uid ||
+                                                    getUserInfo().isDev) && (
+                                                    <IconButton
+                                                        size="small"
+                                                        onClick={() => {
+                                                            openYesNoDialog(
+                                                                TITLE.Alert,
+                                                                "정말 댓글을 삭제하실 건가요?",
+                                                                () => {
+                                                                    deleteBbsComment(
+                                                                        {
+                                                                            id: comment.id,
+                                                                        },
+                                                                        (
+                                                                            result
+                                                                        ) => {
+                                                                            openConfirmDialog(
+                                                                                TITLE.Info,
+                                                                                "댓글이 삭제되었습니다.",
+                                                                                () => {
+                                                                                    refresh();
+                                                                                }
+                                                                            );
+                                                                        }
+                                                                    );
+                                                                }
+                                                            );
+                                                        }}
+                                                    >
+                                                        <CloseIcon fontSize="inherit" />
+                                                    </IconButton>
+                                                )}
+                                            </Box>
                                         </Box>
                                         <Divider />
                                         <Typography
