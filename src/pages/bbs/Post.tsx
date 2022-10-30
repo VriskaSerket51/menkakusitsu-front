@@ -76,9 +76,7 @@ function Post() {
                     commentRef.current.value = "";
                 }
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Info, "작성이 완료되었습니다.", () => {
-                    refresh();
-                });
+                refresh();
             });
         },
         [post, commentRef]
