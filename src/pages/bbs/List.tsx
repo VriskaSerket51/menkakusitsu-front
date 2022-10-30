@@ -51,7 +51,7 @@ function Article(props: ArticleProps) {
                     alignItems: "center",
                     flexWrap: "wrap",
                     float: "right",
-                    color: "lightgray",
+                    color: "gray",
                 }}
             >
                 {post.createdDate}
