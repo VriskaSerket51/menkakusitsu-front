@@ -112,7 +112,7 @@ function Post() {
                                 }}
                             >
                                 <Typography>{post.owner.name}</Typography>
-                                <Typography>{post.createdDate}</Typography>
+                                <Typography color="gray">{post.createdDate}</Typography>
                             </Box>
                         )}
                         <Divider />
@@ -203,7 +203,7 @@ function Post() {
                                                     flexWrap: "wrap",
                                                 }}
                                             >
-                                                <Typography>
+                                                <Typography color="gray">
                                                     {comment.createdDate}
                                                 </Typography>
                                                 {(getUserInfo().uid ===
