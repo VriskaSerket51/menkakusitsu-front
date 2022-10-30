@@ -9,15 +9,17 @@ import {
     Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
 import { getBbsPostList } from "../../utils/Api";
 import ArticleIcon from "@mui/icons-material/Article";
+import CampaignIcon from "@mui/icons-material/Campaign";
 import { useNavigate } from "react-router-dom";
 
 interface ArticleProps {
     post: BbsPost;
+    isNotice?: boolean;
 }
 
 function Article(props: ArticleProps) {
@@ -37,9 +39,10 @@ function Article(props: ArticleProps) {
                     alignItems: "center",
                     flexWrap: "wrap",
                     float: "left",
+                    color: props.isNotice ? "#FF4E59" : "primary.main",
                 }}
             >
-                <ArticleIcon />
+                {props.isNotice ? <CampaignIcon /> : <ArticleIcon />}
                 {post.title} [{post.commentCount}] - {post.owner.name}
             </Box>
             <Box
@@ -48,6 +51,7 @@ function Article(props: ArticleProps) {
                     alignItems: "center",
                     flexWrap: "wrap",
                     float: "right",
+                    color: "lightgray",
                 }}
             >
                 {post.createdDate}
@@ -70,6 +74,22 @@ function List() {
         });
     }, [page]);
 
+    const drawBbsPostList = useCallback(() => {
+        if (postList !== null && postList.length > 0) {
+            return postList.map((post) => {
+                return (
+                    <Article
+                        key={post.id}
+                        post={post}
+                        isNotice={post.postType === 0}
+                    />
+                );
+            });
+        } else {
+            return <Typography>게시글이 없습니다.</Typography>;
+        }
+    }, [postList]);
+
     return (
         <React.Fragment>
             <FixedNavbar />
@@ -82,17 +102,7 @@ function List() {
                 <Paper>
                     <Box sx={{ padding: "50px 50px 30px 50px" }}>
                         <PaperTitle>건의 게시판</PaperTitle>
-                        <Stack spacing={2}>
-                            {postList !== null && postList.length > 0 ? (
-                                postList.map((post) => {
-                                    return (
-                                        <Article key={post.id} post={post} />
-                                    );
-                                })
-                            ) : (
-                                <Typography>게시글이 없습니다.</Typography>
-                            )}
-                        </Stack>
+                        <Stack spacing={2}>{drawBbsPostList()}</Stack>
                         <br />
                         <Box sx={{ display: "flex", justifyContent: "right" }}>
                             <Button
