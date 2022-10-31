@@ -15,7 +15,7 @@ import {
     SpecialroomManagement,
     SurveyCreate,
     About,
-    Account,
+    Setting,
     NotFound,
     BbsList,
     BbsPost,
@@ -124,10 +124,10 @@ root.render(
                             <Route index element={<About />} />
                         </Route>
                         <Route
-                            path="account"
+                            path="setting"
                             element={<PrivateRoute permission={1} />}
                         >
-                            <Route index element={<Account />} />
+                            <Route index element={<Setting />} />
                         </Route>
                         <Route
                             path="attendance"

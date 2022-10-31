@@ -537,3 +537,54 @@ export const deleteUserPush = (
         })
         .catch(onApiError);
 };
+
+export const getMyPrivateInfo = (
+    props: v1.GetMyPrivateInfoRequest,
+    onFinish: (result: v1.GetMyPrivateInfoResponse) => any
+) => {
+    apiGet("/v1/user/me")
+        .then((resp) => {
+            const result: v1.GetMyPrivateInfoResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+export const putMyEmail = (
+    props: v1.PutEmailRequest,
+    onFinish: (result: v1.PutEmailResponse) => any
+) => {
+    apiPut("/v1/user/me/email", props)
+        .then((resp) => {
+            const result: v1.PutEmailResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+export const putMyPassword = (
+    props: v1.PutPasswordRequest,
+    onFinish: (result: v1.PutPasswordResponse) => any
+) => {
+    apiPut("/v1/user/me/password", props)
+        .then((resp) => {
+            const result: v1.PutPasswordResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};

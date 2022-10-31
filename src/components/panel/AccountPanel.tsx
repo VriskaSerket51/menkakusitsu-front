@@ -10,10 +10,12 @@ import {
     Tooltip,
 } from "@mui/material";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getUserInfo } from "../../utils/Utility";
 import { NotificationButton, LogoutButton } from "../button";
 
 function AccountPanel() {
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const open = Boolean(anchorEl);
@@ -74,7 +76,11 @@ function AccountPanel() {
                 </MenuItem>
                 <Divider />
                 <NotificationButton />
-                <MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        navigate("/setting");
+                    }}
+                >
                     <ListItemIcon>
                         <Settings fontSize="small" />
                     </ListItemIcon>
