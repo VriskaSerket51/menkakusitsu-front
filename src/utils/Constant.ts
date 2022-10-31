@@ -9,7 +9,7 @@ export const TITLE = {
 
 export const theme = createTheme({
     typography: {
-        fontFamily: "'NanumSquareR'",
+        fontFamily: "'NanumGothic'",
     },
     palette: {
         background: {
