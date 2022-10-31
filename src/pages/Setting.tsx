@@ -31,7 +31,7 @@ const sidebarItems: SidebarItem[] = [
         title: "계정",
         onClick: (event) => {},
         drawPanel: () => {
-            const [email, setEmail] = useState<string>("");
+            const [email, setEmail] = useState<string | null>(null);
 
             useEffect(() => {
                 getMyPrivateInfo({}, (result) => {
@@ -50,7 +50,13 @@ const sidebarItems: SidebarItem[] = [
                             setErrorText(null);
                             const data = new FormData(event.currentTarget);
                             const newEmail = data.get("email")?.toString();
-                            if (!newEmail) {
+                            if (email === null || !newEmail) {
+                                return;
+                            }
+                            if (email == newEmail) {
+                                setErrorText(
+                                    "이건 당신이 이미 쓰고 계시는 이메일입니다."
+                                );
                                 return;
                             }
                             if (!validateEmail(newEmail)) {
@@ -73,7 +79,7 @@ const sidebarItems: SidebarItem[] = [
                     >
                         <Typography variant="h5">이메일 변경</Typography>
                         <br />
-                        {email && (
+                        {email !== null && (
                             <TextField
                                 size="small"
                                 label="이메일"
