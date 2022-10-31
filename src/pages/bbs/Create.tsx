@@ -43,14 +43,14 @@ function Create() {
             if (!title || !content || !header) {
                 return;
             }
-            openWaitDialog(TITLE.Info, "작성 중입니다...");
+            openWaitDialog(TITLE.Info, "제출 중입니다...");
             postBbsPost(
                 { title: title, content: content, header: header },
                 (result) => {
                     closeWaitDialog();
                     openConfirmDialog(
                         TITLE.Info,
-                        "작성이 완료되었습니다.",
+                        "피드백 제출이 완료되었습니다.",
                         () => {
                             navigate("/bbs/post/list");
                         }
@@ -76,7 +76,7 @@ function Create() {
                         onSubmit={onPostBbsPost}
                         sx={{ padding: "50px 50px 30px 50px" }}
                     >
-                        <PaperTitle>건의 게시글 작성</PaperTitle>
+                        <PaperTitle>피드백 작성</PaperTitle>
                         <Grid container spacing={2}>
                             <Grid item xs={10}>
                                 <TextField

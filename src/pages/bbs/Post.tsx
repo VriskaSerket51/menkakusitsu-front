@@ -155,14 +155,14 @@ function Post() {
                                             onClick={() => {
                                                 openYesNoDialog(
                                                     TITLE.Alert,
-                                                    "정말 게시글을 삭제하실 건가요?",
+                                                    "정말 피드백을 삭제하실 건가요?",
                                                     () => {
                                                         deleteBbsPost(
                                                             { id: post.id },
                                                             (result) => {
                                                                 openConfirmDialog(
                                                                     TITLE.Info,
-                                                                    "게시글이 삭제되었습니다.",
+                                                                    "피드백이 삭제되었습니다.",
                                                                     () => {
                                                                         navigate(
                                                                             "/bbs/post/list"
@@ -181,7 +181,7 @@ function Post() {
                             </Stack>
                         </Box>
                         <Typography variant="h6">
-                            댓글 {commentCount}개
+                            의견 {commentCount}개
                         </Typography>
                         <Stack spacing={2} direction="row" display="flex">
                             <TextField
@@ -228,7 +228,7 @@ function Post() {
                                                         onClick={() => {
                                                             openYesNoDialog(
                                                                 TITLE.Alert,
-                                                                "정말 댓글을 삭제하실 건가요?",
+                                                                "정말 의견을 삭제하실 건가요?",
                                                                 () => {
                                                                     deleteBbsComment(
                                                                         {
@@ -239,7 +239,7 @@ function Post() {
                                                                         ) => {
                                                                             openConfirmDialog(
                                                                                 TITLE.Info,
-                                                                                "댓글이 삭제되었습니다.",
+                                                                                "의견이 삭제되었습니다.",
                                                                                 () => {
                                                                                     refresh();
                                                                                 }

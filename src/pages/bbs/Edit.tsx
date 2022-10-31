@@ -76,7 +76,7 @@ function Edit() {
                     closeWaitDialog();
                     openConfirmDialog(
                         TITLE.Info,
-                        "수정이 완료되었습니다.",
+                        "피드백 수정이 완료되었습니다.",
                         () => {
                             navigate(`/bbs/post/${params.postId}`);
                         }
@@ -102,7 +102,7 @@ function Edit() {
                         onSubmit={onPostBbsPost}
                         sx={{ padding: "50px 50px 30px 50px" }}
                     >
-                        <PaperTitle>건의 게시글 수정</PaperTitle>
+                        <PaperTitle>피드백 수정</PaperTitle>
                         {post && (
                             <React.Fragment>
                                 <Grid
