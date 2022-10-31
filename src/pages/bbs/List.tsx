@@ -43,7 +43,7 @@ function Article(props: ArticleProps) {
                 }}
             >
                 {props.isNotice ? <CampaignIcon /> : <ArticleIcon />}
-                {post.title} [{post.commentCount}] - {post.owner.name}
+                {post.title} [{post.commentCount}]
             </Box>
             <Box
                 sx={{
@@ -54,7 +54,7 @@ function Article(props: ArticleProps) {
                     color: "gray",
                 }}
             >
-                {post.createdDate}
+                {post.owner.name}
             </Box>
         </Button>
     );
