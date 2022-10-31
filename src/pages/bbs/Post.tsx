@@ -36,21 +36,25 @@ function Post() {
     const commentRef = useRef<HTMLTextAreaElement>(null);
     const navigate = useNavigate();
 
+    const board = params.board!;
+    const postId = parseInt(params.postId!);
+
     const [post, setPost] = useState<BbsPost | null>(null);
     const [commentPage, setCommentPage] = useState(1);
     const [commentCount, setCommentCount] = useState(0);
     const [commentList, setCommentList] = useState<BbsComment[] | null>(null);
 
     const refresh = useCallback(() => {
-        getBbsPost({ id: parseInt(params.postId!) }, (result) => {
+        getBbsPost({ board: board, postId: postId }, (result) => {
             if (!result) {
-                navigate("/bbs/post/list");
+                navigate(`/bbs/${board}/list`);
                 return;
             }
             setPost(result.post);
             getBbsCommentList(
                 {
-                    postId: parseInt(params.postId!),
+                    board: board,
+                    postId: postId,
                     commentPage: commentPage,
                     commentListSize: 20,
                 },
@@ -71,13 +75,16 @@ function Post() {
                 return;
             }
             openWaitDialog(TITLE.Info, "작성 중입니다...");
-            postBbsComment({ postId: post.id, content: comment }, (result) => {
-                if (commentRef?.current) {
-                    commentRef.current.value = "";
+            postBbsComment(
+                { board: board, postId: post.id, content: comment },
+                (result) => {
+                    if (commentRef?.current) {
+                        commentRef.current.value = "";
+                    }
+                    closeWaitDialog();
+                    refresh();
                 }
-                closeWaitDialog();
-                refresh();
-            });
+            );
         },
         [post, commentRef]
     );
@@ -102,7 +109,9 @@ function Post() {
                         sx={{ padding: "50px 50px 30px 50px" }}
                     >
                         {post && (
-                            <Typography variant="h5">{post.header} {post.title}</Typography>
+                            <Typography variant="h5">
+                                {post.header} {post.title}
+                            </Typography>
                         )}
                         {post && (
                             <Box
@@ -112,7 +121,9 @@ function Post() {
                                 }}
                             >
                                 <Typography>{post.owner.name}</Typography>
-                                <Typography color="gray">{post.createdDate}</Typography>
+                                <Typography color="gray">
+                                    {post.createdDate}
+                                </Typography>
                             </Box>
                         )}
                         <Divider />
@@ -128,7 +139,7 @@ function Post() {
                                 <Button
                                     variant="contained"
                                     onClick={() => {
-                                        navigate("/bbs/post/list");
+                                        navigate(`/bbs/${board}/list`);
                                     }}
                                 >
                                     목록
@@ -140,7 +151,9 @@ function Post() {
                                             variant="contained"
                                             color="primary"
                                             onClick={() => {
-                                               navigate(`/bbs/post/${post.id}/edit`)
+                                                navigate(
+                                                    `/bbs/${post.board}/${post.id}/edit`
+                                                );
                                             }}
                                         >
                                             수정
@@ -158,14 +171,17 @@ function Post() {
                                                     "정말 피드백을 삭제하실 건가요?",
                                                     () => {
                                                         deleteBbsPost(
-                                                            { id: post.id },
+                                                            {
+                                                                board: board,
+                                                                postI: post.id,
+                                                            },
                                                             (result) => {
                                                                 openConfirmDialog(
                                                                     TITLE.Info,
                                                                     "피드백이 삭제되었습니다.",
                                                                     () => {
                                                                         navigate(
-                                                                            "/bbs/post/list"
+                                                                            `/bbs/${post.board}/list`
                                                                         );
                                                                     }
                                                                 );
@@ -232,7 +248,10 @@ function Post() {
                                                                 () => {
                                                                     deleteBbsComment(
                                                                         {
-                                                                            id: comment.id,
+                                                                            board: board,
+                                                                            postId: postId,
+                                                                            commentId:
+                                                                                comment.id,
                                                                         },
                                                                         (
                                                                             result

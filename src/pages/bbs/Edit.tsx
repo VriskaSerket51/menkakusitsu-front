@@ -18,13 +18,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
 import {
-    getBbsCommentList,
     getBbsPost,
     getBbsPostHeaders,
-    postBbsPost,
     putBbsPost,
 } from "../../utils/Api";
-import ArticleIcon from "@mui/icons-material/Article";
 import { useNavigate, useParams } from "react-router-dom";
 import {
     closeWaitDialog,
@@ -41,14 +38,17 @@ function Edit() {
     const [post, setPost] = useState<BbsPost | null>(null);
     const [headers, setHeaders] = useState<string[]>([]);
 
+    const board = params.board!;
+    const postId = parseInt(params.postId!);
+
     useEffect(() => {
-        getBbsPost({ id: parseInt(params.postId!) }, (result) => {
+        getBbsPost({ board: board, postId: postId }, (result) => {
             if (!result) {
-                navigate("/bbs/post/list");
+                navigate(`/bbs/${board}/list`);
                 return;
             }
             setPost(result.post);
-            getBbsPostHeaders({}, (result) => {
+            getBbsPostHeaders({ board: board }, (result) => {
                 setHeaders(result.headers);
             });
         });
@@ -68,6 +68,7 @@ function Edit() {
             putBbsPost(
                 {
                     postId: parseInt(params.postId!),
+                    board: params.board!,
                     title: title,
                     content: content,
                     header: header,
@@ -78,7 +79,7 @@ function Edit() {
                         TITLE.Info,
                         "피드백 수정이 완료되었습니다.",
                         () => {
-                            navigate(`/bbs/post/${params.postId}`);
+                            navigate(`/bbs/${board}/${params.postId}`);
                         }
                     );
                 }
@@ -175,7 +176,7 @@ function Edit() {
                             <Button
                                 variant="contained"
                                 onClick={() => {
-                                    navigate("/bbs/post/list");
+                                    navigate(`/bbs/${board}/list`);
                                 }}
                             >
                                 목록

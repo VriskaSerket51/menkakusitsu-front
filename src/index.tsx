@@ -63,11 +63,17 @@ root.render(
                             path="bbs"
                             element={<PrivateRoute permission={1} />}
                         >
-                            <Route path="post/create" element={<BbsCreate />} />
-                            <Route path="post/list" element={<BbsList />} />
-                            <Route path="post/:postId" element={<BbsPost />} />
                             <Route
-                                path="post/:postId/edit"
+                                path=":board/create"
+                                element={<BbsCreate />}
+                            />
+                            <Route path=":board/list" element={<BbsList />} />
+                            <Route
+                                path=":board/:postId"
+                                element={<BbsPost />}
+                            />
+                            <Route
+                                path=":board/:postId/edit"
                                 element={<BbsEdit />}
                             />
                         </Route>

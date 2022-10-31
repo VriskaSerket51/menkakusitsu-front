@@ -45,7 +45,7 @@ const navbarItems = [
     {
         color: "primary.main",
         title: "피드백",
-        href: "/bbs/post/list",
+        href: "/bbs/feedback/list",
         permission: 1,
     },
 ];
