@@ -1,8 +1,9 @@
-import { Box, Divider, Link, Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import React from "react";
 import IconLink from "./IconLink";
 import SchoolIcon from "@mui/icons-material/School";
+import PolicyIcon from "@mui/icons-material/Policy";
 
 function Footer() {
     return (
@@ -41,8 +42,30 @@ function Footer() {
                         newTab
                     />
                 </Stack>
-                <Typography>Made by 제주과학고 정보 동아리 COMMON</Typography>
-                <Typography fontSize="0.5rem">Contributors: 23기 고승한, 23기 선우준</Typography>
+                <Stack
+                    direction="row"
+                    divider={
+                        <Divider
+                            orientation="vertical"
+                            variant="middle"
+                            flexItem
+                        />
+                    }
+                    spacing={2}
+                >
+                    <IconLink
+                        href="/policy.html"
+                        icon={<PolicyIcon />}
+                        label="개인정보처리방침"
+                        newTab
+                    />
+                    <Typography>
+                        Made by 제주과학고 정보 동아리 COMMON
+                    </Typography>
+                </Stack>
+                <Typography fontSize="0.5rem">
+                    Contributors: 23기 고승한, 23기 선우준
+                </Typography>
             </Stack>
             <br />
         </React.Fragment>
