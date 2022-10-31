@@ -177,6 +177,7 @@ function Post() {
                                 fullWidth
                                 multiline
                                 placeholder="댓글"
+                                inputProps={{ maxLength: 300 }}
                             />
                             <Button type="submit" variant="contained">
                                 작성
