@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: "NotoSansKR";
+    src: url(/src/assets/fonts/NotoSansKR-Regular.otf) format("opentype");
+}
+
+@font-face {
     font-family: "NanumGothic";
     src: url(/src/assets/fonts/NanumGothic.ttf) format("truetype");
 }
