@@ -101,7 +101,7 @@ function List() {
             >
                 <Paper>
                     <Box sx={{ padding: "50px 50px 30px 50px" }}>
-                        <PaperTitle>건의 게시판</PaperTitle>
+                        <PaperTitle>피드백</PaperTitle>
                         <Stack spacing={2}>{drawBbsPostList()}</Stack>
                         <br />
                         <Box sx={{ display: "flex", justifyContent: "right" }}>
@@ -111,7 +111,7 @@ function List() {
                                     navigate("/bbs/post/create");
                                 }}
                             >
-                                글쓰기
+                                추가하기
                             </Button>
                         </Box>
                         <br />
