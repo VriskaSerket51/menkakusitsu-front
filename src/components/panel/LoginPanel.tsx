@@ -30,12 +30,39 @@ const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
 const onLoginSuccessed = (result: PostLoginResponse) => {
     localStorage.setItem("access-token", result.accessToken);
     localStorage.setItem("refresh-token", result.refreshToken);
+
+    const onFinished = () => {
+        if (result.callbacks) {
+            if (result.callbacks.includes("needChangePw")) {
+                openConfirmDialog(
+                    TITLE.Alert,
+                    "기존 4자리 학번을 비밀번호로 사용하시는 경우, 비밀번호를 바꾸셔야합니다.",
+                    () => {
+                        window.location.href = "/setting";
+                    }
+                );
+                return;
+            }
+            if (result.callbacks.includes("needChangeEmail")) {
+                openConfirmDialog(
+                    TITLE.Alert,
+                    "비밀번호 복구 등의 서비스를 이용하시려면 이메일을 추가하셔야합니다.",
+                    () => {
+                        window.location.href = "/setting";
+                    }
+                );
+                return;
+            }
+        }
+        window.location.reload();
+    };
+
     if (getPushApproved()) {
         getPushToken(() => {
-            window.location.reload();
+            onFinished();
         });
     } else {
-        window.location.reload();
+        onFinished();
     }
 };
 
