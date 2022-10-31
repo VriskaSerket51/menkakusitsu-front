@@ -14,7 +14,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
 import { getBbsPostHeaders, postBbsPost } from "../../utils/Api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
     closeWaitDialog,
     openConfirmDialog,
@@ -25,10 +25,13 @@ import { TITLE } from "../../utils/Constant";
 
 function Create() {
     const navigate = useNavigate();
+    const params = useParams();
     const [headers, setHeaders] = useState<string[]>([]);
 
+    const board = params.board!;
+
     useEffect(() => {
-        getBbsPostHeaders({}, (result) => {
+        getBbsPostHeaders({ board: board }, (result) => {
             setHeaders(result.headers);
         });
     }, []);
@@ -45,14 +48,19 @@ function Create() {
             }
             openWaitDialog(TITLE.Info, "제출 중입니다...");
             postBbsPost(
-                { title: title, content: content, header: header },
+                {
+                    title: title,
+                    content: content,
+                    header: header,
+                    board: board,
+                },
                 (result) => {
                     closeWaitDialog();
                     openConfirmDialog(
                         TITLE.Info,
                         "피드백 제출이 완료되었습니다.",
                         () => {
-                            navigate("/bbs/post/list");
+                            navigate(`/bbs/${board}/list`);
                         }
                     );
                 }
@@ -134,7 +142,7 @@ function Create() {
                             <Button
                                 variant="contained"
                                 onClick={() => {
-                                    navigate("/bbs/post/list");
+                                    navigate(`/bbs/${board}/list`);
                                 }}
                             >
                                 목록

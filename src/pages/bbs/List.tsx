@@ -15,7 +15,7 @@ import PaperTitle from "../../components/PaperTitle";
 import { getBbsPostList } from "../../utils/Api";
 import ArticleIcon from "@mui/icons-material/Article";
 import CampaignIcon from "@mui/icons-material/Campaign";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface ArticleProps {
     post: BbsPost;
@@ -29,7 +29,7 @@ function Article(props: ArticleProps) {
     return (
         <Button
             onClick={() => {
-                navigate(`/bbs/post/${post.id}`);
+                navigate(`/bbs/${post.board}/${post.id}`);
             }}
             sx={{ justifyContent: "space-between" }}
         >
@@ -65,13 +65,19 @@ function List() {
     const [postCount, setPostCount] = useState(0);
     const [postList, setPostList] = useState<BbsPost[] | null>(null);
 
+    const params = useParams();
     const navigate = useNavigate();
 
+    const board = params.board!;
+
     useEffect(() => {
-        getBbsPostList({ postPage: page, postListSize: 20 }, (result) => {
-            setPostCount(result.postCount);
-            setPostList(result.list);
-        });
+        getBbsPostList(
+            { board: board, postPage: page, postListSize: 20 },
+            (result) => {
+                setPostCount(result.postCount);
+                setPostList(result.list);
+            }
+        );
     }, [page]);
 
     const drawBbsPostList = useCallback(() => {
@@ -108,10 +114,10 @@ function List() {
                             <Button
                                 variant="contained"
                                 onClick={() => {
-                                    navigate("/bbs/post/create");
+                                    navigate(`/bbs/${board}/create`);
                                 }}
                             >
-                                추가하기
+                                피드백하기
                             </Button>
                         </Box>
                         <br />
