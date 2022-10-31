@@ -102,7 +102,7 @@ function Post() {
                         sx={{ padding: "50px 50px 30px 50px" }}
                     >
                         {post && (
-                            <Typography variant="h5">{post.title}</Typography>
+                            <Typography variant="h5">{post.header} {post.title}</Typography>
                         )}
                         {post && (
                             <Box
@@ -133,6 +133,19 @@ function Post() {
                                 >
                                     목록
                                 </Button>
+                                {post &&
+                                    (getUserInfo().uid === post.owner.uid ||
+                                        getUserInfo().isDev) && (
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={() => {
+                                               navigate(`/bbs/post/${post.id}/edit`)
+                                            }}
+                                        >
+                                            수정
+                                        </Button>
+                                    )}
                                 {post &&
                                     (getUserInfo().uid === post.owner.uid ||
                                         getUserInfo().isDev) && (

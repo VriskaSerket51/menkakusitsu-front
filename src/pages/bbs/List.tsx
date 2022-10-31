@@ -43,7 +43,7 @@ function Article(props: ArticleProps) {
                 }}
             >
                 {props.isNotice ? <CampaignIcon /> : <ArticleIcon />}
-                {post.title} [{post.commentCount}]
+                {post.header} {post.title} [{post.commentCount}]
             </Box>
             <Box
                 sx={{
