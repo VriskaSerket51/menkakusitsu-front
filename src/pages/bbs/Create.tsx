@@ -1,20 +1,20 @@
-import { BbsComment, BbsPost } from "@common-jshs/menkakusitsu-lib/v1";
 import {
     Box,
     Button,
     Container,
-    Link,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
     Paper,
+    Select,
     TextField,
-    Typography,
 } from "@mui/material";
-import { Stack } from "@mui/system";
 import React, { useCallback, useEffect, useState } from "react";
 import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
-import { getBbsCommentList, getBbsPost, postBbsPost } from "../../utils/Api";
-import ArticleIcon from "@mui/icons-material/Article";
-import { useNavigate, useParams } from "react-router-dom";
+import { getBbsPostHeaders, postBbsPost } from "../../utils/Api";
+import { useNavigate } from "react-router-dom";
 import {
     closeWaitDialog,
     openConfirmDialog,
@@ -25,6 +25,13 @@ import { TITLE } from "../../utils/Constant";
 
 function Create() {
     const navigate = useNavigate();
+    const [headers, setHeaders] = useState<string[]>([]);
+
+    useEffect(() => {
+        getBbsPostHeaders({}, (result) => {
+            setHeaders(result.headers);
+        });
+    }, []);
 
     const onPostBbsPost = useCallback(
         (e: React.MouseEvent<HTMLFormElement>) => {
@@ -32,16 +39,24 @@ function Create() {
             const data = new FormData(e.currentTarget);
             const title = data.get("title")?.toString();
             const content = data.get("content")?.toString();
-            if (!title || !content) {
+            const header = data.get("header")?.toString();
+            if (!title || !content || !header) {
                 return;
             }
             openWaitDialog(TITLE.Info, "작성 중입니다...");
-            postBbsPost({ title: title, content: content }, (result) => {
-                closeWaitDialog();
-                openConfirmDialog(TITLE.Info, "작성이 완료되었습니다.", () => {
-                    navigate("/bbs/post/list");
-                });
-            });
+            postBbsPost(
+                { title: title, content: content, header: header },
+                (result) => {
+                    closeWaitDialog();
+                    openConfirmDialog(
+                        TITLE.Info,
+                        "작성이 완료되었습니다.",
+                        () => {
+                            navigate("/bbs/post/list");
+                        }
+                    );
+                }
+            );
         },
         []
     );
@@ -62,15 +77,43 @@ function Create() {
                         sx={{ padding: "50px 50px 30px 50px" }}
                     >
                         <PaperTitle>건의 게시글 작성</PaperTitle>
-                        <TextField
-                            size="small"
-                            label="제목"
-                            name="title"
-                            fullWidth
-                            required
-                            inputProps={{ maxLength: 20 }}
-                        />
-                        <br />
+                        <Grid container spacing={2}>
+                            <Grid item xs={10}>
+                                <TextField
+                                    size="small"
+                                    label="제목"
+                                    name="title"
+                                    fullWidth
+                                    required
+                                    inputProps={{ maxLength: 30 }}
+                                />
+                            </Grid>
+                            <Grid item xs={2}>
+                                <FormControl size="small" fullWidth>
+                                    <InputLabel id="title-header-label">
+                                        말머리
+                                    </InputLabel>
+                                    <Select
+                                        labelId="title-header-label"
+                                        id="title-header"
+                                        label="말머리"
+                                        name="header"
+                                        required
+                                    >
+                                        {headers.map((header) => {
+                                            return (
+                                                <MenuItem
+                                                    key={header}
+                                                    value={header}
+                                                >
+                                                    {header}
+                                                </MenuItem>
+                                            );
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
                         <br />
                         <TextField
                             label="본문"

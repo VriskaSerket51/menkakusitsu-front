@@ -123,6 +123,23 @@ export const postBbsPost = (
         .catch(onApiError);
 };
 
+export const putBbsPost = (
+    props: v1.PutBbsPostRequest,
+    onFinish: (result: v1.PutBbsPostResponse) => any
+) => {
+    apiPut(`/v1/bbs/post/${props.postId}`, props)
+        .then((resp) => {
+            const result: v1.PutBbsPostResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
 export const deleteBbsPost = (
     props: v1.DeleteBbsPostRequest,
     onFinish: (result: v1.DeleteBbsPostResponse) => any
@@ -130,6 +147,23 @@ export const deleteBbsPost = (
     apiDelete(`/v1/bbs/post`, props)
         .then((resp) => {
             const result: v1.DeleteBbsPostResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+export const getBbsPostHeaders = (
+    props: v1.GetBbsPostHeaderRequest,
+    onFinish: (result: v1.GetBbsPostHeaderResponse) => any
+) => {
+    apiGet("/v1/bbs/post/headers")
+        .then((resp) => {
+            const result: v1.GetBbsPostHeaderResponse = resp.data;
             if (isApiSuccessed(result)) {
                 onFinish(result);
             } else {

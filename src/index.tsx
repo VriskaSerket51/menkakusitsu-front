@@ -20,6 +20,7 @@ import {
     BbsList,
     BbsPost,
     BbsCreate,
+    BbsEdit,
 } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
@@ -65,6 +66,10 @@ root.render(
                             <Route path="post/create" element={<BbsCreate />} />
                             <Route path="post/list" element={<BbsList />} />
                             <Route path="post/:postId" element={<BbsPost />} />
+                            <Route
+                                path="post/:postId/edit"
+                                element={<BbsEdit />}
+                            />
                         </Route>
                         <Route
                             path="chat"
