@@ -68,6 +68,7 @@ function Create() {
                             name="title"
                             fullWidth
                             required
+                            inputProps={{ maxLength: 20 }}
                         />
                         <br />
                         <br />
@@ -78,6 +79,7 @@ function Create() {
                             multiline
                             rows={20}
                             required
+                            inputProps={{ maxLength: 500 }}
                         />
                         <br />
                         <br />
