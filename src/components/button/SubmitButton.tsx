@@ -4,11 +4,13 @@ import React from "react";
 function SubmitButton({
     color,
     width = "100%",
+    height = "58px",
     children,
     ...rest
 }: {
     color: string;
     width?: string;
+    height?: string;
     children?: React.ReactNode;
     [x: string]: any;
 }) {
@@ -26,7 +28,7 @@ function SubmitButton({
                         color: color,
                     },
                     fontFamily: "BMDohyeon",
-                    height: "58px",
+                    height: height,
                     width: width,
                 }}
             >

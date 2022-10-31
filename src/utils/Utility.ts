@@ -11,6 +11,13 @@ export interface BackendResponse {
     data: DefaultResponse;
 }
 
+export const validateEmail = (email: string): boolean => {
+    const regex = new RegExp(
+        "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
+    );
+    return regex.test(email);
+};
+
 export const getDeviceUuid = (): string => {
     const deviceUUid = localStorage.getItem("device-id");
     if (!deviceUUid) {
