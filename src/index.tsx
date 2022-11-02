@@ -23,7 +23,7 @@ import {
     BbsEdit,
 } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Box, CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import EssentialComponents from "./components/EssentialComponents";
 import { theme } from "./utils/Constant";
 import PrivateRoute from "./components/PrivateRoute";
@@ -31,7 +31,7 @@ import RouteTracker from "./components/RouteTracker";
 import { SnackbarProvider } from "notistack";
 import FirebaseManager from "./components/FirebaseManager";
 import { TimetablePanel } from "./components";
-import Footer from "./components/Footer";
+import FooterLayout from "./components/FooterLayout";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -49,8 +49,8 @@ root.render(
             >
                 <FirebaseManager />
                 <RouteTracker />
-                <Box sx={{ minHeight: "100%" }}>
-                    <Routes>
+                <Routes>
+                    <Route element={<FooterLayout />}>
                         <Route index element={<Main />} />
                         <Route
                             path="survey"
@@ -76,14 +76,6 @@ root.render(
                                 path=":board/:postId/edit"
                                 element={<BbsEdit />}
                             />
-                        </Route>
-                        <Route
-                            path="chat"
-                            element={<PrivateRoute permission={1} />}
-                        >
-                            <Route index element={<NotFound />} />
-                            <Route path="idbot" element={<ChatIdbot />} />
-                            <Route path="random" element={<ChatRandom />} />
                         </Route>
                         <Route
                             path="specialroom"
@@ -141,15 +133,30 @@ root.render(
                         >
                             <Route index element={<NotFound />} />
                             <Route path="info" element={<AttendanceInfo />} />
-                            <Route
-                                path="download"
-                                element={<AttendanceDownload />}
-                            />
                         </Route>
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
-                </Box>
-                <Footer />
+                    </Route>
+
+                    <Route
+                        path="chat"
+                        element={<PrivateRoute permission={1} />}
+                    >
+                        <Route index element={<NotFound />} />
+                        <Route path="idbot" element={<ChatIdbot />} />
+                        <Route path="random" element={<ChatRandom />} />
+                    </Route>
+                    <Route
+                        path="attendance"
+                        element={<PrivateRoute permission={1} />}
+                    >
+                        <Route index element={<NotFound />} />
+                        <Route
+                            path="download"
+                            element={<AttendanceDownload />}
+                        />
+                    </Route>
+
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
             </SnackbarProvider>
         </BrowserRouter>
     </ThemeProvider>
