@@ -1,28 +1,33 @@
 import React, { useCallback } from "react";
 import Particles from "react-tsparticles";
-import type { Container, Engine } from "tsparticles-engine";
-import { loadFull } from "tsparticles";
+import { Container, Engine } from "tsparticles-engine";
+import { loadBaseMover } from "tsparticles-move-base";
+import { loadCircleShape } from "tsparticles-shape-circle";
+import { loadColorUpdater } from "tsparticles-updater-color";
+import { loadOpacityUpdater } from "tsparticles-updater-opacity";
+import { loadOutModesUpdater } from "tsparticles-updater-out-modes";
+import { loadSizeUpdater } from "tsparticles-updater-size";
+import { loadWobbleUpdater } from "tsparticles-updater-wobble";
 
 export function SnowParticle() {
     const particlesInit = useCallback(async (engine: Engine) => {
-        console.log(engine);
-
-        // you can initialize the tsParticles instance (engine) here, adding custom shapes or presets
-        // this loads the tsparticles package bundle, it's the easiest method for getting everything ready
-        // starting from v2 you can add only the features you need reducing the bundle size
-        await loadFull(engine);
+        await loadBaseMover(engine);
+        await loadCircleShape(engine);
+        await loadColorUpdater(engine);
+        await loadOpacityUpdater(engine);
+        await loadOutModesUpdater(engine);
+        await loadSizeUpdater(engine);
+        await loadWobbleUpdater(engine);
     }, []);
 
     const particlesLoaded = useCallback(
-        async (container: Container | undefined) => {
-            await console.log(container);
-        },
+        async (container: Container | undefined) => {},
         []
     );
 
     return (
         <Particles
-            id="tsparticles"
+            id="tsparticles-snow"
             init={particlesInit}
             loaded={particlesLoaded}
             options={{
