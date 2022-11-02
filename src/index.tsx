@@ -30,7 +30,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import RouteTracker from "./components/RouteTracker";
 import { SnackbarProvider } from "notistack";
 import FirebaseManager from "./components/FirebaseManager";
-import { TimetablePanel } from "./components";
+import { SnowParticle, TimetablePanel } from "./components";
 import FooterLayout from "./components/FooterLayout";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
@@ -49,6 +49,7 @@ root.render(
             >
                 <FirebaseManager />
                 <RouteTracker />
+                <SnowParticle />
                 <Routes>
                     <Route element={<FooterLayout />}>
                         <Route index element={<Main />} />
