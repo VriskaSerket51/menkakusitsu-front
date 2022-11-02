@@ -7,7 +7,7 @@ export const TITLE = {
     Notice: "공지사항",
 };
 
-export const theme = createTheme({
+export const defaultTheme = createTheme({
     typography: {
         fontFamily: "'NotoSansKR'",
     },
@@ -25,6 +25,23 @@ export const theme = createTheme({
             main: "#4db6ac",
             light: "#82e9de",
             dark: "#00867d",
+        },
+    },
+});
+
+export const christmasTheme = createTheme({
+    typography: {
+        fontFamily: "'NotoSansKR'",
+    },
+    palette: {
+        background: {
+            default: "#EDEDED",
+        },
+        primary: {
+            main: "#C9040C",
+        },
+        secondary: {
+            main: "#28560C",
         },
     },
 });
