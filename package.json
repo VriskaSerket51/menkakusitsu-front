@@ -26,10 +26,12 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
+    "react-tsparticles": "^2.4.0",
     "react-uuid": "^1.0.3",
     "sha3": "^2.1.4",
     "socket.io-client": "^4.5.2",
     "sort-by": "^1.2.0",
+    "tsparticles": "^2.4.0",
     "zustand": "^4.1.2"
   },
   "devDependencies": {
