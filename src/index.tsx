@@ -30,8 +30,9 @@ import PrivateRoute from "./components/PrivateRoute";
 import RouteTracker from "./components/RouteTracker";
 import { SnackbarProvider } from "notistack";
 import FirebaseManager from "./components/FirebaseManager";
-import { SnowParticle, TimetablePanel } from "./components";
+import { TimetablePanel } from "./components";
 import FooterLayout from "./components/FooterLayout";
+import ParticleLayout from "./components/particles";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
@@ -49,102 +50,113 @@ root.render(
             >
                 <FirebaseManager />
                 <RouteTracker />
-                <SnowParticle />
                 <Routes>
-                    <Route element={<FooterLayout />}>
-                        <Route index element={<Main />} />
-                        <Route
-                            path="survey"
-                            element={<PrivateRoute permission={1} />}
-                        >
-                            <Route index element={<NotFound />} />
-                            <Route path="create" element={<SurveyCreate />} />
-                        </Route>
-                        <Route
-                            path="bbs"
-                            element={<PrivateRoute permission={1} />}
-                        >
+                    <Route element={<ParticleLayout type="snow" />}>
+                        <Route element={<FooterLayout />}>
+                            <Route index element={<Main />} />
                             <Route
-                                path=":board/create"
-                                element={<BbsCreate />}
-                            />
-                            <Route path=":board/list" element={<BbsList />} />
+                                path="survey"
+                                element={<PrivateRoute permission={1} />}
+                            >
+                                <Route index element={<NotFound />} />
+                                <Route
+                                    path="create"
+                                    element={<SurveyCreate />}
+                                />
+                            </Route>
                             <Route
-                                path=":board/:postId"
-                                element={<BbsPost />}
-                            />
+                                path="bbs"
+                                element={<PrivateRoute permission={1} />}
+                            >
+                                <Route
+                                    path=":board/create"
+                                    element={<BbsCreate />}
+                                />
+                                <Route
+                                    path=":board/list"
+                                    element={<BbsList />}
+                                />
+                                <Route
+                                    path=":board/:postId"
+                                    element={<BbsPost />}
+                                />
+                                <Route
+                                    path=":board/:postId/edit"
+                                    element={<BbsEdit />}
+                                />
+                            </Route>
                             <Route
-                                path=":board/:postId/edit"
-                                element={<BbsEdit />}
-                            />
-                        </Route>
-                        <Route
-                            path="specialroom"
-                            element={<PrivateRoute permission={1} />}
-                        >
-                            <Route index element={<NotFound />} />
+                                path="specialroom"
+                                element={<PrivateRoute permission={1} />}
+                            >
+                                <Route index element={<NotFound />} />
+                                <Route
+                                    path="apply"
+                                    element={<SpecialroomApply />}
+                                />
+                                <Route
+                                    path="status"
+                                    element={<SpecialroomStatus />}
+                                />
+                                <Route
+                                    path="management"
+                                    element={<PrivateRoute permission={2} />}
+                                >
+                                    <Route
+                                        index
+                                        element={<SpecialroomManagement />}
+                                    />
+                                </Route>
+                            </Route>
                             <Route
-                                path="apply"
-                                element={<SpecialroomApply />}
-                            />
-                            <Route
-                                path="status"
-                                element={<SpecialroomStatus />}
-                            />
+                                path="timetable"
+                                element={<PrivateRoute permission={1} />}
+                            >
+                                <Route index element={<TimetablePanel />} />
+                            </Route>
                             <Route
                                 path="management"
                                 element={<PrivateRoute permission={2} />}
                             >
                                 <Route
-                                    index
-                                    element={<SpecialroomManagement />}
+                                    path="timetable"
+                                    element={<TimetablePanel edit />}
+                                />
+                            </Route>
+                            <Route
+                                path="about"
+                                element={<PrivateRoute permission={1} />}
+                            >
+                                <Route index element={<About />} />
+                            </Route>
+                            <Route
+                                path="setting"
+                                element={<PrivateRoute permission={1} />}
+                            >
+                                <Route index element={<Setting />} />
+                            </Route>
+                            <Route
+                                path="attendance"
+                                element={<PrivateRoute permission={1} />}
+                            >
+                                <Route index element={<NotFound />} />
+                                <Route
+                                    path="info"
+                                    element={<AttendanceInfo />}
                                 />
                             </Route>
                         </Route>
+
                         <Route
-                            path="timetable"
-                            element={<PrivateRoute permission={1} />}
-                        >
-                            <Route index element={<TimetablePanel />} />
-                        </Route>
-                        <Route
-                            path="management"
-                            element={<PrivateRoute permission={2} />}
-                        >
-                            <Route
-                                path="timetable"
-                                element={<TimetablePanel edit />}
-                            />
-                        </Route>
-                        <Route
-                            path="about"
-                            element={<PrivateRoute permission={1} />}
-                        >
-                            <Route index element={<About />} />
-                        </Route>
-                        <Route
-                            path="setting"
-                            element={<PrivateRoute permission={1} />}
-                        >
-                            <Route index element={<Setting />} />
-                        </Route>
-                        <Route
-                            path="attendance"
+                            path="chat"
                             element={<PrivateRoute permission={1} />}
                         >
                             <Route index element={<NotFound />} />
-                            <Route path="info" element={<AttendanceInfo />} />
+                            <Route path="idbot" element={<ChatIdbot />} />
+                            <Route path="random" element={<ChatRandom />} />
                         </Route>
                     </Route>
-
-                    <Route
-                        path="chat"
-                        element={<PrivateRoute permission={1} />}
-                    >
-                        <Route index element={<NotFound />} />
-                        <Route path="idbot" element={<ChatIdbot />} />
-                        <Route path="random" element={<ChatRandom />} />
-                    </Route>
+                    
                     <Route
                         path="attendance"
                         element={<PrivateRoute permission={1} />}
