@@ -173,7 +173,7 @@ function Post() {
                                                         deleteBbsPost(
                                                             {
                                                                 board: board,
-                                                                postI: post.id,
+                                                                postId: post.id,
                                                             },
                                                             (result) => {
                                                                 openConfirmDialog(

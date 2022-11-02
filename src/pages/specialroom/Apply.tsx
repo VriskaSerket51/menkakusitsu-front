@@ -27,6 +27,7 @@ import {
 } from "../../components/popup";
 import {
     getSpecialroomLocationInfo,
+    getSpecialroomManagerInfo,
     getSpecialroomPurposeInfo,
     getSpecialroomStudentInfo,
     getSpecialroomTeacherInfo,
@@ -44,8 +45,10 @@ import {
     UserInfo,
 } from "@common-jshs/menkakusitsu-lib/v1";
 import { unstable_batchedUpdates } from "react-dom";
+import dayjs from "dayjs";
 
 function Apply() {
+    const [managerInfo, setManagerInfo] = React.useState<UserInfo | null>(null);
     const [locationInfos, setLocationInfos] = React.useState<LocationInfo[]>(
         []
     );
@@ -59,7 +62,7 @@ function Apply() {
 
     const [activeStep, setActiveStep] = React.useState(0);
 
-    const today = new Date();
+    const today = dayjs();
 
     const steps = [
         {
@@ -67,8 +70,7 @@ function Apply() {
             content: (
                 <React.Fragment>
                     <Typography>
-                        {today.getFullYear()}년 {today.getMonth() + 1}월{" "}
-                        {today.getDate()}일
+                        {today.year()}년 {today.month() + 1}월 {today.date()}일
                     </Typography>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                         <InputLabel id="select-when">사용 시간</InputLabel>
@@ -255,21 +257,24 @@ function Apply() {
     };
 
     React.useMemo(() => {
-        // ㅋㅋ 콜백 지옥 지리네
-        unstable_batchedUpdates(() => {
-            getSpecialroomLocationInfo({}, (result) => {
-                setLocationInfos(result.locationInfo);
-                getSpecialroomPurposeInfo({}, (result) => {
-                    setPurposeInfos(result.purposeInfo);
-                    getSpecialroomStudentInfo({}, (result) => {
-                        setStudentInfos(result.studentInfo);
-                        getSpecialroomTeacherInfo({}, (result) => {
-                            setTeacherInfos(result.teacherInfo);
+        getSpecialroomManagerInfo(
+            { when: today.format("YYYY-MM-DD") },
+            (result) => {
+                setManagerInfo(result.manager);
+                getSpecialroomLocationInfo({}, (result) => {
+                    setLocationInfos(result.locationInfo);
+                    getSpecialroomPurposeInfo({}, (result) => {
+                        setPurposeInfos(result.purposeInfo);
+                        getSpecialroomStudentInfo({}, (result) => {
+                            setStudentInfos(result.studentInfo);
+                            getSpecialroomTeacherInfo({}, (result) => {
+                                setTeacherInfos(result.teacherInfo);
+                            });
                         });
                     });
                 });
-            });
-        });
+            }
+        );
     }, []);
 
     const onPostApply = (e: React.MouseEvent<HTMLFormElement>) => {
@@ -349,61 +354,74 @@ function Apply() {
                     >
                         <PaperTitle>특별실 신청하기</PaperTitle>
                         <SpecialroomInfoPanel />
-                        <Stepper
-                            activeStep={activeStep}
-                            orientation="vertical"
-                            sx={{ padding: "30px 30px 30px" }}
-                        >
-                            {steps.map((step, index) => {
-                                return (
-                                    <Step key={step.title}>
-                                        <StepLabel
-                                            optional={
-                                                index === steps.length - 1 ? (
-                                                    <Typography variant="caption">
-                                                        Last step
-                                                    </Typography>
-                                                ) : null
-                                            }
-                                        >
-                                            {step.title}
-                                        </StepLabel>
-                                        <StepContent
-                                            TransitionProps={{
-                                                unmountOnExit: false,
-                                            }}
-                                        >
-                                            {step.content}
-                                            <Box sx={{ mb: 2 }}>
-                                                {index !== steps.length - 1 && (
+                        <Box sx={{ padding: "30px 30px 30px" }}>
+                            <Typography variant="h6">
+                                * 오늘의 사감 선생님은 &lt;{managerInfo?.value}
+                                &gt;이십니다.
+                            </Typography>
+                            <br />
+                            <Stepper
+                                activeStep={activeStep}
+                                orientation="vertical"
+                            >
+                                {steps.map((step, index) => {
+                                    return (
+                                        <Step key={step.title}>
+                                            <StepLabel
+                                                optional={
+                                                    index ===
+                                                    steps.length - 1 ? (
+                                                        <Typography variant="caption">
+                                                            Last step
+                                                        </Typography>
+                                                    ) : null
+                                                }
+                                            >
+                                                {step.title}
+                                            </StepLabel>
+                                            <StepContent
+                                                TransitionProps={{
+                                                    unmountOnExit: false,
+                                                }}
+                                            >
+                                                {step.content}
+                                                <Box sx={{ mb: 2 }}>
+                                                    {index !==
+                                                        steps.length - 1 && (
+                                                        <Button
+                                                            variant="contained"
+                                                            onClick={
+                                                                onClickNext
+                                                            }
+                                                            sx={{
+                                                                mt: 1,
+                                                                mr: 1,
+                                                            }}
+                                                        >
+                                                            다음
+                                                        </Button>
+                                                    )}
+
                                                     <Button
-                                                        variant="contained"
-                                                        onClick={onClickNext}
+                                                        disabled={index === 0}
+                                                        onClick={onClickBack}
                                                         sx={{ mt: 1, mr: 1 }}
                                                     >
-                                                        다음
+                                                        뒤로가기
                                                     </Button>
-                                                )}
-
-                                                <Button
-                                                    disabled={index === 0}
-                                                    onClick={onClickBack}
-                                                    sx={{ mt: 1, mr: 1 }}
-                                                >
-                                                    뒤로가기
-                                                </Button>
-                                                <Button
-                                                    onClick={onClickReset}
-                                                    sx={{ mt: 1, mr: 1 }}
-                                                >
-                                                    처음으로
-                                                </Button>
-                                            </Box>
-                                        </StepContent>
-                                    </Step>
-                                );
-                            })}
-                        </Stepper>
+                                                    <Button
+                                                        onClick={onClickReset}
+                                                        sx={{ mt: 1, mr: 1 }}
+                                                    >
+                                                        처음으로
+                                                    </Button>
+                                                </Box>
+                                            </StepContent>
+                                        </Step>
+                                    );
+                                })}
+                            </Stepper>
+                        </Box>
                         <SubmitButton color="primary.main">
                             신청하기
                         </SubmitButton>

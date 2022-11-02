@@ -144,7 +144,7 @@ export const deleteBbsPost = (
     props: v1.DeleteBbsPostRequest,
     onFinish: (result: v1.DeleteBbsPostResponse) => any
 ) => {
-    apiDelete(`/v1/bbs/${props.board}/${props.postI}`, props)
+    apiDelete(`/v1/bbs/${props.board}/${props.postId}`, props)
         .then((resp) => {
             const result: v1.DeleteBbsPostResponse = resp.data;
             if (isApiSuccessed(result)) {
@@ -376,6 +376,23 @@ export const putSpecialroomInfo = (
     apiPut("/v1/specialroom/info", props)
         .then((resp) => {
             const result: v1.PutInfoResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(TITLE.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
+export const getSpecialroomManagerInfo = (
+    props: v1.GetManagerRequest,
+    onFinish: (result: v1.GetManagerResponse) => any
+) => {
+    apiGet(`/v1/specialroom/info/manager/${props.when}`)
+        .then((resp) => {
+            const result: v1.GetManagerResponse = resp.data;
             if (isApiSuccessed(result)) {
                 onFinish(result);
             } else {
