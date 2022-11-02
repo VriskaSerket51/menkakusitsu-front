@@ -25,18 +25,18 @@ import {
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import EssentialComponents from "./components/EssentialComponents";
-import { theme } from "./utils/Constant";
+import { christmasTheme, defaultTheme } from "./utils/Constant";
 import PrivateRoute from "./components/PrivateRoute";
 import RouteTracker from "./components/RouteTracker";
 import { SnackbarProvider } from "notistack";
 import FirebaseManager from "./components/FirebaseManager";
 import { TimetablePanel } from "./components";
-import FooterLayout from "./components/FooterLayout";
-import ParticleLayout from "./components/particles";
+import FooterLayout from "./components/layout/FooterLayout";
+import ThemeLayout from "./components/layout/ThemeLayout";
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
         <EssentialComponents />
         <BrowserRouter>
@@ -51,7 +51,7 @@ root.render(
                 <FirebaseManager />
                 <RouteTracker />
                 <Routes>
-                    <Route element={<ParticleLayout type="snow" />}>
+                    <Route element={<ThemeLayout type="snow" />}>
                         <Route element={<FooterLayout />}>
                             <Route index element={<Main />} />
                             <Route
@@ -156,7 +156,7 @@ root.render(
                             <Route path="random" element={<ChatRandom />} />
                         </Route>
                     </Route>
-                    
+
                     <Route
                         path="attendance"
                         element={<PrivateRoute permission={1} />}
