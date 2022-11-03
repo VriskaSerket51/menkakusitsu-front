@@ -24,6 +24,7 @@ import {
     openConfirmDialog,
     closeWaitDialog,
     openWaitDialog,
+    openYesNoDialog,
 } from "../../components/popup";
 import {
     getSpecialroomLocationInfo,
@@ -46,6 +47,7 @@ import {
 } from "@common-jshs/menkakusitsu-lib/v1";
 import { unstable_batchedUpdates } from "react-dom";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 function Apply() {
     const [managerInfo, setManagerInfo] = React.useState<UserInfo | null>(null);
@@ -63,6 +65,7 @@ function Apply() {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const today = dayjs();
+    const navigate = useNavigate();
 
     const steps = [
         {
@@ -322,7 +325,13 @@ function Apply() {
             },
             () => {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Info, "특별실 신청에 성공했습니다.");
+                openYesNoDialog(
+                    TITLE.Info,
+                    "특별실 신청에 성공했습니다. 신청 현황 페이지를 보시겠습니까?",
+                    () => {
+                        navigate("/specialroom/status");
+                    }
+                );
                 postUserPush(
                     {
                         targetUid: teacher.uid,
