@@ -34,13 +34,14 @@ export function NavbarMenu(props: {
         <Box
             style={{
                 display: "inline-block",
-                marginLeft: "64px",
+                marginLeft: "5rem",
             }}
         >
             <Button onClick={onMouseOver}>
                 <Typography
-                    sx={{ fontFamily: "DesignHouseB", fontSize: "32px" }}
+                    sx={{ fontFamily: "DesignHouseB" }}
                     color={props.color}
+                    variant="h4"
                 >
                     {props.title}
                 </Typography>
@@ -79,7 +80,7 @@ export function NavbarButton(props: NavbarItemProps) {
             <Box
                 style={{
                     display: "inline-block",
-                    marginLeft: "64px",
+                    marginLeft: "5rem",
                 }}
             >
                 <Button
@@ -88,8 +89,9 @@ export function NavbarButton(props: NavbarItemProps) {
                     }}
                 >
                     <Typography
-                        sx={{ fontFamily: "DesignHouseB", fontSize: "32px" }}
+                        sx={{ fontFamily: "DesignHouseB" }}
                         color={props.color}
+                        variant="h4"
                     >
                         {props.title}
                     </Typography>
