@@ -356,7 +356,7 @@ function Apply() {
                         <SpecialroomInfoPanel />
                         <Box sx={{ padding: "30px 30px 30px" }}>
                             <Typography variant="h6">
-                                * 오늘의 사감 선생님은 &lt;{managerInfo?.value}
+                                * 오늘의 생활 지도 선생님은 &lt;{managerInfo?.value}
                                 &gt;이십니다.
                             </Typography>
                             <br />
