@@ -1,4 +1,4 @@
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import { NavbarButton, NavbarMenu } from "./NavbarItem";
 import Logo from "./Logo";
 import React from "react";
@@ -65,6 +65,7 @@ function FixedNavbar() {
                     }}
                 >
                     <Logo />
+                    {/* <Typography sx={{ fontSize: "2.5rem" }}>🎗</Typography> */}
                     {navbarItems.map((navbarItem) => {
                         if (navbarItem.menu) {
                             return (

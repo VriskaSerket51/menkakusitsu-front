@@ -5,12 +5,13 @@ function PaperTitle({ children }: { children: React.ReactNode }) {
     return (
         <Typography
             sx={{
-                fontSize: "60px",
+                // fontSize: "60px",
                 fontFamily: "BMDoHyeon",
                 textAlign: "center",
                 color: "primary.light",
                 marginBottom: "20px",
             }}
+            variant="h2"
         >
             {children}
         </Typography>
