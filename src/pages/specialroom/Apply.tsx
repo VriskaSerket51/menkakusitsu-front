@@ -282,7 +282,10 @@ function Apply() {
         const data = new FormData(e.currentTarget);
         const location = data.get("location");
         if (!location) {
-            TITLE.Alert, "사용 장소 선택을 하지 않으셨습니다.";
+            openConfirmDialog(
+                TITLE.Alert,
+                "사용 장소 선택을 하지 않으셨습니다."
+            );
             setActiveStep(1);
             return;
         }
@@ -356,7 +359,8 @@ function Apply() {
                         <SpecialroomInfoPanel />
                         <Box sx={{ padding: "30px 30px 30px" }}>
                             <Typography variant="h6">
-                                * 오늘의 생활 지도 선생님은 &lt;{managerInfo?.value}
+                                * 오늘의 생활 지도 선생님은 &lt;
+                                {managerInfo?.value}
                                 &gt;이십니다.
                             </Typography>
                             <br />
