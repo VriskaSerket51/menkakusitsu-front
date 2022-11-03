@@ -9,8 +9,8 @@ import { TITLE } from "./Constant";
 
 const onApiError = (e: any) => {
     console.log(e);
-    closeWaitDialog();
-    openConfirmDialog(TITLE.Info, "데이터 전송에 실패했습니다.");
+    // closeWaitDialog();
+    // openConfirmDialog(TITLE.Info, "데이터 전송에 실패했습니다.");
 };
 
 const isApiSuccessed = (result: DefaultResponse) => {
