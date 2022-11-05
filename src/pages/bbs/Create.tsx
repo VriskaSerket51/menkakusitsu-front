@@ -134,6 +134,24 @@ function Create() {
                         />
                         <br />
                         <br />
+                        {/* <Box 
+                            sx={{
+                                textAlign: "center",
+                                p: 2,
+                                border: "1px dashed grey",
+                            }}
+                        >
+                            <Button variant="contained" component="label">
+                                Upload File
+                                <input
+                                    type="file"
+                                    name="data"
+                                    multiple
+                                    hidden
+                                />
+                            </Button>
+                        </Box>*/}
+                        <br />
                         <SubmitButton color="primary.main" width="25%">
                             작성하기
                         </SubmitButton>

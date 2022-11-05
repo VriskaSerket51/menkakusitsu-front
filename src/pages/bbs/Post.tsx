@@ -1,4 +1,8 @@
-import { BbsComment, BbsPost } from "@common-jshs/menkakusitsu-lib/v1";
+import {
+    BbsComment,
+    BbsPost,
+    FileInfo,
+} from "@common-jshs/menkakusitsu-lib/v1";
 import {
     Box,
     Button,
@@ -40,6 +44,7 @@ function Post() {
     const postId = parseInt(params.postId!);
 
     const [post, setPost] = useState<BbsPost | null>(null);
+    const [attachments, setAttachments] = useState<FileInfo[] | undefined>([]);
     const [commentPage, setCommentPage] = useState(1);
     const [commentCount, setCommentCount] = useState(0);
     const [commentList, setCommentList] = useState<BbsComment[] | null>(null);
@@ -50,7 +55,9 @@ function Post() {
                 navigate(`/bbs/${board}/list`);
                 return;
             }
+            console.log(result);
             setPost(result.post);
+            setAttachments(result.attachments);
             getBbsCommentList(
                 {
                     board: board,
@@ -133,6 +140,16 @@ function Post() {
                                 {post.content}
                             </Typography>
                         )}
+                        {attachments &&
+                            attachments.map((attachment) => {
+                                if (attachment.isImage) {
+                                    return (
+                                        <img src={attachment.downloadLink} />
+                                    );
+                                } else {
+                                    return <React.Fragment></React.Fragment>;
+                                }
+                            })}
                         <br />
                         <Box sx={{ display: "flex", justifyContent: "right" }}>
                             <Stack spacing={2} direction="row">
