@@ -1,25 +1,13 @@
+import { Box, TextField, Typography } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
 import {
-    Box,
-    Container,
-    Divider,
-    Grid,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    Paper,
-    TextField,
-    Typography,
-} from "@mui/material";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
-import FixedNavbar from "../components/navbar";
-import { closeWaitDialog, openWaitDialog, SubmitButton } from "../components";
-import { SHA3_512, validateEmail } from "../utils/Utility";
-import { getMyPrivateInfo, putMyEmail, putMyPassword } from "../utils/Api";
-import { TITLE } from "../utils/Constant";
+    closeWaitDialog,
+    openWaitDialog,
+    SubmitButton,
+} from "../../../components";
+import { SHA3_512, validateEmail } from "../../../utils/Utility";
+import { getMyPrivateInfo, putMyEmail, putMyPassword } from "../../../utils/Api";
+import { TITLE } from "../../../utils/Constant";
 
 function AccountSetting() {
     const [email, setEmail] = useState<string | null>(null);
@@ -179,88 +167,4 @@ function AccountSetting() {
     );
 }
 
-interface SidebarItem {
-    title: string;
-    onClick?: React.MouseEventHandler<HTMLDivElement>;
-    icon: ReactNode;
-    drawPanel: () => ReactNode;
-}
-
-const sidebarItems: SidebarItem[] = [
-    {
-        title: "계정",
-        icon: <ManageAccountsIcon />,
-        drawPanel: () => <AccountSetting />,
-    },
-    {
-        title: "기타",
-        icon: <MoreHorizIcon />,
-        drawPanel: () => {
-            return (
-                <React.Fragment>
-                    <Typography>더 필요한 것은 피드백 ㄱㄱ</Typography>
-                </React.Fragment>
-            );
-        },
-    },
-];
-
-function Setting() {
-    const [currentSidebarItem, setCurrentSidebarItem] = useState<SidebarItem>(
-        sidebarItems[0]
-    );
-
-    return (
-        <React.Fragment>
-            <FixedNavbar />
-            <Container
-                maxWidth="lg"
-                sx={{
-                    margin: "30px auto 50px",
-                }}
-            >
-                <Paper>
-                    <Box sx={{ display: "flex" }}>
-                        <Box
-                            sx={{
-                                width: 200,
-                            }}
-                        >
-                            <List>
-                                {sidebarItems.map((sidebarItem, index) => (
-                                    <ListItemButton
-                                        key={sidebarItem.title}
-                                        selected={
-                                            sidebarItem.title ===
-                                            currentSidebarItem.title
-                                        }
-                                        onClick={() => {
-                                            setCurrentSidebarItem(sidebarItem);
-                                        }}
-                                    >
-                                        <ListItemIcon>
-                                            {sidebarItem.icon}
-                                        </ListItemIcon>
-                                        <ListItemText
-                                            primary={sidebarItem.title}
-                                        />
-                                    </ListItemButton>
-                                ))}
-                            </List>
-                        </Box>
-                        <Box
-                            sx={{
-                                padding: "50px 50px 30px 50px",
-                                width: "100%",
-                            }}
-                        >
-                            {currentSidebarItem.drawPanel()}
-                        </Box>
-                    </Box>
-                </Paper>
-            </Container>
-        </React.Fragment>
-    );
-}
-
-export default Setting;
+export default AccountSetting;
