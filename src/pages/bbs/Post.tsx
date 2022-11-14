@@ -144,7 +144,10 @@ function Post() {
                             attachments.map((attachment) => {
                                 if (attachment.isImage) {
                                     return (
-                                        <img src={attachment.downloadLink} />
+                                        <img
+                                            src={attachment.downloadLink}
+                                            width="100%"
+                                        />
                                     );
                                 } else {
                                     return <React.Fragment></React.Fragment>;
