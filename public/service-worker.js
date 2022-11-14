@@ -1,0 +1,1 @@
+const CACHE_NAME = "new-menkakusitsu-cache-v1";

@@ -174,3 +174,11 @@ root.render(
         </BrowserRouter>
     </ThemeProvider>
 );
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+        navigator.serviceWorker
+            .register("/service-worker.js")
+            .catch((e) => console.log(e));
+    });
+}
