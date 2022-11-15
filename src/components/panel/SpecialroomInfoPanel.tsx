@@ -12,29 +12,11 @@ import { useCallback } from "react";
 import { getSpecialroomInfo } from "../../utils/Api";
 import { SpecialroomInfo } from "@common-jshs/menkakusitsu-lib/v1";
 
-function SpecialroomInfoPanel({
-    filter,
-}: {
-    filter?: (specialroomInfo: SpecialroomInfo) => boolean;
-}) {
-    const [information, setInformation] = useState<SpecialroomInfo[] | null>(
-        null
-    );
-    const [isLoading, setIsLoading] = useState(true);
-
-    const updateInformation = useCallback(() => {
-        getSpecialroomInfo({}, (result) => {
-            setInformation(result.information);
-            setIsLoading(false);
-        });
-    }, []);
-
-    useEffect(() => {
-        updateInformation();
-        const interval = setInterval(updateInformation, 10000);
-        return () => clearInterval(interval);
-    }, [updateInformation]);
-
+export const drawInfoTable = (
+    information: SpecialroomInfo[] | null,
+    isLoading: boolean,
+    filter?: (specialroomInfo: SpecialroomInfo) => boolean
+) => {
     return (
         <TableContainer component={Paper}>
             <Table aria-label="특별실 신청 명단">
@@ -88,6 +70,32 @@ function SpecialroomInfoPanel({
             </Table>
         </TableContainer>
     );
+};
+
+function SpecialroomInfoPanel({
+    filter,
+}: {
+    filter?: (specialroomInfo: SpecialroomInfo) => boolean;
+}) {
+    const [information, setInformation] = useState<SpecialroomInfo[] | null>(
+        null
+    );
+    const [isLoading, setIsLoading] = useState(true);
+
+    const updateInformation = useCallback(() => {
+        getSpecialroomInfo({}, (result) => {
+            setInformation(result.information);
+            setIsLoading(false);
+        });
+    }, []);
+
+    useEffect(() => {
+        updateInformation();
+        const interval = setInterval(updateInformation, 10000);
+        return () => clearInterval(interval);
+    }, [updateInformation]);
+
+    return drawInfoTable(information, isLoading, filter);
 }
 
 export default SpecialroomInfoPanel;

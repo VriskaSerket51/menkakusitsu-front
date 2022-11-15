@@ -13,7 +13,10 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { getParameter } from "../../utils/Utility";
 import { SpecialroomInfoPanel } from "../../components/panel";
-import { getAttendanceList } from "../../utils/Api";
+import { getAttendanceList, getSpecialroomInfo } from "../../utils/Api";
+import dayjs from "dayjs";
+import { SpecialroomInfo } from "@common-jshs/menkakusitsu-lib/v1";
+import { drawInfoTable } from "../../components/panel/SpecialroomInfoPanel";
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
@@ -66,15 +69,20 @@ function Download() {
         big: string[][];
         small: string[][];
     } | null>(null);
+    const [information, setInformation] = useState<SpecialroomInfo[] | null>(
+        null
+    );
     const [isLoading, setIsLoading] = useState(true);
 
     const when = parseInt(getParameter("when", "1"));
 
     useEffect(() => {
-        console.log(new Date());
         getAttendanceList({ when: when }, (result) => {
             setAttendanceInfo(result.list);
-            setIsLoading(false);
+            getSpecialroomInfo({}, (result) => {
+                setInformation(result.information);
+                setIsLoading(false);
+            });
         });
     }, []);
 
@@ -84,7 +92,7 @@ function Download() {
         }
     }, [isLoading]);
 
-    const today = new Date();
+    const today = dayjs();
 
     return (
         <React.Fragment>
@@ -103,8 +111,8 @@ function Download() {
                         fontWeight: 200,
                     }}
                 >
-                    {today.getFullYear()}년 {today.getMonth() + 1}월{" "}
-                    {today.getDate()}일 {when}차 면학 출석부
+                    {today.year()}년 {today.month() + 1}월 {today.date()}일{" "}
+                    {when}차 면학 출석부
                 </Typography>
                 <Box sx={{ paddingBottom: "192px" }}>
                     <Typography
@@ -138,11 +146,11 @@ function Download() {
                     >
                         특별실 신청 현황
                     </Typography>
-                    <SpecialroomInfoPanel
-                        filter={(specialroomInfo) =>
-                            specialroomInfo.when === when
-                        }
-                    />
+                    {drawInfoTable(
+                        information,
+                        isLoading,
+                        (specialroomInfo) => specialroomInfo.when === when
+                    )}
                 </Box>
             </Box>
         </React.Fragment>
