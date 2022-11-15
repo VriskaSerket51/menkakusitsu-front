@@ -155,13 +155,7 @@ function Status() {
                 openWaitDialog(TITLE.Info, "특별실 신청을 취소 중입니다...");
                 deleteSpecialroomApply({ when: when }, () => {
                     closeWaitDialog();
-                    openConfirmDialog(
-                        TITLE.Info,
-                        "특별실 신청 취소에 성공했습니다.",
-                        () => {
-                            refresh();
-                        }
-                    );
+                    refresh();
                 });
             },
             () => {}
@@ -174,12 +168,14 @@ function Status() {
 
     let activeStep = -1;
 
-    if (applyStatus?.state === 0) {
-        activeStep = 1;
-    } else if (applyStatus?.state === 1) {
-        activeStep = 2;
-    } else if (applyStatus?.state === -1) {
-        activeStep = 2;
+    if (applyStatus) {
+        if (applyStatus.state === 0) {
+            activeStep = 1;
+        } else if (applyStatus.state === 1) {
+            activeStep = 2;
+        } else if (applyStatus.state === -1) {
+            activeStep = 2;
+        }
     }
 
     return (
