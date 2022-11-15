@@ -21,6 +21,7 @@ import {
     BbsPost,
     BbsCreate,
     BbsEdit,
+    PlaySnake,
 } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -84,6 +85,13 @@ root.render(
                                     path=":board/:postId/edit"
                                     element={<BbsEdit />}
                                 />
+                            </Route>
+                            <Route
+                                path="playground"
+                                element={<PrivateRoute permission={1} />}
+                            >
+                                <Route index element={<NotFound />} />
+                                <Route path="snake" element={<PlaySnake />} />
                             </Route>
                             <Route
                                 path="specialroom"
