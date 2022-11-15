@@ -55,7 +55,6 @@ function Post() {
                 navigate(`/bbs/${board}/list`);
                 return;
             }
-            console.log(result);
             setPost(result.post);
             setAttachments(result.attachments);
             getBbsCommentList(
