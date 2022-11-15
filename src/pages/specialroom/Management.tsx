@@ -195,7 +195,7 @@ function Management() {
     );
 
     return (
-        <>
+        <React.Fragment>
             <FixedNavbar />
             <Container
                 maxWidth="lg"
@@ -267,7 +267,7 @@ function Management() {
                     </Box>
                 </Paper>
             </Container>
-        </>
+        </React.Fragment>
     );
 }
 
