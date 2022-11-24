@@ -12,7 +12,8 @@ function Logo() {
             >
                 <Link href="/" color="inherit" underline="none">
                     <Typography
-                        sx={{ fontFamily: "DesignHouseB", fontSize: "32px" }}
+                        sx={{ fontFamily: "DesignHouseB" }}
+                        variant="h4"
                         color="primary.main"
                     >
                         {import.meta.env.VITE_WEB_TITLE}

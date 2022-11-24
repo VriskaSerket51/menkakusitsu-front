@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography, useMediaQuery } from "@mui/material";
 import { NavbarButton, NavbarMenu } from "./NavbarItem";
 import Logo from "./Logo";
 import React from "react";
@@ -50,7 +50,58 @@ const navbarItems = [
     },
 ];
 
+const drawItems = (isMinWidth: boolean) => {
+    if (isMinWidth) {
+        return (
+            <React.Fragment>
+                {navbarItems.map((navbarItem) => {
+                    if (navbarItem.menu) {
+                        return (
+                            <NavbarMenu
+                                key={navbarItem.title}
+                                color={navbarItem.color}
+                                menu={navbarItem.menu}
+                                title={navbarItem.title}
+                            />
+                        );
+                    } else {
+                        return (
+                            <NavbarButton
+                                key={navbarItem.title}
+                                permission={navbarItem.permission}
+                                href={navbarItem.href}
+                                color={navbarItem.color}
+                                title={navbarItem.title}
+                            />
+                        );
+                    }
+                })}
+                <Box
+                    sx={{
+                        display: "flex",
+                        flex: 1,
+                        justifyContent: "flex-end",
+                    }}
+                >
+                    <Box
+                        style={{
+                            display: "inline-block",
+                            marginRight: "64px",
+                        }}
+                    >
+                        <AccountPanel />
+                    </Box>
+                </Box>
+            </React.Fragment>
+        );
+    } else {
+        return "ㅎ";
+    }
+};
+
 function FixedNavbar() {
+    const isMinWidth = useMediaQuery("(min-width:900px)");
+
     return (
         <React.Fragment>
             <Box bgcolor="primary.dark" height="16px" />
@@ -65,45 +116,7 @@ function FixedNavbar() {
                     }}
                 >
                     <Logo />
-                    {/* <Typography sx={{ fontSize: "2.5rem" }}>🎗</Typography> */}
-                    {navbarItems.map((navbarItem) => {
-                        if (navbarItem.menu) {
-                            return (
-                                <NavbarMenu
-                                    key={navbarItem.title}
-                                    color={navbarItem.color}
-                                    menu={navbarItem.menu}
-                                    title={navbarItem.title}
-                                />
-                            );
-                        } else {
-                            return (
-                                <NavbarButton
-                                    key={navbarItem.title}
-                                    permission={navbarItem.permission}
-                                    href={navbarItem.href}
-                                    color={navbarItem.color}
-                                    title={navbarItem.title}
-                                />
-                            );
-                        }
-                    })}
-                    <Box
-                        sx={{
-                            display: "flex",
-                            flex: 1,
-                            justifyContent: "flex-end",
-                        }}
-                    >
-                        <Box
-                            style={{
-                                display: "inline-block",
-                                marginRight: "64px",
-                            }}
-                        >
-                            <AccountPanel />
-                        </Box>
-                    </Box>
+                    {drawItems(isMinWidth)}
                 </Box>
             </Paper>
         </React.Fragment>

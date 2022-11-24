@@ -73,7 +73,10 @@ function Apply() {
             content: (
                 <React.Fragment>
                     <Typography>
-                        {today.year()}년 {today.month() + 1}월 {today.date()}일
+                        {today.year()}년 {today.month() + 1}월 {today.date()}
+                        일의 생활 지도 선생님은 &lt;
+                        {managerInfo && managerInfo.value || "???"}
+                        &gt;이십니다.
                     </Typography>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
                         <InputLabel id="select-when">사용 시간</InputLabel>
@@ -260,24 +263,24 @@ function Apply() {
     };
 
     React.useMemo(() => {
-        getSpecialroomManagerInfo(
-            { when: today.format("YYYY-MM-DD") },
-            (result) => {
-                setManagerInfo(result.manager);
-                getSpecialroomLocationInfo({}, (result) => {
-                    setLocationInfos(result.locationInfo);
-                    getSpecialroomPurposeInfo({}, (result) => {
-                        setPurposeInfos(result.purposeInfo);
-                        getSpecialroomStudentInfo({}, (result) => {
-                            setStudentInfos(result.studentInfo);
-                            getSpecialroomTeacherInfo({}, (result) => {
-                                setTeacherInfos(result.teacherInfo);
-                            });
-                        });
+        getSpecialroomLocationInfo({}, (result) => {
+            setLocationInfos(result.locationInfo);
+            getSpecialroomPurposeInfo({}, (result) => {
+                setPurposeInfos(result.purposeInfo);
+                getSpecialroomStudentInfo({}, (result) => {
+                    setStudentInfos(result.studentInfo);
+                    getSpecialroomTeacherInfo({}, (result) => {
+                        setTeacherInfos(result.teacherInfo);
+                        getSpecialroomManagerInfo(
+                            { when: today.format("YYYY-MM-DD") },
+                            (result) => {
+                                setManagerInfo(result.manager);
+                            }
+                        );
                     });
                 });
-            }
-        );
+            });
+        });
     }, []);
 
     const onPostApply = (e: React.MouseEvent<HTMLFormElement>) => {
@@ -367,12 +370,6 @@ function Apply() {
                         <PaperTitle>특별실 신청하기</PaperTitle>
                         <SpecialroomInfoPanel />
                         <Box sx={{ padding: "30px 30px 30px" }}>
-                            <Typography variant="h6">
-                                * 오늘의 생활 지도 선생님은 &lt;
-                                {managerInfo?.value}
-                                &gt;이십니다.
-                            </Typography>
-                            <br />
                             <Stepper
                                 activeStep={activeStep}
                                 orientation="vertical"

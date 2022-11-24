@@ -9,7 +9,7 @@ import {
 } from "./Utility";
 import { PostRefreshResponse } from "@common-jshs/menkakusitsu-lib/v1";
 
-export const onTokenError = (resp: BackendResponse) => {
+export const checkTokenError = (resp: BackendResponse) => {
     const result = resp.data;
     if (result.status >= 0) {
         return resp;
@@ -51,7 +51,6 @@ export const checkTokenExpiration = async (accessToken: string) => {
         });
         const result = resp.data as PostRefreshResponse;
         if (result.status >= 0) {
-            clearTokens();
             localStorage.setItem("access-token", result.accessToken);
             localStorage.setItem("refresh-token", result.refreshToken);
             return false;

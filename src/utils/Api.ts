@@ -42,22 +42,8 @@ export const deleteLogout = (
     props: v1.DeleteLogoutRequest,
     onFinish: (result: v1.DeleteLogoutResponse) => any
 ) => {
-    if (getPushApproved()) {
-        deletePushToken(() => {
-            apiDelete("/v1/auth/logout", props)
-                .then((resp) => {
-                    const result: v1.DeleteLogoutResponse = resp.data;
-                    if (isApiSuccessed(result)) {
-                        onFinish(result);
-                    } else {
-                        closeWaitDialog();
-                        openConfirmDialog(TITLE.Alert, result.message);
-                    }
-                })
-                .catch(onApiError);
-        });
-    } else {
-        apiDelete("/v1/auth/logout")
+    const logout = () => {
+        apiDelete("/v1/auth/logout", props)
             .then((resp) => {
                 const result: v1.DeleteLogoutResponse = resp.data;
                 if (isApiSuccessed(result)) {
@@ -68,6 +54,13 @@ export const deleteLogout = (
                 }
             })
             .catch(onApiError);
+    };
+    if (getPushApproved()) {
+        deletePushToken(() => {
+            logout();
+        });
+    } else {
+        logout();
     }
 };
 
