@@ -2,7 +2,7 @@ import { SHA3 } from "sha3";
 import axios from "axios";
 import { openConfirmDialog } from "../components/popup";
 import { TITLE } from "./Constant";
-import { checkTokenExpiration, onTokenError } from "./AuthManager";
+import { checkTokenExpiration, checkTokenError } from "./AuthManager";
 import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
 import uuid from "react-uuid";
 import { Buffer } from "buffer";
@@ -114,7 +114,7 @@ export const apiGet = async (path: string) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenError);
+        .then(checkTokenError);
 };
 
 export const apiPost = async (path: string, body: any = null) => {
@@ -133,7 +133,7 @@ export const apiPost = async (path: string, body: any = null) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenError);
+        .then(checkTokenError);
 };
 
 export const apiPut = async (path: string, body: any = null) => {
@@ -152,7 +152,7 @@ export const apiPut = async (path: string, body: any = null) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenError);
+        .then(checkTokenError);
 };
 
 export const apiDelete = async (path: string, body: any = null) => {
@@ -172,5 +172,5 @@ export const apiDelete = async (path: string, body: any = null) => {
                 Authorization: accessToken,
             },
         })
-        .then(onTokenError);
+        .then(checkTokenError);
 };
