@@ -35,6 +35,8 @@ import { TimetablePanel } from "./components";
 import FooterLayout from "./components/layout/FooterLayout";
 import ThemeLayout from "./components/layout/ThemeLayout";
 
+document.getElementById("preview")!.innerHTML = "";
+
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
     <ThemeProvider theme={defaultTheme}>
