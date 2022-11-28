@@ -71,89 +71,108 @@ const onLoginFailed = (result: PostLoginResponse) => {
     openConfirmDialog(TITLE.Info, result.message, () => {});
 };
 
-const loginPopup = (
-    <Box
-        sx={{
-            borderRadius: "16px",
-            width: "auto",
-            height: 400,
-            backgroundColor: "white",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-        }}
-    >
-        <Typography
-            variant="h5"
-            noWrap
+function LoginPopup() {
+    return (
+        <Box
             sx={{
-                mr: 2,
-                fontWeight: 500,
-                fontFamily: "BMDohyeon",
-                color: "inherit",
-                textDecoration: "none",
+                borderRadius: "16px",
+                width: "auto",
+                height: 400,
+                backgroundColor: "white",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
             }}
         >
-            로그인하세요.
-        </Typography>
-        <Box
-            component="form"
-            onSubmit={onPostLogin}
-            sx={{ mt: 1, padding: "0 30px 0" }}
-        >
-            <TextField
-                className="inputRounded"
-                margin="normal"
-                required
-                fullWidth
-                id="id"
-                label="ID"
-                name="id"
-            />
-            <TextField
-                className="inputRounded"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-            />
-            <Button
-                type="submit"
-                fullWidth
-                variant="contained"
+            <Typography
+                variant="h5"
+                noWrap
                 sx={{
-                    mt: 3,
-                    mb: 2,
-                    borderRadius: "50px",
-                    backgroundColor: "#279023",
-                    "&:hover": {
-                        backgroundColor: "#fff",
-                        color: "#279023",
-                    },
+                    mr: 2,
+                    fontWeight: 500,
                     fontFamily: "BMDohyeon",
+                    color: "inherit",
+                    textDecoration: "none",
                 }}
             >
-                LOGIN
-            </Button>
-            <Grid container>
-                <Grid item xs>
-                    <Link href="" variant="body2" underline="none">
-                        비밀번호를 잊어버리셨나요?
-                    </Link>
+                로그인하세요.
+            </Typography>
+            <Box
+                component="form"
+                onSubmit={onPostLogin}
+                sx={{ mt: 1, padding: "0 30px 0" }}
+            >
+                <TextField
+                    className="inputRounded"
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="id"
+                    label="ID"
+                    name="id"
+                />
+                <TextField
+                    className="inputRounded"
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                />
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                        mt: 3,
+                        mb: 2,
+                        borderRadius: "50px",
+                        backgroundColor: "#279023",
+                        "&:hover": {
+                            backgroundColor: "#fff",
+                            color: "#279023",
+                        },
+                        fontFamily: "BMDohyeon",
+                    }}
+                >
+                    LOGIN
+                </Button>
+                <Grid container>
+                    {/* <Grid item xs>
+                        <Link
+                            href="#"
+                            onClick={() => {
+                                openConfirmDialog(TITLE.Info, "미구현");
+                            }}
+                            variant="body2"
+                            underline="none"
+                        >
+                            비밀번호를 잊어버리셨나요?
+                        </Link>
+                    </Grid> */}
+                    <Grid item>
+                        <Link
+                            href="#"
+                            onClick={() => {
+                                openConfirmDialog(
+                                    TITLE.Info,
+                                    "지금은 신규가입이 불가능합니다."
+                                );
+                            }}
+                            variant="body2"
+                            underline="none"
+                        >
+                            아직 계정이 없으신가요?
+                        </Link>
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <Link href="#" variant="body2" underline="none">
-                        아직 계정이 없으신가요?
-                    </Link>
-                </Grid>
-            </Grid>
+            </Box>
         </Box>
-    </Box>
-);
+    );
+}
 
 function LoginPanel() {
     return (
@@ -170,7 +189,7 @@ function LoginPanel() {
             <SubmitButton
                 color="primary.main"
                 onClick={() => {
-                    openCancelableDialog("", loginPopup);
+                    openCancelableDialog("", <LoginPopup />);
                 }}
             >
                 이디저디 LOGIN
