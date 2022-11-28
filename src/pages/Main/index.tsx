@@ -47,6 +47,9 @@ function Main() {
                     <Grid item xs={4}>
                         <LoginPanel />
                     </Grid>
+                    <Grid item xs={12}>
+                        <MealPanel />
+                    </Grid>
                 </Grid>
             </Container>
         </React.Fragment>
