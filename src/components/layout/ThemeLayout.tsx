@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { SnowParticle } from "../particles/snow";
 
 interface ThemeLayoutProps {
-    type: "christmas" | "snow" | "none";
+    type: "christmas" | "snow" | "april-fools" | "none";
 }
 
 function ThemeLayout(props: ThemeLayoutProps) {
@@ -35,6 +35,8 @@ function ThemeLayout(props: ThemeLayoutProps) {
                     <Outlet />
                 </React.Fragment>
             );
+        case "april-fools":
+            return <Outlet />;
         case "none":
             return <Outlet />;
     }
