@@ -75,7 +75,7 @@ function Apply() {
                     <Typography>
                         {today.year()}년 {today.month() + 1}월 {today.date()}
                         일의 생활 지도 선생님은 &lt;
-                        {managerInfo && managerInfo.value || "???"}
+                        {(managerInfo && managerInfo.value) || "???"}
                         &gt;이십니다.
                     </Typography>
                     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
@@ -263,24 +263,26 @@ function Apply() {
     };
 
     React.useMemo(() => {
-        getSpecialroomLocationInfo({}, (result) => {
-            setLocationInfos(result.locationInfo);
-            getSpecialroomPurposeInfo({}, (result) => {
-                setPurposeInfos(result.purposeInfo);
-                getSpecialroomStudentInfo({}, (result) => {
-                    setStudentInfos(result.studentInfo);
-                    getSpecialroomTeacherInfo({}, (result) => {
-                        setTeacherInfos(result.teacherInfo);
-                        getSpecialroomManagerInfo(
-                            { when: today.format("YYYY-MM-DD") },
-                            (result) => {
-                                setManagerInfo(result.manager);
-                            }
-                        );
+        getSpecialroomManagerInfo(
+            { when: today.format("YYYY-MM-DD") },
+            (result) => {
+                if (result.status >= 0) {
+                    setManagerInfo(result.manager);
+                }
+                getSpecialroomLocationInfo({}, (result) => {
+                    setLocationInfos(result.locationInfo);
+                    getSpecialroomPurposeInfo({}, (result) => {
+                        setPurposeInfos(result.purposeInfo);
+                        getSpecialroomStudentInfo({}, (result) => {
+                            setStudentInfos(result.studentInfo);
+                            getSpecialroomTeacherInfo({}, (result) => {
+                                setTeacherInfos(result.teacherInfo);
+                            });
+                        });
                     });
                 });
-            });
-        });
+            }
+        );
     }, []);
 
     const onPostApply = (e: React.MouseEvent<HTMLFormElement>) => {
