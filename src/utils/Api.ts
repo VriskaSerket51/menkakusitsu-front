@@ -391,6 +391,7 @@ export const getSpecialroomManagerInfo = (
             if (isApiSuccessed(result)) {
                 onFinish(result);
             } else {
+                onFinish(result);
                 closeWaitDialog();
                 openConfirmDialog(TITLE.Alert, result.message);
             }
