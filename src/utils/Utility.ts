@@ -11,6 +11,21 @@ export interface BackendResponse {
     data: DefaultResponse;
 }
 
+export const arrayRemove = <T>(array: Array<T>, item: T): Array<T> => {
+    const index = array.indexOf(item);
+    if (index > -1) {
+        return array.splice(index, 1);
+    }
+    return [];
+};
+
+export const arrayRemoveAt = <T>(array: Array<T>, index: number): Array<T> => {
+    if (index > -1) {
+        return array.splice(index, 1);
+    }
+    return [];
+};
+
 export const validateEmail = (email: string): boolean => {
     const regex = new RegExp(
         "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])"
