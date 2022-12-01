@@ -26,7 +26,6 @@ import {
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import EssentialComponents from "./components/EssentialComponents";
-import { christmasTheme, defaultTheme } from "./utils/Constant";
 import PrivateRoute from "./components/PrivateRoute";
 import RouteTracker from "./components/RouteTracker";
 import { SnackbarProvider } from "notistack";
@@ -34,12 +33,13 @@ import FirebaseManager from "./components/FirebaseManager";
 import { TimetablePanel } from "./components";
 import FooterLayout from "./components/layout/FooterLayout";
 import ThemeLayout from "./components/layout/ThemeLayout";
+import { getTheme } from "./components/layout";
 
 document.getElementById("preview")!.innerHTML = "";
-
 const root = ReactDOM.createRoot(document.getElementById("root")!);
+const theme = getTheme();
 root.render(
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={theme.value}>
         <CssBaseline />
         <EssentialComponents />
         <BrowserRouter>
@@ -54,7 +54,7 @@ root.render(
                 <FirebaseManager />
                 <RouteTracker />
                 <Routes>
-                    <Route element={<ThemeLayout type="christmas" />}>
+                    <Route element={<ThemeLayout type={theme.type} />}>
                         <Route element={<FooterLayout />}>
                             <Route index element={<Main />} />
                             <Route
