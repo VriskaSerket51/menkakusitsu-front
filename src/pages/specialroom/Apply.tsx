@@ -45,7 +45,6 @@ import {
     PurposeInfo,
     UserInfo,
 } from "@common-jshs/menkakusitsu-lib/v1";
-import { unstable_batchedUpdates } from "react-dom";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 
@@ -262,7 +261,7 @@ function Apply() {
         setActiveStep(0);
     };
 
-    React.useMemo(() => {
+    React.useEffect(() => {
         getSpecialroomManagerInfo(
             { when: today.format("YYYY-MM-DD") },
             (result) => {
