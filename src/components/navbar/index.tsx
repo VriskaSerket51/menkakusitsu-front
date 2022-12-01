@@ -1,4 +1,18 @@
-import { Box, Paper, Typography, useMediaQuery } from "@mui/material";
+import {
+    Box,
+    Button,
+    Divider,
+    IconButton,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText,
+    Paper,
+    Toolbar,
+    Typography,
+    useMediaQuery,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import { NavbarButton, NavbarMenu } from "./NavbarItem";
 import Logo from "./Logo";
 import React from "react";
@@ -50,10 +64,22 @@ const navbarItems = [
     },
 ];
 
-const drawItems = (isMinWidth: boolean) => {
-    if (isMinWidth) {
+interface NavbarItemsProps {
+    isMinWidth: boolean;
+}
+
+function NavbarItems(props: NavbarItemsProps) {
+    const { isMinWidth } = props;
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
+
+    // if (isMinWidth) {
         return (
             <React.Fragment>
+                <Logo />
                 {navbarItems.map((navbarItem) => {
                     if (navbarItem.menu) {
                         return (
@@ -94,10 +120,23 @@ const drawItems = (isMinWidth: boolean) => {
                 </Box>
             </React.Fragment>
         );
-    } else {
-        return "ㅎ";
-    }
-};
+    // } else {
+    //     return (
+    //         <Toolbar>
+    //             <IconButton
+    //                 color="inherit"
+    //                 aria-label="open drawer"
+    //                 edge="start"
+    //                 onClick={handleDrawerToggle}
+    //                 sx={{ mr: 2, display: { sm: "none" } }}
+    //             >
+    //                 <MenuIcon />
+    //             </IconButton>
+    //             <Logo />
+    //         </Toolbar>
+    //     );
+    // }
+}
 
 function FixedNavbar() {
     const isMinWidth = useMediaQuery("(min-width:900px)");
@@ -115,8 +154,7 @@ function FixedNavbar() {
                         margin: "0px auto",
                     }}
                 >
-                    <Logo />
-                    {drawItems(isMinWidth)}
+                    <NavbarItems isMinWidth={isMinWidth} />
                 </Box>
             </Paper>
         </React.Fragment>
