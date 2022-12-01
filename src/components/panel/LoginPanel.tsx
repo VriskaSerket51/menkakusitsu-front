@@ -130,10 +130,10 @@ function LoginPopup() {
                         mt: 3,
                         mb: 2,
                         borderRadius: "50px",
-                        backgroundColor: "#279023",
+                        backgroundColor: "primary.main",
                         "&:hover": {
                             backgroundColor: "#fff",
-                            color: "#279023",
+                            color: "primary.main",
                         },
                         fontFamily: "BMDohyeon",
                     }}
