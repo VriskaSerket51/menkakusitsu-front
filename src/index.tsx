@@ -54,7 +54,7 @@ root.render(
                 <FirebaseManager />
                 <RouteTracker />
                 <Routes>
-                    <Route element={<ThemeLayout type="snow" />}>
+                    <Route element={<ThemeLayout type="christmas" />}>
                         <Route element={<FooterLayout />}>
                             <Route index element={<Main />} />
                             <Route
