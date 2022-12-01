@@ -1,8 +1,6 @@
 import { SHA3 } from "sha3";
 import axios from "axios";
-import { openConfirmDialog } from "../components/popup";
-import { TITLE } from "./Constant";
-import { checkTokenExpiration, checkTokenError } from "./AuthManager";
+import { checkTokenExpiration, checkTokenError, onLogout } from "./AuthManager";
 import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
 import uuid from "react-uuid";
 import { Buffer } from "buffer";
@@ -119,17 +117,17 @@ export const apiGet = async (path: string) => {
         return axios.get(url);
     }
     if (await checkTokenExpiration(accessToken)) {
+        onLogout();
         throw new Error("Token expired.");
     }
     accessToken = localStorage.getItem("access-token");
     accessToken = `Bearer ${accessToken}`;
-    return axios
-        .get(url, {
-            headers: {
-                Authorization: accessToken,
-            },
-        })
-        .then(checkTokenError);
+    return axios.get(url, {
+        headers: {
+            Authorization: accessToken,
+        },
+    });
+    // .then(checkTokenError);
 };
 
 export const apiPost = async (path: string, body: any = null) => {
@@ -142,13 +140,12 @@ export const apiPost = async (path: string, body: any = null) => {
         throw new Error("Token expired.");
     }
     accessToken = `Bearer ${accessToken}`;
-    return axios
-        .post(url, body, {
-            headers: {
-                Authorization: accessToken,
-            },
-        })
-        .then(checkTokenError);
+    return axios.post(url, body, {
+        headers: {
+            Authorization: accessToken,
+        },
+    });
+    // .then(checkTokenError);
 };
 
 export const apiPut = async (path: string, body: any = null) => {
@@ -161,13 +158,12 @@ export const apiPut = async (path: string, body: any = null) => {
         throw new Error("Token expired.");
     }
     accessToken = `Bearer ${accessToken}`;
-    return axios
-        .put(url, body, {
-            headers: {
-                Authorization: accessToken,
-            },
-        })
-        .then(checkTokenError);
+    return axios.put(url, body, {
+        headers: {
+            Authorization: accessToken,
+        },
+    });
+    // .then(checkTokenError);
 };
 
 export const apiDelete = async (path: string, body: any = null) => {
@@ -180,12 +176,11 @@ export const apiDelete = async (path: string, body: any = null) => {
         throw new Error("Token expired.");
     }
     accessToken = `Bearer ${accessToken}`;
-    return axios
-        .delete(url, {
-            data: body,
-            headers: {
-                Authorization: accessToken,
-            },
-        })
-        .then(checkTokenError);
+    return axios.delete(url, {
+        data: body,
+        headers: {
+            Authorization: accessToken,
+        },
+    });
+    // .then(checkTokenError);
 };
