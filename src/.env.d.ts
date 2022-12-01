@@ -6,3 +6,8 @@ interface ImportMeta {
         readonly VITE_API_PREFIX: string;
     };
 }
+
+declare module "*.jpg";
+declare module "*.png";
+declare module "*.jpeg";
+declare module "*.gif";
