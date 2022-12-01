@@ -38,6 +38,11 @@ const navbarItems = [
                 href: "/specialroom/management",
                 permission: 2,
             },
+            // {
+            //     title: "학생활동실 사용 신청",
+            //     href: "/",
+            //     permission: 1,
+            // },
         ],
     },
     {
@@ -77,49 +82,49 @@ function NavbarItems(props: NavbarItemsProps) {
     };
 
     // if (isMinWidth) {
-        return (
-            <React.Fragment>
-                <Logo />
-                {navbarItems.map((navbarItem) => {
-                    if (navbarItem.menu) {
-                        return (
-                            <NavbarMenu
-                                key={navbarItem.title}
-                                color={navbarItem.color}
-                                menu={navbarItem.menu}
-                                title={navbarItem.title}
-                            />
-                        );
-                    } else {
-                        return (
-                            <NavbarButton
-                                key={navbarItem.title}
-                                permission={navbarItem.permission}
-                                href={navbarItem.href}
-                                color={navbarItem.color}
-                                title={navbarItem.title}
-                            />
-                        );
-                    }
-                })}
+    return (
+        <React.Fragment>
+            <Logo />
+            {navbarItems.map((navbarItem) => {
+                if (navbarItem.menu) {
+                    return (
+                        <NavbarMenu
+                            key={navbarItem.title}
+                            color={navbarItem.color}
+                            menu={navbarItem.menu}
+                            title={navbarItem.title}
+                        />
+                    );
+                } else {
+                    return (
+                        <NavbarButton
+                            key={navbarItem.title}
+                            permission={navbarItem.permission}
+                            href={navbarItem.href}
+                            color={navbarItem.color}
+                            title={navbarItem.title}
+                        />
+                    );
+                }
+            })}
+            <Box
+                sx={{
+                    display: "flex",
+                    flex: 1,
+                    justifyContent: "flex-end",
+                }}
+            >
                 <Box
-                    sx={{
-                        display: "flex",
-                        flex: 1,
-                        justifyContent: "flex-end",
+                    style={{
+                        display: "inline-block",
+                        marginRight: "64px",
                     }}
                 >
-                    <Box
-                        style={{
-                            display: "inline-block",
-                            marginRight: "64px",
-                        }}
-                    >
-                        <AccountPanel />
-                    </Box>
+                    <AccountPanel />
                 </Box>
-            </React.Fragment>
-        );
+            </Box>
+        </React.Fragment>
+    );
     // } else {
     //     return (
     //         <Toolbar>

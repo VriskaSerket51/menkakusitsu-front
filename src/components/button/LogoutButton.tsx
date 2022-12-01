@@ -5,6 +5,7 @@ import { TITLE } from "../../utils/Constant";
 import { clearTokens, redirectToHome } from "../../utils/Utility";
 import { openWaitDialog, openYesNoDialog } from "../popup";
 import { ListItemIcon, MenuItem } from "@mui/material";
+import { onLogout } from "../../utils/AuthManager";
 
 function LogoutButton() {
     return (
@@ -15,10 +16,7 @@ function LogoutButton() {
                     "정말 로그아웃 하시겠습니까?",
                     () => {
                         openWaitDialog(TITLE.Info, "로그아웃 중입니다...");
-                        deleteLogout({}, () => {
-                            clearTokens();
-                            redirectToHome();
-                        });
+                        deleteLogout({}, onLogout);
                     }
                 );
             }}

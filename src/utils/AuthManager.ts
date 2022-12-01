@@ -35,14 +35,14 @@ export const checkTokenExpiration = async (accessToken: string) => {
     if (!parsedJWT) {
         return false;
     }
-    const exp = parsedJWT.exp;
+    const exp: number = parsedJWT.exp;
     if (exp - Date.now() / 1000 < 60) {
         const refreshToken = localStorage.getItem("refresh-token");
         if (!refreshToken || !parseJWT(refreshToken)) {
             return true;
         }
         const authHeader = `Bearer ${refreshToken}`;
-        const resp: BackendResponse = await axios({
+        const resp = await axios({
             method: "POST",
             url: import.meta.env.VITE_API_PREFIX + "/v1/auth/refresh",
             headers: {
@@ -55,11 +55,15 @@ export const checkTokenExpiration = async (accessToken: string) => {
             localStorage.setItem("refresh-token", result.refreshToken);
             return false;
         } else {
-            openConfirmDialog(TITLE.Alert, result.message, () => {
-                clearTokens();
-                redirectToHome();
-            });
+            // console.error(result.message);
+            // openConfirmDialog(TITLE.Alert, result.message, onLogout);
             return true;
         }
     }
+    return false;
+};
+
+export const onLogout = () => {
+    clearTokens();
+    redirectToHome();
 };
