@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
 import React from "react";
 import { Outlet } from "react-router-dom";
+import { ThemeType } from ".";
 import { SnowParticle } from "../particles/snow";
 
 interface ThemeLayoutProps {
-    type: "christmas" | "snow" | "april-fools" | "none";
+    type: ThemeType;
 }
 
 function ThemeLayout(props: ThemeLayoutProps) {
