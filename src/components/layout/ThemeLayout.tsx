@@ -3,6 +3,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import { ThemeType } from ".";
 import { SnowParticle } from "../particles/snow";
+import christmasImg from "../../assets/christmas.png";
 
 interface ThemeLayoutProps {
     type: ThemeType;
@@ -15,8 +16,7 @@ function ThemeLayout(props: ThemeLayoutProps) {
                 <React.Fragment>
                     <Box
                         sx={{
-                            background:
-                                "url(http://cfs.tistory.com/static/sticker/s_18.png) repeat",
+                            background: `url(${christmasImg}) repeat`,
                             textIndent: "-1000em",
                             position: "absolute",
                             left: "0",
