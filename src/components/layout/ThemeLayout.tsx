@@ -14,7 +14,7 @@ function ThemeLayout(props: ThemeLayoutProps) {
             return (
                 <React.Fragment>
                     <Box
-                        style={{
+                        sx={{
                             background:
                                 "url(http://cfs.tistory.com/static/sticker/s_18.png) repeat",
                             textIndent: "-1000em",
@@ -23,6 +23,8 @@ function ThemeLayout(props: ThemeLayoutProps) {
                             top: "0",
                             width: "100%",
                             height: "70px",
+                            pointerEvents: "none",
+                            cursor: "default",
                         }}
                     ></Box>
                     <SnowParticle />

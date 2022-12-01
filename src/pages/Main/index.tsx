@@ -30,7 +30,7 @@ function Main() {
                     margin: "50px auto 30px",
                 }}
             >
-                <Link href="/" underline="none" color="#279023">
+                <Link href="/" underline="none" color="primary.main">
                     {import.meta.env.VITE_WEB_TITLE}
                 </Link>
             </Typography>
