@@ -1,7 +1,7 @@
 import React from "react";
 
 function PreventUnload() {
-    React.useMemo(() => {
+    React.useEffect(() => {
         window.addEventListener("beforeunload", (event) => {
             event.preventDefault();
             event.returnValue = "";
