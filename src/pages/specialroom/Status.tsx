@@ -235,11 +235,11 @@ function Status() {
                                             <br />
                                             장소: {applyStatus.location}
                                             <br />
-                                            목적: {applyStatus.purpose}{" "}
+                                            목적: {applyStatus.purpose}
                                             {applyStatus.state === -1 &&
                                                 " - 거부됨"}
                                             <br />
-                                            명단: {applyStatus.applicants} - 총{" "}
+                                            명단: {applyStatus.applicants} - 총
                                             {
                                                 applyStatus.applicants.split(
                                                     ","
