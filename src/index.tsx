@@ -35,7 +35,7 @@ import FooterLayout from "./components/layout/FooterLayout";
 import ThemeLayout from "./components/layout/ThemeLayout";
 import { getTheme } from "./components/layout";
 
-document.getElementById("preview")!.innerHTML = "";
+// document.getElementById("preview")!.innerHTML = "";
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 const theme = getTheme();
 root.render(
