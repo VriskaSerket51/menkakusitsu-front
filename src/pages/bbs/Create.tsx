@@ -9,6 +9,9 @@ import {
     Paper,
     Select,
     TextField,
+    Checkbox,
+    FormGroup,
+    FormControlLabel,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import FixedNavbar from "../../components/navbar";
@@ -43,6 +46,7 @@ function Create() {
             const title = data.get("title")?.toString();
             const content = data.get("content")?.toString();
             const header = data.get("header")?.toString();
+            const isPublic = data.get("isPrivate")?.toString() != "on";
             if (!title || !content || !header) {
                 return;
             }
@@ -53,6 +57,7 @@ function Create() {
                     content: content,
                     header: header,
                     board: board,
+                    isPublic: isPublic,
                 },
                 (result) => {
                     closeWaitDialog();
@@ -132,8 +137,13 @@ function Create() {
                             required
                             inputProps={{ maxLength: 500 }}
                         />
-                        <br />
-                        <br />
+                        <FormGroup>
+                            <FormControlLabel
+                                control={<Checkbox />}
+                                label="비공개 피드백 작성"
+                                name="isPrivate"
+                            />
+                        </FormGroup>
                         {/* <Box 
                             sx={{
                                 textAlign: "center",
@@ -150,7 +160,7 @@ function Create() {
                                     hidden
                                 />
                             </Button>
-                        </Box>*/}
+                        </Box> */}
                         <br />
                         <SubmitButton color="primary.main" width="25%">
                             작성하기
