@@ -2,8 +2,11 @@ import { BbsComment, BbsPost } from "@common-jshs/menkakusitsu-lib/v1";
 import {
     Box,
     Button,
+    Checkbox,
     Container,
     FormControl,
+    FormControlLabel,
+    FormGroup,
     Grid,
     InputLabel,
     Link,
@@ -17,11 +20,7 @@ import { Stack } from "@mui/system";
 import React, { useCallback, useEffect, useState } from "react";
 import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
-import {
-    getBbsPost,
-    getBbsPostHeaders,
-    putBbsPost,
-} from "../../utils/Api";
+import { getBbsPost, getBbsPostHeaders, putBbsPost } from "../../utils/Api";
 import { useNavigate, useParams } from "react-router-dom";
 import {
     closeWaitDialog,
@@ -61,6 +60,7 @@ function Edit() {
             const title = data.get("title")?.toString();
             const content = data.get("content")?.toString();
             const header = data.get("header")?.toString();
+            const isPublic = data.get("isPrivate")?.toString() != "on";
             if (!title || !content || !header) {
                 return;
             }
@@ -72,6 +72,7 @@ function Edit() {
                     title: title,
                     content: content,
                     header: header,
+                    isPublic: isPublic,
                 },
                 (result) => {
                     closeWaitDialog();
@@ -162,9 +163,19 @@ function Edit() {
                                     defaultValue={post.content}
                                     inputProps={{ maxLength: 500 }}
                                 />
+                                <FormGroup>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                defaultChecked={!post.isPublic}
+                                            />
+                                        }
+                                        label="비공개 피드백 작성"
+                                        name="isPrivate"
+                                    />
+                                </FormGroup>
                             </React.Fragment>
                         )}
-                        <br />
                         <br />
                         {post && (
                             <SubmitButton color="primary.main" width="25%">
