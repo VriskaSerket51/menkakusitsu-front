@@ -2,13 +2,14 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import { Box, Button, Menu, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { getPermissionLevel } from "../../utils/Utility";
+import { getPermissionLevel, openInNewTab } from "../../utils/Utility";
 
 interface NavbarItemProps {
     permission: number;
     href: string;
     color?: string;
     title: string;
+    newTab?: boolean;
 }
 
 export function NavbarMenu(props: {
@@ -57,7 +58,11 @@ export function NavbarMenu(props: {
                             <MenuItem
                                 key={menu.title}
                                 onClick={() => {
-                                    navigate(menu.href);
+                                    if (menu.newTab) {
+                                        openInNewTab(menu.href);
+                                    } else {
+                                        navigate(menu.href);
+                                    }
                                 }}
                             >
                                 {menu.title}
@@ -85,7 +90,11 @@ export function NavbarButton(props: NavbarItemProps) {
             >
                 <Button
                     onClick={() => {
-                        navigate(props.href);
+                        if (props.newTab) {
+                            openInNewTab(props.href);
+                        } else {
+                            navigate(props.href);
+                        }
                     }}
                 >
                     <Typography

@@ -58,6 +58,7 @@ const navbarItems = [
                 title: "이디봇",
                 href: "/chat/idbot",
                 permission: 1,
+                newTab: true,
             },
         ],
     },
@@ -103,6 +104,7 @@ function NavbarItems(props: NavbarItemsProps) {
                             href={navbarItem.href}
                             color={navbarItem.color}
                             title={navbarItem.title}
+                            // newTab={navbarItem.newTab}
                         />
                     );
                 }
