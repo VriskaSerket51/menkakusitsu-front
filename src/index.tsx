@@ -22,7 +22,7 @@ import {
     BbsCreate,
     BbsEdit,
     PlaySnake,
-} from "./pages";
+} from "./pages/index(old)";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import EssentialComponents from "./components/EssentialComponents";
