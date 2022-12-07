@@ -26,6 +26,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.2",
+    "react-topbar-progress-indicator": "^4.1.1",
     "react-tsparticles": "^2.4.0",
     "react-uuid": "^1.0.3",
     "sha3": "^2.1.4",
