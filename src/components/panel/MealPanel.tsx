@@ -1,8 +1,9 @@
 import { GetMealResponse } from "@common-jshs/menkakusitsu-lib/v1";
-import React from "react";
+import React, { ReactNode } from "react";
 import { getMeal } from "../../utils/Api";
 import dayjs from "dayjs";
 import { Box, Divider, Paper, SxProps, Theme, Typography } from "@mui/material";
+import { dayToString } from "../../utils/Utility";
 
 interface MealInfoProps {
     type: "breakfast" | "lunch" | "dinner";
@@ -12,36 +13,52 @@ interface MealInfoProps {
 const MealInfo = (props: MealInfoProps) => {
     const currentHour = dayjs().hour();
     let mealName: string = "";
-    let highlitedMeal: boolean = false;
+    let isHighlighted: boolean = false;
     switch (props.type) {
         case "breakfast":
             mealName = "아침";
-            highlitedMeal = currentHour >= 19;
+            isHighlighted = currentHour >= 19;
             break;
         case "lunch":
             mealName = "점심";
-            highlitedMeal = currentHour < 13;
+            isHighlighted = currentHour < 13;
             break;
         case "dinner":
             mealName = "저녁";
-            highlitedMeal = currentHour >= 13 && currentHour < 19;
+            isHighlighted = currentHour >= 13 && currentHour < 19;
             break;
     }
-    const sx: SxProps<Theme> = highlitedMeal
-        ? {
-              display: "block",
-              padding: "34px 30px 30px 30px",
-              borderRadius: "1px",
-              borderStyle: "solid none none none",
-              borderColor: "primary.main",
-              borderWidth: "8px",
-          }
-        : {
-              display: "block",
-              padding: "50px 30px 30px 30px",
-          };
+    const Meal = ({ children }: { children: ReactNode }) => {
+        if (isHighlighted) {
+            return (
+                <Box
+                    sx={{
+                        display: "block",
+                        padding: "34px 30px 30px 30px",
+                        borderRadius: "1px",
+                        borderStyle: "solid none none none",
+                        borderColor: "primary.main",
+                        borderWidth: "8px",
+                    }}
+                >
+                    {children}
+                </Box>
+            );
+        } else {
+            return (
+                <Box
+                    sx={{
+                        display: "block",
+                        padding: "50px 30px 30px 30px",
+                    }}
+                >
+                    {children}
+                </Box>
+            );
+        }
+    };
     return (
-        <Box sx={sx}>
+        <Meal>
             <Typography variant="h5">{mealName}</Typography>
             {props.meals &&
                 props.meals.map((meal) => {
@@ -51,7 +68,7 @@ const MealInfo = (props: MealInfoProps) => {
                         </Typography>
                     );
                 })}
-        </Box>
+        </Meal>
     );
 };
 
@@ -60,10 +77,11 @@ function MealPanel() {
         null
     );
     const [isLoading, setIsLoading] = React.useState(true);
+    const today = dayjs();
 
     React.useEffect(() => {
         getMeal(
-            { when: dayjs().startOf("day").format("YYYY-MM-DD") },
+            { when: today.startOf("day").format("YYYY-MM-DD") },
             (result) => {
                 setMealInfo(result);
                 setIsLoading(false);
@@ -74,20 +92,25 @@ function MealPanel() {
     return (
         <React.Fragment>
             <Box>
-                <Paper
-                    sx={{
-                        display: "flex",
-                        justifyContent: "space-around",
-                    }}
-                >
-                    <MealInfo type="lunch" meals={mealInfo?.lunch.meals} />
-                    <Divider orientation="vertical" flexItem />
-                    <MealInfo type="dinner" meals={mealInfo?.dinner.meals} />
-                    <Divider orientation="vertical" flexItem />
-                    <MealInfo
-                        type="breakfast"
-                        meals={mealInfo?.breakfast.meals}
-                    />
+                <Paper>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "space-around",
+                        }}
+                    >
+                        <MealInfo type="lunch" meals={mealInfo?.lunch.meals} />
+                        <Divider orientation="vertical" flexItem />
+                        <MealInfo
+                            type="dinner"
+                            meals={mealInfo?.dinner.meals}
+                        />
+                        <Divider orientation="vertical" flexItem />
+                        <MealInfo
+                            type="breakfast"
+                            meals={mealInfo?.breakfast.meals}
+                        />
+                    </Box>
                 </Paper>
             </Box>
         </React.Fragment>
