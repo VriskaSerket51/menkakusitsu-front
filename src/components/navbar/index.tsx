@@ -43,17 +43,17 @@ const navbarItems = [
             //     href: "/",
             //     permission: 1,
             // },
+            {
+                title: "출석부 다운로드",
+                href: "/attendance/info",
+                permission: 1,
+            },
         ],
     },
     {
         color: "primary.main",
         title: "유틸리티",
         menu: [
-            {
-                title: "출석부 다운로드",
-                href: "/attendance/info",
-                permission: 1,
-            },
             {
                 title: "이디봇",
                 href: "/chat/idbot",
