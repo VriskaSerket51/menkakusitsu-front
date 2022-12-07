@@ -125,6 +125,7 @@ function Download() {
                     </Typography>
                     {attendanceInfo && parseAttendanceList(attendanceInfo.big)}
                 </Box>
+                <br />
                 <Box sx={{ paddingBottom: "64px" }}>
                     <Typography
                         sx={{
