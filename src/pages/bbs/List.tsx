@@ -15,6 +15,7 @@ import PaperTitle from "../../components/PaperTitle";
 import { getBbsPostList } from "../../utils/Api";
 import ArticleIcon from "@mui/icons-material/Article";
 import CampaignIcon from "@mui/icons-material/Campaign";
+import LockIcon from "@mui/icons-material/Lock";
 import { useNavigate, useParams } from "react-router-dom";
 
 interface ArticleProps {
@@ -42,7 +43,13 @@ function Article(props: ArticleProps) {
                     color: props.isNotice ? "#FF4E59" : "primary.main",
                 }}
             >
-                {props.isNotice ? <CampaignIcon /> : <ArticleIcon />}
+                {props.isNotice ? (
+                    <CampaignIcon />
+                ) : post.isPublic ? (
+                    <ArticleIcon />
+                ) : (
+                    <LockIcon />
+                )}
                 {post.header} {post.title} [{post.commentCount}]
             </Box>
             <Box
