@@ -1,57 +1,27 @@
-import React from "react";
-import loadable from "@loadable/component";
-import FixedNavbar from "../components/navbar";
+export { default as Main } from "./Main";
 
-function Fallback() {
-    return <FixedNavbar />;
-}
+export { default as AttendanceDownload } from "./attendance/Download";
+export { default as AttendanceInfo } from "./attendance/Info";
 
-export const Main = loadable(() => import("./Main"));
-Main.preload();
+export { default as BbsCreate } from "./bbs/Create";
+export { default as BbsEdit } from "./bbs/Edit";
+export { default as BbsList } from "./bbs/List";
+export { default as BbsPost } from "./bbs/Post";
 
-export const AttendanceDownload = loadable(
-    () => import("./attendance/Download")
-);
-export const AttendanceInfo = loadable(() => import("./attendance/Info"));
-AttendanceDownload.preload();
-AttendanceInfo.preload();
+export { default as ChatIdbot } from "./chat/Idbot";
+export { default as ChatRandom } from "./chat/RandomChat";
 
-export const BbsCreate = loadable(() => import("./bbs/Create"));
-export const BbsEdit = loadable(() => import("./bbs/Edit"));
-export const BbsList = loadable(() => import("./bbs/List"));
-export const BbsPost = loadable(() => import("./bbs/Post"));
-BbsCreate.preload();
-BbsEdit.preload();
-BbsList.preload();
-BbsPost.preload();
+export { default as PlaySnake } from "./playground/snake/SnakeGame";
 
-export const ChatIdbot = loadable(() => import("./chat/Idbot"));
-export const ChatRandom = loadable(() => import("./chat/RandomChat"));
-ChatIdbot.preload();
-ChatRandom.preload();
+export { default as SpecialroomApply } from "./specialroom/Apply";
+export { default as SpecialroomStatus } from "./specialroom/Status";
+export { default as SpecialroomManagement } from "./specialroom/Management";
 
-export const PlaySnake = loadable(() => import("./playground/snake/SnakeGame"));
-PlaySnake.preload();
+export { default as SurveyCreate } from "./survey/Create";
 
-export const SpecialroomApply = loadable(() => import("./specialroom/Apply"));
-export const SpecialroomStatus = loadable(() => import("./specialroom/Status"));
-export const SpecialroomManagement = loadable(
-    () => import("./specialroom/Management")
-);
-SpecialroomApply.preload();
-SpecialroomStatus.preload();
-SpecialroomManagement.preload();
+export { default as About } from "./About";
 
-export const SurveyCreate = loadable(() => import("./survey/Create"));
-SurveyCreate.preload();
+export { default as Setting } from "./setting";
 
-export const About = loadable(() => import("./About"));
-About.preload();
-
-export const Setting = loadable(() => import("./setting"));
-Setting.preload();
-
-export const NotFound = loadable(() => import("./NotFound"));
-export const Construct = loadable(() => import("./Construct"));
-NotFound.preload();
-Construct.preload();
+export { default as NotFound } from "./NotFound";
+export { default as Construct } from "./Construct";
