@@ -30,3 +30,6 @@ export const getTheme = (): { type: ThemeType; value: any } => {
         value: defaultTheme,
     };
 };
+
+export { default as FooterLayout } from "./FooterLayout";
+export { default as ThemeLayout } from "./ThemeLayout";
