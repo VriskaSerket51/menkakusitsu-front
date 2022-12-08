@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 
 import "./index.css";
 import "./styles/Fonts.css";
+import "./styles/NProgress.css";
 
 import {
     Main,
@@ -22,7 +23,7 @@ import {
     BbsCreate,
     BbsEdit,
     PlaySnake,
-} from "./pages/index(old)";
+} from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import EssentialComponents from "./components/EssentialComponents";
@@ -31,9 +32,7 @@ import RouteTracker from "./components/RouteTracker";
 import { SnackbarProvider } from "notistack";
 import FirebaseManager from "./components/FirebaseManager";
 import { TimetablePanel } from "./components";
-import FooterLayout from "./components/layout/FooterLayout";
-import ThemeLayout from "./components/layout/ThemeLayout";
-import { getTheme } from "./components/layout";
+import { getTheme, FooterLayout, ThemeLayout } from "./components/layout";
 
 // document.getElementById("preview")!.innerHTML = "";
 const root = ReactDOM.createRoot(document.getElementById("root")!);
