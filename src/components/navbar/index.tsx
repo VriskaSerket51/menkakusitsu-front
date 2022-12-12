@@ -60,6 +60,12 @@ const navbarItems = [
                 permission: 1,
                 newTab: true,
             },
+            {
+                title: "공학용 계산기",
+                href: "/numworks/simulator.html",
+                permission: 1,
+                newTab: true,
+            },
         ],
     },
     {
