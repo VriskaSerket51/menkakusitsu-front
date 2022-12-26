@@ -3,7 +3,6 @@ import {
     Box,
     Button,
     Container,
-    Link,
     Pagination,
     Paper,
     Typography,
@@ -16,7 +15,7 @@ import { getBbsPostList } from "../../utils/Api";
 import ArticleIcon from "@mui/icons-material/Article";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import LockIcon from "@mui/icons-material/Lock";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 interface ArticleProps {
     post: BbsPost;
@@ -28,11 +27,14 @@ function Article(props: ArticleProps) {
 
     const post = props.post;
     return (
-        <Button
-            onClick={() => {
-                navigate(`/bbs/${post.board}/${post.id}`);
+        <Link
+            to={`/bbs/${post.board}/${post.id}`}
+            style={{
+                justifyContent: "space-between",
+                textDecoration: "none",
+                fontSize: "0.9em",
+                padding: "0.4em",
             }}
-            sx={{ justifyContent: "space-between" }}
         >
             <Box
                 sx={{
@@ -63,7 +65,7 @@ function Article(props: ArticleProps) {
             >
                 {post.owner.name}
             </Box>
-        </Button>
+        </Link>
     );
 }
 

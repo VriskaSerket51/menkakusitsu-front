@@ -1,11 +1,9 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import { Box, Link } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function Logo() {
-    const navigate = useNavigate();
-
     return (
         <Box
             style={{
@@ -13,14 +11,7 @@ function Logo() {
                 marginLeft: "64px",
             }}
         >
-            <Link
-                color="inherit"
-                underline="none"
-                onClick={() => {
-                    navigate("/");
-                }}
-                sx={{cursor: "pointer"}}
-            >
+            <Link color="inherit" to="/" style={{ textDecoration: "none" }}>
                 <Typography
                     sx={{ fontFamily: "DesignHouseB" }}
                     variant="h4"
