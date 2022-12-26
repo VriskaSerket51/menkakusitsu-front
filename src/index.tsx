@@ -23,6 +23,7 @@ import {
     BbsCreate,
     BbsEdit,
     PlaySnake,
+    SpecialroomOuter,
 } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -114,6 +115,15 @@ root.render(
                                     <Route
                                         index
                                         element={<SpecialroomManagement />}
+                                    />
+                                </Route>
+                                <Route
+                                    path="outer"
+                                    element={<PrivateRoute permission={2} />}
+                                >
+                                    <Route
+                                        index
+                                        element={<SpecialroomOuter />}
                                     />
                                 </Route>
                             </Route>
