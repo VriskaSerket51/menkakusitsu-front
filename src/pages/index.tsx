@@ -16,6 +16,7 @@ export { default as PlaySnake } from "./playground/snake/SnakeGame";
 export { default as SpecialroomApply } from "./specialroom/Apply";
 export { default as SpecialroomStatus } from "./specialroom/Status";
 export { default as SpecialroomManagement } from "./specialroom/Management";
+export { default as SpecialroomOuter } from "./specialroom/Outer";
 
 export { default as SurveyCreate } from "./survey/Create";
 
