@@ -6,6 +6,12 @@ import RouteTracker from "../RouteTracker";
 import create from "zustand";
 import FixedNavbar from "../navbar";
 import Footer from "../Footer";
+import {
+    CancelableDialog,
+    ConfirmDialog,
+    WaitDialog,
+    YesNoDialog,
+} from "../popup";
 
 export interface RouteWrapperProps {
     noHeader?: boolean;
@@ -21,20 +27,26 @@ export default function RouteWrapper() {
     const { noHeader, noFooter } = useRouteWrapperStore();
 
     return (
-        <SnackbarProvider
-            maxSnack={5}
-            autoHideDuration={6000}
-            anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-            }}
-        >
-            <FirebaseManager />
-            <RouteTracker />
-            {!noHeader && <FixedNavbar />}
-            <Outlet />
-            {!noFooter && <Footer />}
-        </SnackbarProvider>
+        <React.Fragment>
+            <ConfirmDialog />
+            <WaitDialog />
+            <YesNoDialog />
+            <CancelableDialog />
+            <SnackbarProvider
+                maxSnack={5}
+                autoHideDuration={6000}
+                anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                }}
+            >
+                <FirebaseManager />
+                <RouteTracker />
+                {!noHeader && <FixedNavbar />}
+                <Outlet />
+                {!noFooter && <Footer />}
+            </SnackbarProvider>
+        </React.Fragment>
     );
 }
 

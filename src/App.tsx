@@ -32,12 +32,11 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import EssentialComponents from "./components/EssentialComponents";
-import PrivateRoute from "./components/PrivateRoute";
 import { TimetablePanel } from "./components";
 import {
     getTheme,
     RouteWrapper,
+    PrivateRoute
 } from "./components/router";
 
 const theme = getTheme();
@@ -115,7 +114,6 @@ export default function App() {
     return (
         <ThemeProvider theme={theme.value}>
             <CssBaseline />
-            <EssentialComponents />
             <RouterProvider router={router} />
         </ThemeProvider>
     );
