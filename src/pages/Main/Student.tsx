@@ -6,7 +6,6 @@ import { MealPanel, PagePanel, TimetablePanel } from "../../components";
 function Student() {
     return (
         <React.Fragment>
-            <FixedNavbar />
             <Container
                 maxWidth="xl"
                 sx={{

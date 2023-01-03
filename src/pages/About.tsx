@@ -5,7 +5,6 @@ import FixedNavbar from "../components/navbar";
 function About() {
     return (
         <React.Fragment>
-            <FixedNavbar />
             <Container
                 maxWidth="xl"
                 sx={{

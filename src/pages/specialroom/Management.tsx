@@ -193,7 +193,6 @@ function Management() {
 
     return (
         <React.Fragment>
-            <FixedNavbar />
             <Container
                 maxWidth="lg"
                 sx={{

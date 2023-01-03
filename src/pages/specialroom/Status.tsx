@@ -180,7 +180,6 @@ function Status() {
 
     return (
         <React.Fragment>
-            <FixedNavbar />
             <Container
                 maxWidth="md"
                 sx={{

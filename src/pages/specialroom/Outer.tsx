@@ -11,7 +11,6 @@ function Outer() {
     const [outsiders, setOutsiders] = useState([]);
     return (
         <React.Fragment>
-            <FixedNavbar />
             <Container
                 maxWidth="lg"
                 sx={{

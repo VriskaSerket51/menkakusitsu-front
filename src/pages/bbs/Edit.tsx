@@ -91,7 +91,6 @@ function Edit() {
 
     return (
         <React.Fragment>
-            <FixedNavbar />
             <Container
                 maxWidth="md"
                 sx={{

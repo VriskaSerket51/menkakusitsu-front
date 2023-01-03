@@ -24,7 +24,6 @@ const infos = [
 function Info() {
     return (
         <React.Fragment>
-            <FixedNavbar />
             <Container
                 maxWidth="md"
                 sx={{

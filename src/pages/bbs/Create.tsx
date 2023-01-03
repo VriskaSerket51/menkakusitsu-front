@@ -76,7 +76,6 @@ function Create() {
 
     return (
         <React.Fragment>
-            <FixedNavbar />
             <Container
                 maxWidth="md"
                 sx={{
