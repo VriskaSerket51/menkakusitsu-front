@@ -121,8 +121,9 @@ function Download() {
                         fontWeight: 200,
                     }}
                 >
-                    {today.year()}년 {today.month() + 1}월 {today.date()}일
-                    {when}차 면학 출석부
+                    {`${today.year()}년 ${
+                        today.month() + 1
+                    }월 ${today.date()}일 ${when}차 면학 출석부`}
                 </Typography>
                 <Box sx={{ paddingBottom: "192px" }}>
                     <Typography
