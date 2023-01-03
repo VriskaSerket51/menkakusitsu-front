@@ -12,22 +12,25 @@ interface NavbarItemProps {
     newTab?: boolean;
 }
 
-export function NavbarMenu(props: {
+interface NavbarMenuProps {
     title: string;
     color: string;
     menu: NavbarItemProps[];
-}) {
-    const navigate = useNavigate();
+}
+
+export function NavbarMenu(props: NavbarMenuProps) {
+    const { title, color, menu } = props;
 
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+    const navigate = useNavigate();
 
-    function onMouseOver(event: React.MouseEvent<HTMLButtonElement>) {
+    function openMenu(event: React.MouseEvent<HTMLButtonElement>) {
         if (anchorEl !== event.currentTarget) {
             setAnchorEl(event.currentTarget);
         }
     }
 
-    function onMouseLeave() {
+    function closeMenu() {
         setAnchorEl(null);
     }
 
@@ -38,21 +41,21 @@ export function NavbarMenu(props: {
                 marginLeft: "5rem",
             }}
         >
-            <Button onClick={onMouseOver}>
+            <Button onClick={openMenu}>
                 <Typography
                     sx={{ fontFamily: "DesignHouseB" }}
-                    color={props.color}
+                    color={color}
                     variant="h4"
                 >
-                    {props.title}
+                    {title}
                 </Typography>
             </Button>
             <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
-                onClose={onMouseLeave}
+                onClose={closeMenu}
             >
-                {props.menu.map((menu) => {
+                {menu.map((menu) => {
                     if (getPermissionLevel() >= menu.permission) {
                         return (
                             <MenuItem
@@ -63,6 +66,7 @@ export function NavbarMenu(props: {
                                     } else {
                                         navigate(menu.href);
                                     }
+                                    closeMenu();
                                 }}
                             >
                                 {menu.title}
@@ -78,9 +82,10 @@ export function NavbarMenu(props: {
 }
 
 export function NavbarButton(props: NavbarItemProps) {
+    const { permission, href, color, title, newTab } = props;
     const navigate = useNavigate();
 
-    if (getPermissionLevel() >= props.permission) {
+    if (getPermissionLevel() >= permission) {
         return (
             <Box
                 style={{
@@ -90,19 +95,19 @@ export function NavbarButton(props: NavbarItemProps) {
             >
                 <Button
                     onClick={() => {
-                        if (props.newTab) {
-                            openInNewTab(props.href);
+                        if (newTab) {
+                            openInNewTab(href);
                         } else {
-                            navigate(props.href);
+                            navigate(href);
                         }
                     }}
                 >
                     <Typography
                         sx={{ fontFamily: "DesignHouseB" }}
-                        color={props.color}
+                        color={color}
                         variant="h4"
                     >
-                        {props.title}
+                        {title}
                     </Typography>
                 </Button>
             </Box>
