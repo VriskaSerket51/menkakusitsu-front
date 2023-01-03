@@ -65,7 +65,14 @@ function Footer() {
                         newTab
                     />
                     <Typography>
-                        Made by 제주과학고 정보 동아리 COMMON
+                        <a
+                            style={{ color: "black" }}
+                            href="https://github.com/COMMON-Jshs"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                        >
+                            Made by 제주과학고 정보 동아리 COMMON
+                        </a>
                     </Typography>
                 </Stack>
                 <Typography fontSize="0.5rem">
