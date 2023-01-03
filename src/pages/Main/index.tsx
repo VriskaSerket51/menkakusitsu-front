@@ -23,10 +23,8 @@ function Main() {
 
     useEffect(() => {
         setHeaderActive(false);
-        setFooterActive(false);
         return () => {
             setHeaderActive(true);
-            setFooterActive(true);
         };
     }, []);
 
