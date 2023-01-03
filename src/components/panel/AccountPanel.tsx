@@ -20,11 +20,11 @@ function AccountPanel() {
 
     const open = Boolean(anchorEl);
 
-    const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const onClose = () => {
+    const closeMenu = () => {
         setAnchorEl(null);
     };
 
@@ -32,8 +32,8 @@ function AccountPanel() {
         <React.Fragment>
             <Box>
                 <Tooltip title="계정 설정">
-                    <IconButton onClick={onClick} size="small" sx={{ ml: 2 }}>
-                        <Avatar alt={getUserInfo().id} src="-" />
+                    <IconButton onClick={openMenu} size="small" sx={{ ml: 2 }}>
+                        <Avatar alt={getUserInfo()?.id} src="-" />
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -41,7 +41,7 @@ function AccountPanel() {
                 anchorEl={anchorEl}
                 id="account-menu"
                 open={open}
-                onClose={onClose}
+                onClose={closeMenu}
                 PaperProps={{
                     elevation: 0,
                     sx: {
@@ -72,13 +72,14 @@ function AccountPanel() {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
                 <MenuItem>
-                    <Avatar /> {getUserInfo().id}
+                    <Avatar /> {getUserInfo()?.id}
                 </MenuItem>
                 <Divider />
                 <NotificationButton />
                 <MenuItem
                     onClick={() => {
                         navigate("/setting");
+                        closeMenu();
                     }}
                 >
                     <ListItemIcon>
