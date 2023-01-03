@@ -5,6 +5,11 @@ import IconLink from "./IconLink";
 import SchoolIcon from "@mui/icons-material/School";
 import PolicyIcon from "@mui/icons-material/Policy";
 
+const contributors = [
+    { name: "23기 고승한", link: "https://github.com/VriskaSerket51" },
+    { name: "23기 선우준", link: "https://github.com/sunsh9876543210" },
+];
+
 function Footer() {
     return (
         <React.Fragment>
@@ -64,7 +69,22 @@ function Footer() {
                     </Typography>
                 </Stack>
                 <Typography fontSize="0.5rem">
-                    Contributors: 23기 고승한, 23기 선우준
+                    {"Contributors: "}
+                    {contributors.map((contributor, idx) => {
+                        return (
+                            <a
+                                key={contributor.name}
+                                style={{ color: "black" }}
+                                href={contributor.link}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                            >
+                                {`${contributor.name}${
+                                    idx == contributors.length - 1 ? "" : ", "
+                                }`}
+                            </a>
+                        );
+                    })}
                 </Typography>
             </Stack>
             <br />
