@@ -6,7 +6,12 @@ function RouteTracker() {
     const location = useLocation();
 
     useEffect(() => {
-        if (!window.location.href.startsWith("localhost")) {
+        const host = window.location.href;
+        if (
+            !host.startsWith("localhost") &&
+            !host.startsWith("127.") &&
+            !host.startsWith("192.")
+        ) {
             logPageView();
         }
     }, [location]);
