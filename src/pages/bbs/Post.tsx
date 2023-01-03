@@ -26,7 +26,7 @@ import {
     postBbsComment,
 } from "../../utils/Api";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserInfo } from "../../utils/Utility";
+import { getUserInfo, getParameter } from "../../utils/Utility";
 import {
     closeWaitDialog,
     openConfirmDialog,
@@ -34,6 +34,7 @@ import {
     openYesNoDialog,
 } from "../../components";
 import { TITLE } from "../../utils/Constant";
+import List from "./List";
 
 function Post() {
     const params = useParams();
@@ -42,6 +43,7 @@ function Post() {
 
     const board = params.board!;
     const postId = parseInt(params.postId!);
+    const page = Number(getParameter("page", "1"));
 
     const [post, setPost] = useState<BbsPost | null>(null);
     const [attachments, setAttachments] = useState<FileInfo[] | undefined>([]);
@@ -70,7 +72,7 @@ function Post() {
                 }
             );
         });
-    }, [commentPage]);
+    }, [commentPage, params]);
 
     const onPostComment = useCallback(
         (event: React.MouseEvent<HTMLFormElement>) => {
@@ -101,7 +103,6 @@ function Post() {
 
     return (
         <React.Fragment>
-            <FixedNavbar />
             <Container
                 maxWidth="md"
                 sx={{
@@ -322,6 +323,7 @@ function Post() {
                     </Box>
                 </Paper>
             </Container>
+            <List page={page} currentPostId={postId} />
         </React.Fragment>
     );
 }
