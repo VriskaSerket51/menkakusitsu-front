@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SpecialroomInfoPanel, MealPanel, LoginPanel } from "../../components";
 import { Container, Typography, Grid, Link } from "@mui/material";
 import { getUserInfo } from "../../utils/Utility";
 import Teacher from "./Teacher";
 import Student from "./Student";
+import {
+    setFooterActive,
+    setHeaderActive,
+} from "../../components/router/RouteWrapper";
 
 function Main() {
     const accessToken = localStorage.getItem("access-token");
@@ -16,6 +20,15 @@ function Main() {
             return <Student />;
         }
     }
+
+    useEffect(() => {
+        setHeaderActive(false);
+        setFooterActive(false);
+        return () => {
+            setHeaderActive(true);
+            setFooterActive(true);
+        };
+    }, []);
 
     return (
         <React.Fragment>
