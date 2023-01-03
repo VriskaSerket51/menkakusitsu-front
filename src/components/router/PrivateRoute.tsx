@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { getPermissionLevel } from "../utils/Utility";
+import { getPermissionLevel } from "../../utils/Utility";
 
 interface PrivateRouteProps {
     permission: number;
