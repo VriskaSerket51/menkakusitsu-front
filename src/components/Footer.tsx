@@ -1,9 +1,10 @@
 import { Divider, Stack, Typography } from "@mui/material";
-import InstagramIcon from "@mui/icons-material/Instagram";
 import React from "react";
 import IconLink from "./IconLink";
 import SchoolIcon from "@mui/icons-material/School";
 import PolicyIcon from "@mui/icons-material/Policy";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import { InstagramLogo } from "./images/Instagram";
 
 const contributors = [
     { name: "23기 고승한", link: "https://github.com/VriskaSerket51" },
@@ -36,13 +37,13 @@ function Footer() {
                     />
                     <IconLink
                         href="https://www.instagram.com/jejuscience1999/"
-                        icon={<InstagramIcon />}
+                        icon={<InstagramLogo />}
                         label="제주과학고 공식 인스타그램"
                         newTab
                     />
                     <IconLink
                         href="https://www.instagram.com/jshs_bamboo/"
-                        icon={<InstagramIcon />}
+                        icon={<InstagramLogo />}
                         label="제주과학고 대나무숲"
                         newTab
                     />
@@ -64,16 +65,12 @@ function Footer() {
                         label="개인정보처리방침"
                         newTab
                     />
-                    <Typography>
-                        <a
-                            style={{ color: "black" }}
-                            href="https://github.com/COMMON-Jshs"
-                            target="_blank"
-                            rel="noreferrer noopener"
-                        >
-                            Made by 제주과학고 정보 동아리 COMMON
-                        </a>
-                    </Typography>
+                    <IconLink
+                        href="https://github.com/COMMON-Jshs"
+                        icon={<GitHubIcon />}
+                        label=" Made by 제주과학고 정보 동아리 COMMON"
+                        newTab
+                    />
                 </Stack>
                 <Typography fontSize="0.5rem">
                     {"Contributors: "}
