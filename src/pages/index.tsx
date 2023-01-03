@@ -1,4 +1,4 @@
-export { default as Main } from "./Main";
+export { default as Main } from "./main";
 
 export { default as AttendanceDownload } from "./attendance/Download";
 export { default as AttendanceInfo } from "./attendance/Info";
