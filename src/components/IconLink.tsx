@@ -10,12 +10,15 @@ interface IconLinkProps {
 }
 
 function IconLink(props: IconLinkProps) {
+    const { href, icon, label, newTab } = props;
+
     return (
         <Link
-            href={props.href}
+            href={href}
             underline="hover"
-            target={props.newTab ? "_blank" : ""}
-            rel={props.newTab ? "noopener" : ""}
+            target={newTab ? "_blank" : ""}
+            rel={newTab ? "noopener" : ""}
+            color="black"
         >
             <Box
                 sx={{
@@ -24,8 +27,7 @@ function IconLink(props: IconLinkProps) {
                     flexWrap: "wrap",
                 }}
             >
-                {props.icon ? props.icon : <LinkIcon />}
-                {props.label}
+                {icon || <LinkIcon />} {label}
             </Box>
         </Link>
     );
