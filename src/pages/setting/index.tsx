@@ -39,7 +39,6 @@ function Setting() {
 
     return (
         <React.Fragment>
-            <FixedNavbar />
             <Container
                 maxWidth="lg"
                 sx={{

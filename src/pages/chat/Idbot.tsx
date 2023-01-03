@@ -1,19 +1,32 @@
 import { Box, Divider, Paper, Typography } from "@mui/material";
 import { ChatController, MuiChat } from "../../components/chat-ui-react";
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "../../styles/ChatStyle.css";
 import { getIdbotChat } from "../../utils/Api";
+import {
+    setFooterActive,
+    setHeaderActive,
+} from "../../components/router/RouteWrapper";
 
 const BOT_NAME = "이디봇";
 
 function Idbot() {
-    const [chatCtl] = React.useState(
+    const [chatCtl] = useState(
         new ChatController({
             showDateTime: true,
         })
     );
 
-    React.useMemo(async () => {
+    useEffect(() => {
+        setHeaderActive(false);
+        setFooterActive(false);
+        return () => {
+            setHeaderActive(true);
+            setFooterActive(true);
+        };
+    }, []);
+
+    useMemo(async () => {
         const addBotMessage = async (content: string) => {
             await chatCtl.addMessage({
                 type: "jsx",

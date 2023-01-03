@@ -17,6 +17,10 @@ import { getAttendanceList, getSpecialroomInfo } from "../../utils/Api";
 import dayjs from "dayjs";
 import { SpecialroomInfo } from "@common-jshs/menkakusitsu-lib/v1";
 import { drawInfoTable } from "../../components/panel/SpecialroomInfoPanel";
+import {
+    setFooterActive,
+    setHeaderActive,
+} from "../../components/router/RouteWrapper";
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
@@ -84,6 +88,12 @@ function Download() {
                 setIsLoading(false);
             });
         });
+        setHeaderActive(false);
+        setFooterActive(false);
+        return () => {
+            setHeaderActive(true);
+            setFooterActive(true);
+        };
     }, []);
 
     useEffect(() => {
