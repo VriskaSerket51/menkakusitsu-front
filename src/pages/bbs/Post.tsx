@@ -44,6 +44,7 @@ function Post() {
     const board = params.board!;
     const postId = parseInt(params.postId!);
     const page = Number(getParameter("page", "1"));
+    const userInfo = getUserInfo();
 
     const [post, setPost] = useState<BbsPost | null>(null);
     const [attachments, setAttachments] = useState<FileInfo[] | undefined>([]);
@@ -165,8 +166,8 @@ function Post() {
                                     목록
                                 </Button>
                                 {post &&
-                                    (getUserInfo().uid === post.owner.uid ||
-                                        getUserInfo().isDev) && (
+                                    (userInfo?.uid === post.owner.uid ||
+                                        userInfo?.isDev) && (
                                         <Button
                                             variant="contained"
                                             color="primary"
@@ -180,8 +181,8 @@ function Post() {
                                         </Button>
                                     )}
                                 {post &&
-                                    (getUserInfo().uid === post.owner.uid ||
-                                        getUserInfo().isDev) && (
+                                    (userInfo?.uid === post.owner.uid ||
+                                        userInfo?.isDev) && (
                                         <Button
                                             variant="contained"
                                             color="error"
@@ -256,9 +257,9 @@ function Post() {
                                                 <Typography color="gray">
                                                     {comment.createdDate}
                                                 </Typography>
-                                                {(getUserInfo().uid ===
+                                                {(userInfo?.uid ===
                                                     comment.owner.uid ||
-                                                    getUserInfo().isDev) && (
+                                                    userInfo?.isDev) && (
                                                     <IconButton
                                                         size="small"
                                                         onClick={() => {
