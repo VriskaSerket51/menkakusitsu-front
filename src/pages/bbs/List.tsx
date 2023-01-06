@@ -46,7 +46,7 @@ function Article(props: ArticleProps) {
                     alignItems: "center",
                     flexWrap: "wrap",
                     float: "left",
-                    color: isNotice ? "#FF4E59" : "primary.main",
+                    color: isNotice ? "#FF4E59" : "primary.dark",
                 }}
             >
                 {isNotice ? (
