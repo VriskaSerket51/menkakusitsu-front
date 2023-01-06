@@ -29,6 +29,8 @@ function Management() {
     const [information, setInformation] = useState<SpecialroomInfo[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    const userInfo = getUserInfo();
+
     interface InfoCellProps {
         state: number;
     }
@@ -184,7 +186,7 @@ function Management() {
         getSpecialroomInfo({}, (result) => {
             setInformation(
                 result.information.filter(
-                    (info) => info.teacher.uid == getUserInfo().uid
+                    (info) => info.teacher.uid == userInfo?.uid
                 )
             );
             setIsLoading(false);
@@ -204,7 +206,7 @@ function Management() {
                         <PaperTitle>특별실 신청 관리</PaperTitle>
                         <SpecialroomInfoPanel
                             filter={(info) =>
-                                info.teacher.uid == getUserInfo().uid
+                                info.teacher.uid == userInfo?.uid
                             }
                         />
                         <Stack

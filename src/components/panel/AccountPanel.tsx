@@ -19,6 +19,7 @@ function AccountPanel() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const open = Boolean(anchorEl);
+    const userInfo = getUserInfo();
 
     const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -33,7 +34,7 @@ function AccountPanel() {
             <Box>
                 <Tooltip title="계정 설정">
                     <IconButton onClick={openMenu} size="small" sx={{ ml: 2 }}>
-                        <Avatar alt={getUserInfo()?.id} src="-" />
+                        <Avatar alt={userInfo?.id} src="-" />
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -72,7 +73,7 @@ function AccountPanel() {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
                 <MenuItem>
-                    <Avatar /> {getUserInfo()?.id}
+                    <Avatar /> {userInfo?.id}
                 </MenuItem>
                 <Divider />
                 <NotificationButton />
