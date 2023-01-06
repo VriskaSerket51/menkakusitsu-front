@@ -1,13 +1,9 @@
 import { SHA3 } from "sha3";
 import axios from "axios";
-import { checkTokenExpiration, checkTokenError, onLogout } from "./AuthManager";
+import { checkTokenExpiration, onLogout } from "./AuthManager";
 import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
 import uuid from "react-uuid";
 import { Buffer } from "buffer";
-
-export interface BackendResponse {
-    data: DefaultResponse;
-}
 
 export const dayToString = (day: number) => {
     if (day < 0 || day > 7) {
@@ -79,20 +75,25 @@ export const openInNewTab = (url: string) => {
     window.open(url, "_blank", "noopener");
 };
 
-export const getPermissionLevel = () => {
-    if (!getUserInfo()) {
-        return 0;
+export enum Permission {
+    Guest = 0,
+    Student = 1,
+    Teacher = 2,
+    Dev = 100,
+}
+
+export const getPermissionLevel = (): Permission => {
+    const userInfo = getUserInfo();
+    if (!userInfo) {
+        return Permission.Guest;
     }
-    if (getUserInfo().isDev) {
-        return 10;
+    if (userInfo.isDev) {
+        return Permission.Dev;
     }
-    if (getUserInfo().isTeacher) {
-        return 2;
+    if (userInfo.isTeacher) {
+        return Permission.Teacher;
     }
-    if (isLogined()) {
-        return 1;
-    }
-    return 0;
+    return Permission.Student;
 };
 
 export const isLogined = () => {
@@ -110,7 +111,14 @@ export const parseJWT = (token: string) => {
     }
 };
 
-export const getUserInfo = () => {
+type UserInfo = {
+    uid: number;
+    id: string;
+    isDev: boolean;
+    isTeacher: boolean;
+};
+
+export const getUserInfo = (): UserInfo | null => {
     const accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
         return null;
