@@ -7,7 +7,7 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute = (props: PrivateRouteProps) => {
-    let { permission } = props;
+    const { permission } = props;
 
     return getPermissionLevel() >= permission ? (
         <Outlet />
