@@ -1,22 +1,9 @@
-import {
-    Box,
-    Button,
-    Divider,
-    IconButton,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemText,
-    Paper,
-    Toolbar,
-    Typography,
-    useMediaQuery,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { Box, Paper, useMediaQuery } from "@mui/material";
 import { NavbarButton, NavbarMenu } from "./NavbarItem";
 import Logo from "./Logo";
 import React from "react";
 import { AccountPanel } from "../panel";
+import { Permission } from "../../utils/Utility";
 
 const navbarItems = [
     {
@@ -26,22 +13,22 @@ const navbarItems = [
             {
                 title: "특별실 신청",
                 href: "/specialroom/apply",
-                permission: 1,
+                permission: Permission.Student,
             },
             {
                 title: "특별실 신청 현황",
                 href: "/specialroom/status",
-                permission: 1,
+                permission: Permission.Student,
             },
             {
                 title: "특별실 신청 관리",
                 href: "/specialroom/management",
-                permission: 2,
+                permission: Permission.Teacher,
             },
             {
                 title: "학생 외박 관리",
                 href: "/specialroom/outer",
-                permission: 2,
+                permission: Permission.Teacher,
             },
             // {
             //     title: "학생활동실 사용 신청",
@@ -51,7 +38,7 @@ const navbarItems = [
             {
                 title: "출석부 다운로드",
                 href: "/attendance/info",
-                permission: 1,
+                permission: Permission.Student,
             },
         ],
     },
@@ -62,13 +49,13 @@ const navbarItems = [
             {
                 title: "이디봇",
                 href: "/chat/idbot",
-                permission: 1,
+                permission: Permission.Student,
                 newTab: true,
             },
             {
                 title: "공학용 계산기",
                 href: "/numworks/simulator.html",
-                permission: 1,
+                permission: Permission.Student,
                 newTab: true,
             },
         ],
@@ -77,7 +64,7 @@ const navbarItems = [
         color: "primary.main",
         title: "피드백",
         href: "/bbs/feedback/list",
-        permission: 1,
+        permission: Permission.Student,
     },
 ];
 
