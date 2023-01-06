@@ -31,7 +31,6 @@ export const getTheme = (): { type: ThemeType; value: any } => {
     };
 };
 
-export { default as FooterLayout } from "./FooterLayout";
 export { default as ThemeLayout } from "./ThemeLayout";
 export { default as RouteWrapper } from "./RouteWrapper";
 export { default as PrivateRoute } from "./PrivateRoute";
