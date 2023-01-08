@@ -21,6 +21,7 @@ import {
     BbsEdit,
     PlaySnake,
     SpecialroomOuter,
+    Contributors,
 } from "./pages";
 import {
     Route,
@@ -30,10 +31,11 @@ import {
 } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { TimetablePanel } from "./components";
-import { getTheme, RouteWrapper, PrivateRoute } from "./components/router";
+import { getTheme, getThemeType } from "./components/theme";
 import { Permission } from "./utils/Utility";
+import { PrivateRoute, RouteWrapper } from "./components/router";
 
-const theme = getTheme();
+const themeType = getThemeType();
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -56,6 +58,13 @@ const router = createBrowserRouter(
                 <Route path=":board/list" element={<BbsList page={1} />} />
                 <Route path=":board/:postId" element={<BbsPost />} />
                 <Route path=":board/:postId/edit" element={<BbsEdit />} />
+            </Route>
+
+            <Route
+                path="contributors"
+                element={<PrivateRoute permission={Permission.Student} />}
+            >
+                <Route index element={<Contributors />} />
             </Route>
 
             <Route
@@ -139,7 +148,7 @@ const router = createBrowserRouter(
 
 export default function App() {
     return (
-        <ThemeProvider theme={theme.value}>
+        <ThemeProvider theme={getTheme(themeType)}>
             <CssBaseline />
             <RouterProvider router={router} />
         </ThemeProvider>
