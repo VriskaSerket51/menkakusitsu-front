@@ -21,6 +21,7 @@ import {
     setFooterActive,
     setHeaderActive,
 } from "../../components/router/RouteWrapper";
+import { setParticleActive } from "../../components/particles";
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
@@ -90,9 +91,11 @@ function Download() {
         });
         setHeaderActive(false);
         setFooterActive(false);
+        setParticleActive(false);
         return () => {
             setHeaderActive(true);
             setFooterActive(true);
+            setParticleActive(true);
         };
     }, []);
 
