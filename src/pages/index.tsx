@@ -11,6 +11,8 @@ export { default as BbsPost } from "./bbs/Post";
 export { default as ChatIdbot } from "./chat/Idbot";
 export { default as ChatRandom } from "./chat/RandomChat";
 
+export { default as Contributors } from "./contributors";
+
 export { default as PlaySnake } from "./playground/snake/SnakeGame";
 
 export { default as SpecialroomApply } from "./specialroom/Apply";

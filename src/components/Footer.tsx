@@ -1,15 +1,12 @@
-import { Divider, Stack, Typography } from "@mui/material";
+import { Box, Divider, Stack } from "@mui/material";
 import React from "react";
-import IconLink from "./IconLink";
+import { IconLink, IconNavLink } from "./basic/Link";
 import SchoolIcon from "@mui/icons-material/School";
 import PolicyIcon from "@mui/icons-material/Policy";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import { InstagramLogo } from "./images/Instagram";
-
-const contributors = [
-    { name: "23기 고승한", link: "https://github.com/VriskaSerket51" },
-    { name: "23기 선우준", link: "https://github.com/sunsh9876543210" },
-];
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import { Link } from "react-router-dom";
 
 function Footer() {
     return (
@@ -68,28 +65,15 @@ function Footer() {
                     <IconLink
                         href="https://github.com/COMMON-Jshs"
                         icon={<GitHubIcon />}
-                        label=" Made by 제주과학고 정보 동아리 COMMON"
+                        label="Made by 제주과학고 정보 동아리 COMMON"
                         newTab
                     />
+                    <IconNavLink
+                        to="/contributors"
+                        label="만든 사람들"
+                        icon={<PeopleAltIcon />}
+                    />
                 </Stack>
-                <Typography fontSize="0.5rem">
-                    {"Contributors: "}
-                    {contributors.map((contributor, idx) => {
-                        return (
-                            <a
-                                key={contributor.name}
-                                style={{ color: "black" }}
-                                href={contributor.link}
-                                target="_blank"
-                                rel="noreferrer noopener"
-                            >
-                                {`${contributor.name}${
-                                    idx == contributors.length - 1 ? "" : ", "
-                                }`}
-                            </a>
-                        );
-                    })}
-                </Typography>
             </Stack>
             <br />
         </React.Fragment>
