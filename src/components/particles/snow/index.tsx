@@ -9,7 +9,7 @@ import { loadOutModesUpdater } from "tsparticles-updater-out-modes";
 import { loadSizeUpdater } from "tsparticles-updater-size";
 import { loadWobbleUpdater } from "tsparticles-updater-wobble";
 
-export function SnowParticle() {
+export default function SnowParticle() {
     const particlesInit = useCallback(async (engine: Engine) => {
         await loadBaseMover(engine);
         await loadCircleShape(engine);
@@ -27,7 +27,6 @@ export function SnowParticle() {
 
     return (
         <Particles
-            id="tsparticles-snow"
             init={particlesInit}
             loaded={particlesLoaded}
             options={{
