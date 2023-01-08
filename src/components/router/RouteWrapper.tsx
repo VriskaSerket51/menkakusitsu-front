@@ -12,19 +12,23 @@ import {
     WaitDialog,
     YesNoDialog,
 } from "../popup";
+import { getThemeType, ThemeAddon } from "../theme";
+import ParticleManager from "../particles";
 
 export interface RouteWrapperProps {
     noHeader?: boolean;
     noFooter?: boolean;
 }
 
-const useRouteWrapperStore = create<RouteWrapperProps>((set) => ({
+const useRouteWrapperStore = create<RouteWrapperProps>(() => ({
     noHeader: false,
     noFooter: false,
 }));
 
 export default function RouteWrapper() {
     const { noHeader, noFooter } = useRouteWrapperStore();
+
+    const type = getThemeType();
 
     return (
         <React.Fragment>
@@ -42,6 +46,8 @@ export default function RouteWrapper() {
             >
                 <FirebaseManager />
                 <RouteTracker />
+                <ParticleManager />
+                <ThemeAddon type={type} />
                 {!noHeader && <FixedNavbar />}
                 <Outlet />
                 {!noFooter && <Footer />}
