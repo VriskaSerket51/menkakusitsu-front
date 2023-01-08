@@ -10,7 +10,7 @@ interface PagePanelProps {
     children?: React.ReactNode;
 }
 
-function useInterval(callback, delay) {
+function useInterval(callback: Function, delay: number) {
     const savedCallback = useRef<Function>();
 
     // Remember the latest callback.
