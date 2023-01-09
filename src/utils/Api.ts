@@ -70,7 +70,7 @@ export const getBbsPostList = (
     onFinish: (result: v1.GetBbsPostListResponse) => any
 ) => {
     apiGet(
-        `/v1/bbs/${props.board}/list?postPage=${props.postPage}&postListSize=${props.postListSize}`
+        `/v1/bbs/post/list?board=${props.board}&postPage=${props.postPage}&postListSize=${props.postListSize}`
     )
         .then((resp) => {
             const result: v1.GetBbsPostListResponse = resp.data;
@@ -88,7 +88,7 @@ export const getBbsPost = (
     props: v1.GetBbsPostRequest,
     onFinish: (result: v1.GetBbsPostResponse) => any
 ) => {
-    apiGet(`/v1/bbs/${props.board}/${props.postId}`)
+    apiGet(`/v1/bbs/post?board=${props.board}&postId=${props.postId}`)
         .then((resp) => {
             const result: v1.GetBbsPostResponse = resp.data;
             if (isApiSuccessed(result)) {
@@ -105,7 +105,7 @@ export const postBbsPost = (
     props: v1.PostBbsPostRequest,
     onFinish: (result: v1.PostBbsPostResponse) => any
 ) => {
-    apiPost(`/v1/bbs/${props.board}`, props)
+    apiPost("/v1/bbs/post", props)
         .then((resp) => {
             const result: v1.PostBbsPostResponse = resp.data;
             if (isApiSuccessed(result)) {
@@ -122,7 +122,7 @@ export const putBbsPost = (
     props: v1.PutBbsPostRequest,
     onFinish: (result: v1.PutBbsPostResponse) => any
 ) => {
-    apiPut(`/v1/bbs/${props.board}/${props.postId}`, props)
+    apiPut("/v1/bbs/post", props)
         .then((resp) => {
             const result: v1.PutBbsPostResponse = resp.data;
             if (isApiSuccessed(result)) {
@@ -139,7 +139,7 @@ export const deleteBbsPost = (
     props: v1.DeleteBbsPostRequest,
     onFinish: (result: v1.DeleteBbsPostResponse) => any
 ) => {
-    apiDelete(`/v1/bbs/${props.board}/${props.postId}`, props)
+    apiDelete("/v1/bbs/post", props)
         .then((resp) => {
             const result: v1.DeleteBbsPostResponse = resp.data;
             if (isApiSuccessed(result)) {
@@ -156,7 +156,7 @@ export const getBbsPostHeaders = (
     props: v1.GetBbsPostHeaderRequest,
     onFinish: (result: v1.GetBbsPostHeaderResponse) => any
 ) => {
-    apiGet(`/v1/bbs/${props.board}/headers`)
+    apiGet(`/v1/bbs/post/headers?board=${props.board}`)
         .then((resp) => {
             const result: v1.GetBbsPostHeaderResponse = resp.data;
             if (isApiSuccessed(result)) {
@@ -174,7 +174,7 @@ export const getBbsCommentList = (
     onFinish: (result: v1.GetBbsCommentListResponse) => any
 ) => {
     apiGet(
-        `/v1/bbs/${props.board}/${props.postId}/list?commentPage=${props.commentPage}&commentListSize=${props.commentListSize}`
+        `/v1/bbs/comment/list?board=${props.board}&postId=${props.postId}&commentPage=${props.commentPage}&commentListSize=${props.commentListSize}`
     )
         .then((resp) => {
             const result: v1.GetBbsCommentListResponse = resp.data;
@@ -192,7 +192,7 @@ export const postBbsComment = (
     props: v1.PostBbsCommentRequest,
     onFinish: (result: v1.PostBbsCommentResponse) => any
 ) => {
-    apiPost(`/v1/bbs/${props.board}/${props.postId}`, props)
+    apiPost("/v1/bbs/comment", props)
         .then((resp) => {
             const result: v1.PostBbsCommentResponse = resp.data;
             if (isApiSuccessed(result)) {
@@ -209,10 +209,7 @@ export const deleteBbsComment = (
     props: v1.DeleteBbsCommentRequest,
     onFinish: (result: v1.DeleteBbsCommentResponse) => any
 ) => {
-    apiDelete(
-        `/v1/bbs/${props.board}/${props.postId}/${props.commentId}`,
-        props
-    )
+    apiDelete("/v1/bbs/comment", props)
         .then((resp) => {
             const result: v1.DeleteBbsCommentResponse = resp.data;
             if (isApiSuccessed(result)) {
