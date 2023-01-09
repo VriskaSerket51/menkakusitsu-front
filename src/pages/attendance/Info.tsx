@@ -7,12 +7,11 @@ import {
     Paper,
 } from "@mui/material";
 import React from "react";
-import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
 import { SubmitButton } from "../../components";
 import { openInNewTab } from "../../utils/Utility";
 
-const infos = [
+const info = [
     "출석부 학생 배치는 면학실 자리 배치와 같습니다.",
     "출석부 최하단에 일일 특별실 신청 명단이 있습니다.",
     // "학생이 특별실을 신청하지 않은 경우 학생 이름 아래에 'X'가 적힙니다.",
@@ -36,7 +35,7 @@ function Info() {
                         <List
                             sx={{ width: "100%", bgcolor: "background.paper" }}
                         >
-                            {infos.map((info, index) => {
+                            {info.map((info, index) => {
                                 return (
                                     <ListItem key={info}>
                                         <ListItemText
