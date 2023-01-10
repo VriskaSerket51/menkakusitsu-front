@@ -33,7 +33,7 @@ import {
     openWaitDialog,
     openYesNoDialog,
 } from "../../components";
-import { TITLE } from "../../utils/Constant";
+import { COMMENT_LIST_SIZE, DialogTitle } from "../../utils/Constant";
 import List from "./List";
 
 function Post() {
@@ -65,7 +65,7 @@ function Post() {
                     board: board,
                     postId: postId,
                     commentPage: commentPage,
-                    commentListSize: 20,
+                    commentListSize: COMMENT_LIST_SIZE,
                 },
                 (result) => {
                     setCommentCount(result.commentCount);
@@ -83,7 +83,7 @@ function Post() {
             if (!post || !comment) {
                 return;
             }
-            openWaitDialog(TITLE.Info, "작성 중입니다...");
+            openWaitDialog(DialogTitle.Info, "작성 중입니다...");
             postBbsComment(
                 { board: board, postId: post.id, content: comment },
                 (result) => {
@@ -188,7 +188,7 @@ function Post() {
                                             color="error"
                                             onClick={() => {
                                                 openYesNoDialog(
-                                                    TITLE.Alert,
+                                                    DialogTitle.Alert,
                                                     "정말 피드백을 삭제하실 건가요?",
                                                     () => {
                                                         deleteBbsPost(
@@ -198,7 +198,7 @@ function Post() {
                                                             },
                                                             (result) => {
                                                                 openConfirmDialog(
-                                                                    TITLE.Info,
+                                                                    DialogTitle.Info,
                                                                     "피드백이 삭제되었습니다.",
                                                                     () => {
                                                                         navigate(
@@ -264,7 +264,7 @@ function Post() {
                                                         size="small"
                                                         onClick={() => {
                                                             openYesNoDialog(
-                                                                TITLE.Alert,
+                                                                DialogTitle.Alert,
                                                                 "정말 의견을 삭제하실 건가요?",
                                                                 () => {
                                                                     deleteBbsComment(
@@ -278,7 +278,7 @@ function Post() {
                                                                             result
                                                                         ) => {
                                                                             openConfirmDialog(
-                                                                                TITLE.Info,
+                                                                                DialogTitle.Info,
                                                                                 "의견이 삭제되었습니다.",
                                                                                 () => {
                                                                                     refresh();
@@ -307,7 +307,11 @@ function Post() {
                         <br />
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Pagination
-                                count={Math.floor(commentCount / 20) + 1}
+                                count={
+                                    Math.floor(
+                                        commentCount / COMMENT_LIST_SIZE
+                                    ) + 1
+                                }
                                 page={commentPage}
                                 onChange={(
                                     event: React.ChangeEvent<unknown>,

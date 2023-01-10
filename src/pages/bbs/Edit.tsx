@@ -28,7 +28,7 @@ import {
     openWaitDialog,
     SubmitButton,
 } from "../../components";
-import { TITLE } from "../../utils/Constant";
+import { DialogTitle } from "../../utils/Constant";
 
 function Edit() {
     const params = useParams();
@@ -64,7 +64,7 @@ function Edit() {
             if (!title || !content || !header) {
                 return;
             }
-            openWaitDialog(TITLE.Info, "수정 중입니다...");
+            openWaitDialog(DialogTitle.Info, "수정 중입니다...");
             putBbsPost(
                 {
                     postId: parseInt(params.postId!),
@@ -77,7 +77,7 @@ function Edit() {
                 (result) => {
                     closeWaitDialog();
                     openConfirmDialog(
-                        TITLE.Info,
+                        DialogTitle.Info,
                         "피드백 수정이 완료되었습니다.",
                         () => {
                             navigate(`/bbs/${board}/${params.postId}`);

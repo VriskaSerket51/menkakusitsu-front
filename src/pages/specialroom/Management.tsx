@@ -23,7 +23,7 @@ import {
 } from "../../components";
 import { getSpecialroomInfo, putSpecialroomInfo } from "../../utils/Api";
 import { SpecialroomInfo } from "@common-jshs/menkakusitsu-lib/v1";
-import { TITLE } from "../../utils/Constant";
+import { DialogTitle } from "../../utils/Constant";
 
 function Management() {
     const [information, setInformation] = useState<SpecialroomInfo[]>([]);
@@ -117,7 +117,7 @@ function Management() {
                                     color="success"
                                     onClick={() => {
                                         openWaitDialog(
-                                            TITLE.Info,
+                                            DialogTitle.Info,
                                             "처리 중입니다..."
                                         );
                                         putSpecialroomInfo(
@@ -146,7 +146,7 @@ function Management() {
                                     color="error"
                                     onClick={() => {
                                         openWaitDialog(
-                                            TITLE.Info,
+                                            DialogTitle.Info,
                                             "처리 중입니다..."
                                         );
                                         putSpecialroomInfo(

@@ -5,7 +5,7 @@ import { apiDelete, apiGet, apiPost, SHA3_512 } from "./Utility";
 import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
 import * as v1 from "@common-jshs/menkakusitsu-lib/v1";
 import { closeWaitDialog, openConfirmDialog } from "../components/popup";
-import { TITLE } from "./Constant";
+import { DialogTitle } from "./Constant";
 
 const onApiError = (e: any) => {
     console.log(e);
@@ -50,7 +50,7 @@ export const deleteLogout = (
                     onFinish(result);
                 } else {
                     closeWaitDialog();
-                    openConfirmDialog(TITLE.Alert, result.message);
+                    openConfirmDialog(DialogTitle.Alert, result.message);
                 }
             })
             .catch(onApiError);
@@ -78,7 +78,7 @@ export const getBbsPostList = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -95,7 +95,7 @@ export const getBbsPost = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message, onFinish);
+                openConfirmDialog(DialogTitle.Alert, result.message, onFinish);
             }
         })
         .catch(onApiError);
@@ -112,7 +112,7 @@ export const postBbsPost = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -129,7 +129,7 @@ export const putBbsPost = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -146,7 +146,7 @@ export const deleteBbsPost = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -163,7 +163,7 @@ export const getBbsPostHeaders = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -182,7 +182,7 @@ export const getBbsCommentList = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -199,7 +199,7 @@ export const postBbsComment = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -216,7 +216,7 @@ export const deleteBbsComment = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -234,7 +234,7 @@ export const getIdbotChat = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -252,7 +252,7 @@ export const getMeal = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -270,7 +270,7 @@ export const getSpecialroomApply = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -287,7 +287,7 @@ export const postSpecialroomApply = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -304,7 +304,7 @@ export const deleteSpecialroomApply = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -321,7 +321,7 @@ export const getAttendanceInfo = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -338,7 +338,7 @@ export const getAttendanceList = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -355,7 +355,7 @@ export const getSpecialroomInfo = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -372,7 +372,7 @@ export const putSpecialroomInfo = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -390,7 +390,7 @@ export const getSpecialroomManagerInfo = (
             } else {
                 onFinish(result);
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -407,7 +407,7 @@ export const getSpecialroomLocationInfo = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -424,7 +424,7 @@ export const getSpecialroomPurposeInfo = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -441,7 +441,7 @@ export const getSpecialroomStudentInfo = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -458,7 +458,7 @@ export const getSpecialroomTeacherInfo = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -476,7 +476,7 @@ export const getTimetable = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -493,7 +493,7 @@ export const putTimetable = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -511,7 +511,7 @@ export const postUserPush = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -528,7 +528,7 @@ export const putUserPush = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -545,7 +545,7 @@ export const deleteUserPush = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -562,7 +562,7 @@ export const getMyPrivateInfo = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -579,7 +579,7 @@ export const putMyEmail = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);
@@ -596,7 +596,7 @@ export const putMyPassword = (
                 onFinish(result);
             } else {
                 closeWaitDialog();
-                openConfirmDialog(TITLE.Alert, result.message);
+                openConfirmDialog(DialogTitle.Alert, result.message);
             }
         })
         .catch(onApiError);

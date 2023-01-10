@@ -7,7 +7,7 @@ import {
 } from "../../../components";
 import { SHA3_512, validateEmail } from "../../../utils/Utility";
 import { getMyPrivateInfo, putMyEmail, putMyPassword } from "../../../utils/Api";
-import { TITLE } from "../../../utils/Constant";
+import { DialogTitle } from "../../../utils/Constant";
 
 function AccountSetting() {
     const [email, setEmail] = useState<string | null>(null);
@@ -42,7 +42,7 @@ function AccountSetting() {
                         setErrorText("유효하지 않은 이메일입니다!");
                         return;
                     }
-                    openWaitDialog(TITLE.Info, "잠시만 기다려주세요...");
+                    openWaitDialog(DialogTitle.Info, "잠시만 기다려주세요...");
                     putMyEmail(
                         { oldEmail: email, newEmail: newEmail },
                         (result) => {
@@ -98,7 +98,7 @@ function AccountSetting() {
                         );
                         return;
                     }
-                    openWaitDialog(TITLE.Info, "잠시만 기다려주세요...");
+                    openWaitDialog(DialogTitle.Info, "잠시만 기다려주세요...");
                     putMyPassword(
                         {
                             oldPassword: SHA3_512(oldPassword),

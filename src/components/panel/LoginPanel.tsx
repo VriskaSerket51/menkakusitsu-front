@@ -8,7 +8,7 @@ import {
     openWaitDialog,
     openCancelableDialog,
 } from "../popup";
-import { TITLE } from "../../utils/Constant";
+import { DialogTitle } from "../../utils/Constant";
 import { SubmitButton } from "../button";
 import { getPushToken } from "../FirebaseManager";
 import { getPushApproved } from "../../utils/PushManager";
@@ -23,7 +23,7 @@ const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
     if (!id || !password) {
         return;
     }
-    openWaitDialog(TITLE.Info, "로그인 중입니다...");
+    openWaitDialog(DialogTitle.Info, "로그인 중입니다...");
     postLogin({ id: id, password: password }, onLoginSuccessed, onLoginFailed);
 };
 
@@ -35,7 +35,7 @@ const onLoginSuccessed = (result: PostLoginResponse) => {
         if (result.callbacks) {
             if (result.callbacks.includes("needChangePw")) {
                 openConfirmDialog(
-                    TITLE.Alert,
+                    DialogTitle.Alert,
                     "기존 4자리 학번을 비밀번호로 사용하시는 경우, 비밀번호를 바꾸셔야합니다.",
                     () => {
                         window.location.href = "/setting";
@@ -45,7 +45,7 @@ const onLoginSuccessed = (result: PostLoginResponse) => {
             }
             if (result.callbacks.includes("needChangeEmail")) {
                 openConfirmDialog(
-                    TITLE.Alert,
+                    DialogTitle.Alert,
                     "비밀번호 복구 등의 서비스를 이용하시려면 이메일을 추가하셔야합니다.",
                     () => {
                         window.location.href = "/setting";
@@ -68,7 +68,7 @@ const onLoginSuccessed = (result: PostLoginResponse) => {
 
 const onLoginFailed = (result: PostLoginResponse) => {
     closeWaitDialog();
-    openConfirmDialog(TITLE.Info, result.message, () => {});
+    openConfirmDialog(DialogTitle.Info, result.message, () => {});
 };
 
 function LoginPopup() {
@@ -158,7 +158,7 @@ function LoginPopup() {
                             href="#"
                             onClick={() => {
                                 openConfirmDialog(
-                                    TITLE.Info,
+                                    DialogTitle.Info,
                                     "지금은 신규가입이 불가능합니다."
                                 );
                             }}

@@ -24,7 +24,7 @@ import {
     openWaitDialog,
     SubmitButton,
 } from "../../components";
-import { TITLE } from "../../utils/Constant";
+import { DialogTitle } from "../../utils/Constant";
 
 function Create() {
     const navigate = useNavigate();
@@ -50,7 +50,7 @@ function Create() {
             if (!title || !content || !header) {
                 return;
             }
-            openWaitDialog(TITLE.Info, "제출 중입니다...");
+            openWaitDialog(DialogTitle.Info, "제출 중입니다...");
             postBbsPost(
                 {
                     title: title,
@@ -62,7 +62,7 @@ function Create() {
                 (result) => {
                     closeWaitDialog();
                     openConfirmDialog(
-                        TITLE.Info,
+                        DialogTitle.Info,
                         "피드백 제출이 완료되었습니다.",
                         () => {
                             navigate(`/bbs/${board}/list`);

@@ -35,7 +35,7 @@ import {
     postSpecialroomApply,
     postUserPush,
 } from "../../utils/Api";
-import { TITLE } from "../../utils/Constant";
+import { DialogTitle } from "../../utils/Constant";
 import FixedNavbar from "../../components/navbar";
 import { SpecialroomInfoPanel } from "../../components/panel";
 import PaperTitle from "../../components/PaperTitle";
@@ -290,7 +290,7 @@ function Apply() {
         const location = data.get("location");
         if (!location) {
             openConfirmDialog(
-                TITLE.Alert,
+                DialogTitle.Alert,
                 "사용 장소 선택을 하지 않으셨습니다."
             );
             setActiveStep(1);
@@ -299,7 +299,7 @@ function Apply() {
         const purpose = data.get("purpose");
         if (!purpose) {
             openConfirmDialog(
-                TITLE.Alert,
+                DialogTitle.Alert,
                 "사용 목적 선택을 하지 않으셨습니다."
             );
             setActiveStep(2);
@@ -307,18 +307,18 @@ function Apply() {
         }
         if (applicants.length === 0) {
             openConfirmDialog(
-                TITLE.Alert,
+                DialogTitle.Alert,
                 "학생 명단 선택을 하지 않으셨습니다."
             );
             setActiveStep(3);
             return;
         }
         if (!teacher) {
-            openConfirmDialog(TITLE.Alert, "선생님 선택을 하지 않으셨습니다.");
+            openConfirmDialog(DialogTitle.Alert, "선생님 선택을 하지 않으셨습니다.");
             setActiveStep(4);
             return;
         }
-        openWaitDialog(TITLE.Info, "특별실을 신청하는 중입니다...");
+        openWaitDialog(DialogTitle.Info, "특별실을 신청하는 중입니다...");
         postSpecialroomApply(
             {
                 location: location.toString(),
@@ -330,7 +330,7 @@ function Apply() {
             () => {
                 closeWaitDialog();
                 openYesNoDialog(
-                    TITLE.Info,
+                    DialogTitle.Info,
                     "특별실 신청에 성공했습니다. 신청 현황 페이지를 보시겠습니까?",
                     () => {
                         navigate("/specialroom/status");

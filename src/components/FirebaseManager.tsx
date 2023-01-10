@@ -15,7 +15,7 @@ import { useSnackbar } from "notistack";
 import { DefaultSnackbar } from "./snackbar";
 import { putUserPush, deleteUserPush } from "../utils/Api";
 import { openConfirmDialog } from "./popup";
-import { TITLE } from "../utils/Constant";
+import { DialogTitle } from "../utils/Constant";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -82,7 +82,7 @@ export const getPushToken = (onFinish: (successed: boolean) => any) => {
             .catch((e) => {
                 console.log(e);
                 openConfirmDialog(
-                    TITLE.Alert,
+                    DialogTitle.Alert,
                     "Failed to get FCM token for reason: " + e
                 );
             });
@@ -108,7 +108,7 @@ export const deletePushToken = (onFinish: (successed: boolean) => any) => {
             .catch((e) => {
                 console.log(e);
                 openConfirmDialog(
-                    TITLE.Alert,
+                    DialogTitle.Alert,
                     "Failed to delete FCM token for reason: " + e
                 );
             });
