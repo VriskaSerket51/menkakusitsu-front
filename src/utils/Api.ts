@@ -2,86 +2,11 @@ import { deletePushToken } from "../components/FirebaseManager";
 import axios from "axios";
 import { checkTokenExpiration, onLogout } from "./AuthManager";
 import { getPushApproved } from "./PushManager";
-import {  SHA3_512 } from "./Utility";
+import { SHA3_512 } from "./Utility";
 import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
 import * as v1 from "@common-jshs/menkakusitsu-lib/v1";
 import { closeWaitDialog, openConfirmDialog } from "../components/popup";
 import { DialogTitle } from "./Constant";
-
-export const apiGet = async (path: string) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
-    let accessToken = localStorage.getItem("access-token");
-    if (!accessToken) {
-        return axios.get(url);
-    }
-    if (await checkTokenExpiration(accessToken)) {
-        onLogout();
-        throw new Error("Token expired.");
-    }
-    accessToken = localStorage.getItem("access-token");
-    accessToken = `Bearer ${accessToken}`;
-    return axios.get(url, {
-        headers: {
-            Authorization: accessToken,
-        },
-    });
-    // .then(checkTokenError);
-};
-
-export const apiPost = async (path: string, body: any = null) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
-    let accessToken = localStorage.getItem("access-token");
-    if (!accessToken) {
-        return axios.post(url, body);
-    }
-    if (await checkTokenExpiration(accessToken)) {
-        throw new Error("Token expired.");
-    }
-    accessToken = `Bearer ${accessToken}`;
-    return axios.post(url, body, {
-        headers: {
-            Authorization: accessToken,
-        },
-    });
-    // .then(checkTokenError);
-};
-
-export const apiPut = async (path: string, body: any = null) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
-    let accessToken = localStorage.getItem("access-token");
-    if (!accessToken) {
-        return axios.put(url);
-    }
-    if (await checkTokenExpiration(accessToken)) {
-        throw new Error("Token expired.");
-    }
-    accessToken = `Bearer ${accessToken}`;
-    return axios.put(url, body, {
-        headers: {
-            Authorization: accessToken,
-        },
-    });
-    // .then(checkTokenError);
-};
-
-export const apiDelete = async (path: string, body: any = null) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
-    let accessToken = localStorage.getItem("access-token");
-    if (!accessToken) {
-        return axios.delete(url);
-    }
-    if (await checkTokenExpiration(accessToken)) {
-        throw new Error("Token expired.");
-    }
-    accessToken = `Bearer ${accessToken}`;
-    return axios.delete(url, {
-        data: body,
-        headers: {
-            Authorization: accessToken,
-        },
-    });
-    // .then(checkTokenError);
-};
 
 const onApiError = (e: any) => {
     console.log(e);
@@ -91,6 +16,44 @@ const onApiError = (e: any) => {
 
 const isApiSuccessed = (result: DefaultResponse) => {
     return result.status >= 0;
+};
+
+export const apiRequest = async (method: string, path: string, data?: any) => {
+    const url = import.meta.env.VITE_API_PREFIX + path;
+    let accessToken = localStorage.getItem("access-token");
+    if (!accessToken) {
+        return axios({ method: method, url: url, data: data });
+    }
+    if (await checkTokenExpiration(accessToken)) {
+        onLogout();
+        throw new Error("Token expired.");
+    }
+    accessToken = localStorage.getItem("access-token");
+    accessToken = `Bearer ${accessToken}`;
+    return axios({
+        method: method,
+        url: url,
+        data: data,
+        headers: {
+            Authorization: accessToken,
+        },
+    });
+};
+
+export const apiGet = async (path: string) => {
+    return apiRequest("get", path);
+};
+
+export const apiPost = async <T>(path: string, body?: any) => {
+    return apiRequest("post", path, body);
+};
+
+export const apiPut = async <T>(path: string, body: any = null) => {
+    return apiRequest("put", path, body);
+};
+
+export const apiDelete = async <T>(path: string, body: any = null) => {
+    return apiRequest("delete", path, body);
 };
 
 //Auth
