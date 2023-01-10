@@ -1,7 +1,4 @@
 import { SHA3 } from "sha3";
-import axios from "axios";
-import { checkTokenExpiration, onLogout } from "./AuthManager";
-import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
 import uuid from "react-uuid";
 import { Buffer } from "buffer";
 
@@ -139,79 +136,4 @@ export const SHA3_512 = (input: string) => {
     const hash = new SHA3(512);
     hash.update(input);
     return hash.digest("hex");
-};
-
-export const apiGet = async (path: string) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
-    let accessToken = localStorage.getItem("access-token");
-    if (!accessToken) {
-        return axios.get(url);
-    }
-    if (await checkTokenExpiration(accessToken)) {
-        onLogout();
-        throw new Error("Token expired.");
-    }
-    accessToken = localStorage.getItem("access-token");
-    accessToken = `Bearer ${accessToken}`;
-    return axios.get(url, {
-        headers: {
-            Authorization: accessToken,
-        },
-    });
-    // .then(checkTokenError);
-};
-
-export const apiPost = async (path: string, body: any = null) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
-    let accessToken = localStorage.getItem("access-token");
-    if (!accessToken) {
-        return axios.post(url, body);
-    }
-    if (await checkTokenExpiration(accessToken)) {
-        throw new Error("Token expired.");
-    }
-    accessToken = `Bearer ${accessToken}`;
-    return axios.post(url, body, {
-        headers: {
-            Authorization: accessToken,
-        },
-    });
-    // .then(checkTokenError);
-};
-
-export const apiPut = async (path: string, body: any = null) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
-    let accessToken = localStorage.getItem("access-token");
-    if (!accessToken) {
-        return axios.put(url);
-    }
-    if (await checkTokenExpiration(accessToken)) {
-        throw new Error("Token expired.");
-    }
-    accessToken = `Bearer ${accessToken}`;
-    return axios.put(url, body, {
-        headers: {
-            Authorization: accessToken,
-        },
-    });
-    // .then(checkTokenError);
-};
-
-export const apiDelete = async (path: string, body: any = null) => {
-    const url = import.meta.env.VITE_API_PREFIX + path;
-    let accessToken = localStorage.getItem("access-token");
-    if (!accessToken) {
-        return axios.delete(url);
-    }
-    if (await checkTokenExpiration(accessToken)) {
-        throw new Error("Token expired.");
-    }
-    accessToken = `Bearer ${accessToken}`;
-    return axios.delete(url, {
-        data: body,
-        headers: {
-            Authorization: accessToken,
-        },
-    });
-    // .then(checkTokenError);
 };
