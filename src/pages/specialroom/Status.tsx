@@ -27,7 +27,7 @@ import HourglassTopIcon from "@mui/icons-material/HourglassTop";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useCallback } from "react";
 import SubmitButton from "../../components/button/SubmitButton";
-import { TITLE } from "../../utils/Constant";
+import { DialogTitle } from "../../utils/Constant";
 import {
     openConfirmDialog,
     openYesNoDialog,
@@ -149,10 +149,10 @@ function Status() {
     const onCancelApply = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         openYesNoDialog(
-            TITLE.Info,
+            DialogTitle.Info,
             "정말 특별실 신청을 취소하시겠습니까?",
             () => {
-                openWaitDialog(TITLE.Info, "특별실 신청을 취소 중입니다...");
+                openWaitDialog(DialogTitle.Info, "특별실 신청을 취소 중입니다...");
                 deleteSpecialroomApply({ when: when }, () => {
                     closeWaitDialog();
                     refresh();

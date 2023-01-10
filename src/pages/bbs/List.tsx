@@ -15,6 +15,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import LockIcon from "@mui/icons-material/Lock";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { POST_LIST_SIZE } from "../../utils/Constant";
 
 interface ArticleProps {
     post: BbsPost;
@@ -90,7 +91,7 @@ function List(props: ListProps) {
 
     useEffect(() => {
         getBbsPostList(
-            { board: board, postPage: page, postListSize: 20 },
+            { board: board, postPage: page, postListSize: POST_LIST_SIZE },
             (result) => {
                 setPostCount(result.postCount);
                 setPostList(result.list);
@@ -142,7 +143,9 @@ function List(props: ListProps) {
                         <br />
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Pagination
-                                count={Math.floor(postCount / 20) + 1}
+                                count={
+                                    Math.floor(postCount / POST_LIST_SIZE) + 1
+                                }
                                 page={page}
                                 onChange={(
                                     event: React.ChangeEvent<unknown>,

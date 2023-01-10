@@ -1,7 +1,7 @@
 import React from "react";
 import { Logout } from "@mui/icons-material";
 import { deleteLogout } from "../../utils/Api";
-import { TITLE } from "../../utils/Constant";
+import { DialogTitle } from "../../utils/Constant";
 import { clearTokens, redirectToHome } from "../../utils/Utility";
 import { openWaitDialog, openYesNoDialog } from "../popup";
 import { ListItemIcon, MenuItem } from "@mui/material";
@@ -12,10 +12,10 @@ function LogoutButton() {
         <MenuItem
             onClick={() => {
                 openYesNoDialog(
-                    TITLE.Info,
+                    DialogTitle.Info,
                     "정말 로그아웃 하시겠습니까?",
                     () => {
-                        openWaitDialog(TITLE.Info, "로그아웃 중입니다...");
+                        openWaitDialog(DialogTitle.Info, "로그아웃 중입니다...");
                         deleteLogout({}, onLogout);
                     }
                 );
