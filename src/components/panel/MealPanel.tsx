@@ -2,7 +2,15 @@ import { GetMealResponse } from "@common-jshs/menkakusitsu-lib/v1";
 import React, { ReactNode } from "react";
 import { getMeal } from "../../utils/Api";
 import dayjs from "dayjs";
-import { Box, Divider, Paper, SxProps, Theme, Typography } from "@mui/material";
+import {
+    Box,
+    Divider,
+    Paper,
+    Skeleton,
+    SxProps,
+    Theme,
+    Typography,
+} from "@mui/material";
 import { dayToString } from "../../utils/Utility";
 
 interface MealInfoProps {
@@ -11,10 +19,12 @@ interface MealInfoProps {
 }
 
 const MealInfo = (props: MealInfoProps) => {
+    const { type, meals } = props;
+
     const currentHour = dayjs().hour();
     let mealName: string = "";
     let isHighlighted: boolean = false;
-    switch (props.type) {
+    switch (type) {
         case "breakfast":
             mealName = "아침";
             isHighlighted = currentHour >= 19;
@@ -39,6 +49,7 @@ const MealInfo = (props: MealInfoProps) => {
                         borderStyle: "solid none none none",
                         borderColor: "primary.main",
                         borderWidth: "8px",
+                        flex: 1,
                     }}
                 >
                     {children}
@@ -50,6 +61,7 @@ const MealInfo = (props: MealInfoProps) => {
                     sx={{
                         display: "block",
                         padding: "50px 30px 30px 30px",
+                        flex: 1,
                     }}
                 >
                     {children}
@@ -60,14 +72,24 @@ const MealInfo = (props: MealInfoProps) => {
     return (
         <Meal>
             <Typography variant="h5">{mealName}</Typography>
-            {props.meals &&
-                props.meals.map((meal) => {
+            {meals ? (
+                meals.map((meal) => {
                     return (
                         <Typography key={meal} variant="h6">
                             - {meal}
                         </Typography>
                     );
-                })}
+                })
+            ) : (
+                <Box>
+                    <Skeleton variant="text" animation="wave" />
+                    <Skeleton variant="text" animation="wave" />
+                    <Skeleton variant="text" animation="wave" />
+                    <Skeleton variant="text" animation="wave" />
+                    <Skeleton variant="text" animation="wave" />
+                    <Skeleton variant="text" animation="wave" />
+                </Box>
+            )}
         </Meal>
     );
 };
@@ -97,6 +119,7 @@ function MealPanel() {
                         sx={{
                             display: "flex",
                             justifyContent: "space-around",
+                            flexWrap: "wrap",
                         }}
                     >
                         <MealInfo type="lunch" meals={mealInfo?.lunch.meals} />
