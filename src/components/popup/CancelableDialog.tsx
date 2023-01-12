@@ -6,10 +6,11 @@ import {
     Slide,
     IconButton,
 } from "@mui/material";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import { TransitionProps } from "@mui/material/transitions";
 import { defaultCallback, DialogProps } from ".";
+import { useLocation } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -29,6 +30,12 @@ const useCancelableDialogStore = create<DialogProps>((set) => ({
 
 function CancelableDialog() {
     const { title, content, onYes, close } = useCancelableDialogStore();
+    const location = useLocation();
+
+    useEffect(() => {
+        close();
+    }, [location]);
+
     return (
         <Dialog
             open={Boolean(onYes)}
@@ -58,7 +65,7 @@ function CancelableDialog() {
             <DialogContent>{content}</DialogContent>
         </Dialog>
     );
-};
+}
 
 export default CancelableDialog;
 
