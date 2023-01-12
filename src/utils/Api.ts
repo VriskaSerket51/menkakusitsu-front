@@ -9,9 +9,19 @@ import { closeWaitDialog, openConfirmDialog } from "../components/popup";
 import { DialogTitle } from "./Constant";
 
 const onApiError = (e: any) => {
-    console.log(e);
-    // closeWaitDialog();
-    // openConfirmDialog(TITLE.Info, "데이터 전송에 실패했습니다.");
+    console.error(e);
+    closeWaitDialog();
+    const error = `${e}`;
+    if (error.includes("400")) {
+        openConfirmDialog(DialogTitle.Alert, "데이터 형식이 잘못되었습니다.");
+    } else if (error.includes("403")) {
+        openConfirmDialog(DialogTitle.Alert, "권한이 부족합니다.");
+    } else if (error.includes("500")) {
+        openConfirmDialog(
+            DialogTitle.Alert,
+            "데이터 처리 중 에러가 발생했습니다."
+        );
+    }
 };
 
 const isApiSuccessed = (result: DefaultResponse) => {
@@ -57,6 +67,23 @@ export const apiDelete = async <T>(path: string, body: any = null) => {
 };
 
 //Auth
+export const postRegister = (
+    props: v1.PostRegisterRequest,
+    onFinish: (result: v1.PostRegisterResponse) => any
+) => {
+    apiPost("/v1/auth/register", props)
+        .then((resp) => {
+            const result: v1.PostLoginResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(DialogTitle.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
 export const postLogin = (
     props: v1.PostLoginRequest,
     onSuccessed: (result: v1.PostLoginResponse) => any,
