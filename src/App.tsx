@@ -55,7 +55,7 @@ const router = createBrowserRouter(
                 element={<PrivateRoute permission={Permission.Student} />}
             >
                 <Route path=":board/create" element={<BbsCreate />} />
-                <Route path=":board/list" element={<BbsList page={1} />} />
+                <Route path=":board/list" element={<BbsList />} />
                 <Route path=":board/:postId" element={<BbsPost />} />
                 <Route path=":board/:postId/edit" element={<BbsEdit />} />
             </Route>

@@ -17,7 +17,6 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import FixedNavbar from "../../components/navbar";
 import {
     deleteBbsComment,
     deleteBbsPost,
@@ -44,11 +43,11 @@ function Post() {
     const board = params.board!;
     const postId = parseInt(params.postId!);
     const page = Number(getParameter("page", "1"));
+    const commentPage = Number(getParameter("commentPage", "1"));
     const userInfo = getUserInfo();
 
     const [post, setPost] = useState<BbsPost | null>(null);
     const [attachments, setAttachments] = useState<FileInfo[] | undefined>([]);
-    const [commentPage, setCommentPage] = useState(1);
     const [commentCount, setCommentCount] = useState(0);
     const [commentList, setCommentList] = useState<BbsComment[] | null>(null);
 
@@ -307,19 +306,17 @@ function Post() {
                         <br />
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Pagination
-                                count={
-                                    Math.floor(
-                                        commentCount / COMMENT_LIST_SIZE
-                                    ) + 1
-                                }
+                                count={Math.ceil(
+                                    commentCount / COMMENT_LIST_SIZE
+                                )}
                                 page={commentPage}
                                 onChange={(
                                     event: React.ChangeEvent<unknown>,
                                     value: number
                                 ) => {
-                                    if (commentPage != value) {
-                                        setCommentPage(value);
-                                    }
+                                    navigate(
+                                        `/bbs/${board}/${postId}?page=${page}&commentPage=${value}`
+                                    );
                                 }}
                                 variant="outlined"
                                 color="primary"
@@ -328,7 +325,7 @@ function Post() {
                     </Box>
                 </Paper>
             </Container>
-            <List page={page} currentPostId={postId} />
+            <List />
         </React.Fragment>
     );
 }
