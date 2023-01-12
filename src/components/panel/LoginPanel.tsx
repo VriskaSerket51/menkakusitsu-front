@@ -1,19 +1,15 @@
 import "../../styles/LoginForm.css";
 
 import React from "react";
-import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
-import {
-    openConfirmDialog,
-    closeWaitDialog,
-    openWaitDialog,
-    openCancelableDialog,
-} from "../popup";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { openConfirmDialog, closeWaitDialog, openWaitDialog } from "../popup";
 import { DialogTitle } from "../../utils/Constant";
-import { SubmitButton } from "../button";
 import { getPushToken } from "../FirebaseManager";
 import { getPushApproved } from "../../utils/PushManager";
 import { PostLoginResponse } from "@common-jshs/menkakusitsu-lib/v1";
 import { postLogin } from "../../utils/Api";
+import { IconNavLink } from "../basic/Link";
+import { AccountBox } from "@mui/icons-material";
 
 const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -71,13 +67,12 @@ const onLoginFailed = (result: PostLoginResponse) => {
     openConfirmDialog(DialogTitle.Info, result.message, () => {});
 };
 
-function LoginPopup() {
+export default function LoginPanel() {
     return (
         <Box
             sx={{
-                borderRadius: "16px",
                 width: "auto",
-                height: 400,
+                height: "100%",
                 backgroundColor: "white",
                 display: "flex",
                 flexDirection: "column",
@@ -154,48 +149,14 @@ function LoginPopup() {
                         </Link>
                     </Grid> */}
                     <Grid item>
-                        <Link
-                            href="#"
-                            onClick={() => {
-                                openConfirmDialog(
-                                    DialogTitle.Info,
-                                    "지금은 신규가입이 불가능합니다."
-                                );
-                            }}
-                            variant="body2"
-                            underline="none"
-                        >
-                            아직 계정이 없으신가요?
-                        </Link>
+                        <IconNavLink
+                            to="/auth/register"
+                            label="아직 계정이 없으신가요?"
+                            icon={<AccountBox />}
+                        />
                     </Grid>
                 </Grid>
             </Box>
         </Box>
     );
 }
-
-function LoginPanel() {
-    return (
-        <Box
-            sx={{
-                width: "auto",
-                height: "auto",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-            }}
-        >
-            <SubmitButton
-                color="primary.main"
-                onClick={() => {
-                    openCancelableDialog("", <LoginPopup />);
-                }}
-            >
-                이디저디 LOGIN
-            </SubmitButton>
-        </Box>
-    );
-}
-
-export default LoginPanel;

@@ -22,6 +22,8 @@ import {
     PlaySnake,
     SpecialroomOuter,
     Contributors,
+    Login,
+    Register,
 } from "./pages";
 import {
     Route,
@@ -43,11 +45,21 @@ const router = createBrowserRouter(
             <Route index element={<Main />} />
 
             <Route
-                path="survey"
+                path="auth"
+                element={<PrivateRoute permission={Permission.Guest} only />}
+            >
+                <Route index element={<NotFound />} />
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
+            </Route>
+
+            <Route
+                path="attendance"
                 element={<PrivateRoute permission={Permission.Student} />}
             >
                 <Route index element={<NotFound />} />
-                <Route path="create" element={<SurveyCreate />} />
+                <Route path="info" element={<AttendanceInfo />} />
+                <Route path="download" element={<AttendanceDownload />} />
             </Route>
 
             <Route
@@ -58,6 +70,15 @@ const router = createBrowserRouter(
                 <Route path=":board/list" element={<BbsList />} />
                 <Route path=":board/:postId" element={<BbsPost />} />
                 <Route path=":board/:postId/edit" element={<BbsEdit />} />
+            </Route>
+
+            <Route
+                path="chat"
+                element={<PrivateRoute permission={Permission.Student} />}
+            >
+                <Route index element={<NotFound />} />
+                <Route path="idbot" element={<ChatIdbot />} />
+                <Route path="random" element={<ChatRandom />} />
             </Route>
 
             <Route
@@ -73,6 +94,19 @@ const router = createBrowserRouter(
             >
                 <Route index element={<NotFound />} />
                 <Route path="snake" element={<PlaySnake />} />
+            </Route>
+
+            <Route
+                path="timetable"
+                element={<PrivateRoute permission={Permission.Student} />}
+            >
+                <Route index element={<TimetablePanel />} />
+            </Route>
+            <Route
+                path="management"
+                element={<PrivateRoute permission={Permission.Teacher} />}
+            >
+                <Route path="timetable" element={<TimetablePanel edit />} />
             </Route>
 
             <Route
@@ -97,26 +131,6 @@ const router = createBrowserRouter(
             </Route>
 
             <Route
-                path="timetable"
-                element={<PrivateRoute permission={Permission.Student} />}
-            >
-                <Route index element={<TimetablePanel />} />
-            </Route>
-            <Route
-                path="management"
-                element={<PrivateRoute permission={Permission.Teacher} />}
-            >
-                <Route path="timetable" element={<TimetablePanel edit />} />
-            </Route>
-
-            <Route
-                path="about"
-                element={<PrivateRoute permission={Permission.Student} />}
-            >
-                <Route index element={<About />} />
-            </Route>
-
-            <Route
                 path="setting"
                 element={<PrivateRoute permission={Permission.Student} />}
             >
@@ -124,21 +138,18 @@ const router = createBrowserRouter(
             </Route>
 
             <Route
-                path="attendance"
+                path="survey"
                 element={<PrivateRoute permission={Permission.Student} />}
             >
                 <Route index element={<NotFound />} />
-                <Route path="info" element={<AttendanceInfo />} />
-                <Route path="download" element={<AttendanceDownload />} />
+                <Route path="create" element={<SurveyCreate />} />
             </Route>
 
             <Route
-                path="chat"
+                path="about"
                 element={<PrivateRoute permission={Permission.Student} />}
             >
-                <Route index element={<NotFound />} />
-                <Route path="idbot" element={<ChatIdbot />} />
-                <Route path="random" element={<ChatRandom />} />
+                <Route index element={<About />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
