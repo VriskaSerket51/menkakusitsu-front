@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { SpecialroomInfoPanel, MealPanel, LoginPanel } from "../../components";
+import { SpecialroomInfoPanel, MealPanel, LoginButton } from "../../components";
 import { Container, Typography, Grid, Link } from "@mui/material";
 import {
     setHeaderActive,
@@ -41,7 +41,7 @@ export default function Guest() {
                         <SpecialroomInfoPanel />
                     </Grid>
                     <Grid item xs={3.5}>
-                        <LoginPanel />
+                        <LoginButton />
                     </Grid>
                     <Grid item xs={12}>
                         <MealPanel />
