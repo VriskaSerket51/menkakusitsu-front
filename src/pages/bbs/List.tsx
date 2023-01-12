@@ -16,6 +16,7 @@ import CampaignIcon from "@mui/icons-material/Campaign";
 import LockIcon from "@mui/icons-material/Lock";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { POST_LIST_SIZE } from "../../utils/Constant";
+import { getParameter } from "../../utils/Utility";
 
 interface ArticleProps {
     post: BbsPost;
@@ -74,20 +75,16 @@ function Article(props: ArticleProps) {
     );
 }
 
-interface ListProps {
-    page: number;
-    currentPostId?: number;
-}
-
-function List(props: ListProps) {
-    const [page, setPage] = useState(props.page);
+function List() {
     const [postCount, setPostCount] = useState(0);
     const [postList, setPostList] = useState<BbsPost[] | null>(null);
 
     const params = useParams();
     const navigate = useNavigate();
 
+    const page = Number(getParameter("page", "1"));
     const board = params.board!;
+    const postId = params.postId;
 
     useEffect(() => {
         getBbsPostList(
@@ -108,14 +105,16 @@ function List(props: ListProps) {
                         post={post}
                         page={page}
                         isNotice={post.postType === 0}
-                        isHighlighted={post.id == props.currentPostId}
+                        isHighlighted={
+                            Boolean(postId) && post.id == Number(postId!)
+                        }
                     />
                 );
             });
         } else {
             return <Typography>게시글이 없습니다.</Typography>;
         }
-    }, [postList, props.currentPostId]);
+    }, [postList, postId]);
 
     return (
         <React.Fragment>
@@ -143,16 +142,20 @@ function List(props: ListProps) {
                         <br />
                         <Box sx={{ display: "flex", justifyContent: "center" }}>
                             <Pagination
-                                count={
-                                    Math.floor(postCount / POST_LIST_SIZE) + 1
-                                }
+                                count={Math.ceil(postCount / POST_LIST_SIZE)}
                                 page={page}
                                 onChange={(
                                     event: React.ChangeEvent<unknown>,
                                     value: number
                                 ) => {
-                                    if (page != value) {
-                                        setPage(value);
+                                    if (postId) {
+                                        navigate(
+                                            `/bbs/${board}/${postId}?page=${value}`
+                                        );
+                                    } else {
+                                        navigate(
+                                            `/bbs/${board}/list?page=${value}`
+                                        );
                                     }
                                 }}
                                 variant="outlined"
