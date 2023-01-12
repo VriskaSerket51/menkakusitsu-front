@@ -1,6 +1,15 @@
 import { SHA3 } from "sha3";
 import uuid from "react-uuid";
 import { Buffer } from "buffer";
+import { LoadableComponent } from "@loadable/component";
+import { topbar } from "../components/topbar";
+
+export const dynamicLoader = (component: LoadableComponent<unknown>) => {
+    topbar.show();
+    component.preload();
+    topbar.hide();
+    return null;
+};
 
 export const dayToString = (day: number) => {
     if (day < 0 || day > 7) {
