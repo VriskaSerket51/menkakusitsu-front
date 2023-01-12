@@ -1,39 +1,33 @@
-import loadable from "@loadable/component";
+export { default as Main } from "./main";
 
-export const Main = loadable(() => import("./main"));
+export { default as Login } from "./auth/Login";
+export { default as Register } from "./auth/Register";
 
-export const Login = loadable(() => import("./auth/Login"));
-export const Register = loadable(() => import("./auth/Register"));
+export { default as AttendanceDownload } from "./attendance/Download";
+export { default as AttendanceInfo } from "./attendance/Info";
 
-export const AttendanceDownload = loadable(
-    () => import("./attendance/Download")
-);
-export const AttendanceInfo = loadable(() => import("./attendance/Info"));
+export { default as BbsCreate } from "./bbs/Create";
+export { default as BbsEdit } from "./bbs/Edit";
+export { default as BbsList } from "./bbs/List";
+export { default as BbsPost } from "./bbs/Post";
 
-export const BbsCreate = loadable(() => import("./bbs/Create"));
-export const BbsEdit = loadable(() => import("./bbs/Edit"));
-export const BbsList = loadable(() => import("./bbs/List"));
-export const BbsPost = loadable(() => import("./bbs/Post"));
+export { default as ChatIdbot } from "./chat/Idbot";
+export { default as ChatRandom } from "./chat/RandomChat";
 
-export const ChatIdbot = loadable(() => import("./chat/Idbot"));
-export const ChatRandom = loadable(() => import("./chat/RandomChat"));
+export { default as Contributors } from "./contributors";
 
-export const Contributors = loadable(() => import("./contributors"));
+export { default as PlaySnake } from "./playground/snake/SnakeGame";
 
-export const PlaySnake = loadable(() => import("./playground/snake/SnakeGame"));
+export { default as SpecialroomApply } from "./specialroom/Apply";
+export { default as SpecialroomStatus } from "./specialroom/Status";
+export { default as SpecialroomManagement } from "./specialroom/Management";
+export { default as SpecialroomOuter } from "./specialroom/Outer";
 
-export const SpecialroomApply = loadable(() => import("./specialroom/Apply"));
-export const SpecialroomStatus = loadable(() => import("./specialroom/Status"));
-export const SpecialroomManagement = loadable(
-    () => import("./specialroom/Management")
-);
-export const SpecialroomOuter = loadable(() => import("./specialroom/Outer"));
+export { default as SurveyCreate } from "./survey/Create";
 
-export const SurveyCreate = loadable(() => import("./survey/Create"));
+export { default as About } from "./About";
 
-export const About = loadable(() => import("./About"));
+export { default as Setting } from "./setting";
 
-export const Setting = loadable(() => import("./setting"));
-
-export const NotFound = loadable(() => import("./NotFound"));
-export const Construct = loadable(() => import("./Construct"));
+export { default as NotFound } from "./NotFound";
+export { default as Construct } from "./Construct";

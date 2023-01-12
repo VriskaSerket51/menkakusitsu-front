@@ -34,7 +34,7 @@ import {
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { TimetablePanel } from "./components";
 import { getTheme, getThemeType } from "./components/theme";
-import { dynamicLoader, Permission } from "./utils/Utility";
+import { Permission } from "./utils/Utility";
 import { PrivateRoute, RouteWrapper } from "./components/router";
 
 const themeType = getThemeType();
@@ -42,27 +42,15 @@ const themeType = getThemeType();
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<RouteWrapper />}>
-            <Route
-                index
-                element={<Main />}
-                loader={() => dynamicLoader(Main)}
-            />
+            <Route index element={<Main />} />
 
             <Route
                 path="auth"
                 element={<PrivateRoute permission={Permission.Guest} only />}
             >
                 <Route index element={<NotFound />} />
-                <Route
-                    path="login"
-                    element={<Login />}
-                    loader={() => dynamicLoader(Login)}
-                />
-                <Route
-                    path="register"
-                    element={<Register />}
-                    loader={() => dynamicLoader(Register)}
-                />
+                <Route path="login" element={<Login />} />
+                <Route path="register" element={<Register />} />
             </Route>
 
             <Route
@@ -70,42 +58,18 @@ const router = createBrowserRouter(
                 element={<PrivateRoute permission={Permission.Student} />}
             >
                 <Route index element={<NotFound />} />
-                <Route
-                    path="info"
-                    element={<AttendanceInfo />}
-                    loader={() => dynamicLoader(AttendanceInfo)}
-                />
-                <Route
-                    path="download"
-                    element={<AttendanceDownload />}
-                    loader={() => dynamicLoader(AttendanceDownload)}
-                />
+                <Route path="info" element={<AttendanceInfo />} />
+                <Route path="download" element={<AttendanceDownload />} />
             </Route>
 
             <Route
                 path="bbs"
                 element={<PrivateRoute permission={Permission.Student} />}
             >
-                <Route
-                    path=":board/create"
-                    element={<BbsCreate />}
-                    loader={() => dynamicLoader(BbsCreate)}
-                />
-                <Route
-                    path=":board/list"
-                    element={<BbsList />}
-                    loader={() => dynamicLoader(BbsList)}
-                />
-                <Route
-                    path=":board/:postId"
-                    element={<BbsPost />}
-                    loader={() => dynamicLoader(BbsPost)}
-                />
-                <Route
-                    path=":board/:postId/edit"
-                    element={<BbsEdit />}
-                    loader={() => dynamicLoader(BbsEdit)}
-                />
+                <Route path=":board/create" element={<BbsCreate />} />
+                <Route path=":board/list" element={<BbsList />} />
+                <Route path=":board/:postId" element={<BbsPost />} />
+                <Route path=":board/:postId/edit" element={<BbsEdit />} />
             </Route>
 
             <Route
@@ -113,27 +77,15 @@ const router = createBrowserRouter(
                 element={<PrivateRoute permission={Permission.Student} />}
             >
                 <Route index element={<NotFound />} />
-                <Route
-                    path="idbot"
-                    element={<ChatIdbot />}
-                    loader={() => dynamicLoader(ChatIdbot)}
-                />
-                <Route
-                    path="random"
-                    element={<ChatRandom />}
-                    loader={() => dynamicLoader(ChatRandom)}
-                />
+                <Route path="idbot" element={<ChatIdbot />} />
+                <Route path="random" element={<ChatRandom />} />
             </Route>
 
             <Route
                 path="contributors"
                 element={<PrivateRoute permission={Permission.Student} />}
             >
-                <Route
-                    index
-                    element={<Contributors />}
-                    loader={() => dynamicLoader(Contributors)}
-                />
+                <Route index element={<Contributors />} />
             </Route>
 
             <Route
@@ -141,11 +93,7 @@ const router = createBrowserRouter(
                 element={<PrivateRoute permission={Permission.Student} />}
             >
                 <Route index element={<NotFound />} />
-                <Route
-                    path="snake"
-                    element={<PlaySnake />}
-                    loader={() => dynamicLoader(PlaySnake)}
-                />
+                <Route path="snake" element={<PlaySnake />} />
             </Route>
 
             <Route
@@ -166,35 +114,19 @@ const router = createBrowserRouter(
                 element={<PrivateRoute permission={Permission.Student} />}
             >
                 <Route index element={<NotFound />} />
-                <Route
-                    path="apply"
-                    element={<SpecialroomApply />}
-                    loader={() => dynamicLoader(SpecialroomApply)}
-                />
-                <Route
-                    path="status"
-                    element={<SpecialroomStatus />}
-                    loader={() => dynamicLoader(SpecialroomStatus)}
-                />
+                <Route path="apply" element={<SpecialroomApply />} />
+                <Route path="status" element={<SpecialroomStatus />} />
                 <Route
                     path="management"
                     element={<PrivateRoute permission={Permission.Teacher} />}
                 >
-                    <Route
-                        index
-                        element={<SpecialroomManagement />}
-                        loader={() => dynamicLoader(SpecialroomManagement)}
-                    />
+                    <Route index element={<SpecialroomManagement />} />
                 </Route>
                 <Route
                     path="outer"
                     element={<PrivateRoute permission={Permission.Teacher} />}
                 >
-                    <Route
-                        index
-                        element={<SpecialroomOuter />}
-                        loader={() => dynamicLoader(SpecialroomOuter)}
-                    />
+                    <Route index element={<SpecialroomOuter />} />
                 </Route>
             </Route>
 
@@ -202,11 +134,7 @@ const router = createBrowserRouter(
                 path="setting"
                 element={<PrivateRoute permission={Permission.Student} />}
             >
-                <Route
-                    index
-                    element={<Setting />}
-                    loader={() => dynamicLoader(Setting)}
-                />
+                <Route index element={<Setting />} />
             </Route>
 
             <Route
@@ -214,22 +142,14 @@ const router = createBrowserRouter(
                 element={<PrivateRoute permission={Permission.Student} />}
             >
                 <Route index element={<NotFound />} />
-                <Route
-                    path="create"
-                    element={<SurveyCreate />}
-                    loader={() => dynamicLoader(SurveyCreate)}
-                />
+                <Route path="create" element={<SurveyCreate />} />
             </Route>
 
             <Route
                 path="about"
                 element={<PrivateRoute permission={Permission.Student} />}
             >
-                <Route
-                    index
-                    element={<About />}
-                    loader={() => dynamicLoader(About)}
-                />
+                <Route index element={<About />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
