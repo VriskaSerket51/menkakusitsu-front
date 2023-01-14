@@ -1,8 +1,9 @@
 import React from "react";
-import { getPermissionLevel, Permission } from "../../utils/Utility";
+import { getPermissionLevel } from "../../utils/Utility";
 import Teacher from "./Teacher";
 import Student from "./Student";
 import Guest from "./Guest";
+import { Permission } from "@common-jshs/menkakusitsu-lib";
 
 function Main() {
     const permission = getPermissionLevel();

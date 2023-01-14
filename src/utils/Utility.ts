@@ -3,6 +3,7 @@ import uuid from "react-uuid";
 import { Buffer } from "buffer";
 import { LoadableComponent } from "@loadable/component";
 import { topbar } from "../components/topbar";
+import { Permission, TokenPayload } from "@common-jshs/menkakusitsu-lib";
 
 export const dynamicLoader = (component: LoadableComponent<unknown>) => {
     topbar.show();
@@ -32,14 +33,12 @@ export const dayToString = (day: number) => {
         case 6:
             return "토";
     }
+    return null;
 };
 
 export const arrayRemove = <T>(array: Array<T>, item: T): Array<T> => {
     const index = array.indexOf(item);
-    if (index > -1) {
-        return array.splice(index, 1);
-    }
-    return [];
+    return arrayRemoveAt<T>(array, index);
 };
 
 export const arrayRemoveAt = <T>(array: Array<T>, index: number): Array<T> => {
@@ -81,35 +80,33 @@ export const openInNewTab = (url: string) => {
     window.open(url, "_blank", "noopener");
 };
 
-export enum Permission {
-    Guest = 0,
-    Student = 1,
-    Teacher = 2,
-    Dev = 100,
-}
-
-export const getPermissionLevel = (): Permission => {
-    const userInfo = getUserInfo();
-    if (!userInfo) {
+export const getPermissionLevel = () => {
+    const payload = getTokenPayload();
+    if (!payload) {
         return Permission.Guest;
     }
-    if (userInfo.isDev) {
-        return Permission.Dev;
+    return payload.permission;
+};
+
+export const hasPermissionLevel = (permission: number) => {
+    const payload = getTokenPayload();
+    if (!payload) {
+        return false;
     }
-    if (userInfo.isTeacher) {
-        return Permission.Teacher;
-    }
-    return Permission.Student;
+    return payload.permission >= permission;
 };
 
 export const isLogined = () => {
     return Boolean(localStorage.getItem("access-token"));
 };
 
-export const parseJWT = (token: string) => {
+export const parseJWT = (token: string): TokenPayload | null => {
     try {
-        return JSON.parse(
-            Buffer.from(token.split(".")[1], "base64").toString("utf-8")
+        return Object.assign(
+            new TokenPayload(),
+            JSON.parse(
+                Buffer.from(token.split(".")[1], "base64").toString("utf-8")
+            )
         );
     } catch (e) {
         console.error(e);
@@ -117,14 +114,7 @@ export const parseJWT = (token: string) => {
     }
 };
 
-type UserInfo = {
-    uid: number;
-    id: string;
-    isDev: boolean;
-    isTeacher: boolean;
-};
-
-export const getUserInfo = (): UserInfo | null => {
+export const getTokenPayload = (): TokenPayload | null => {
     const accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
         return null;
