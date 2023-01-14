@@ -10,6 +10,7 @@ import { PostLoginResponse } from "@common-jshs/menkakusitsu-lib/v1";
 import { postLogin } from "../../utils/Api";
 import { IconNavLink } from "../basic/Link";
 import { AccountBox } from "@mui/icons-material";
+import { SHA3_512 } from "../../utils/Utility";
 
 const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -20,7 +21,11 @@ const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
         return;
     }
     openWaitDialog(DialogTitle.Info, "로그인 중입니다...");
-    postLogin({ id: id, password: password }, onLoginSuccessed, onLoginFailed);
+    postLogin(
+        { id: id, password: SHA3_512(password) },
+        onLoginSuccessed,
+        onLoginFailed
+    );
 };
 
 const onLoginSuccessed = (result: PostLoginResponse) => {
