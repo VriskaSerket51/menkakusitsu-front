@@ -42,7 +42,7 @@ export default function RegisterPanel() {
             postRegister(
                 {
                     name: name,
-                    // sid: sid,
+                    sid: sid,
                     email: email,
                     id: id,
                     password: SHA3_512(password),
