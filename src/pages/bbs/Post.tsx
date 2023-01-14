@@ -1,8 +1,4 @@
-import {
-    BbsComment,
-    BbsPost,
-    FileInfo,
-} from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import {
     Box,
     Button,
@@ -25,7 +21,11 @@ import {
     postBbsComment,
 } from "../../utils/Api";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserInfo, getParameter } from "../../utils/Utility";
+import {
+    getTokenPayload,
+    getParameter,
+    hasPermissionLevel,
+} from "../../utils/Utility";
 import {
     closeWaitDialog,
     openConfirmDialog,
@@ -34,6 +34,7 @@ import {
 } from "../../components";
 import { COMMENT_LIST_SIZE, DialogTitle } from "../../utils/Constant";
 import List from "./List";
+import { Permission } from "@common-jshs/menkakusitsu-lib";
 
 function Post() {
     const params = useParams();
@@ -44,12 +45,16 @@ function Post() {
     const postId = parseInt(params.postId!);
     const page = Number(getParameter("page", "1"));
     const commentPage = Number(getParameter("commentPage", "1"));
-    const userInfo = getUserInfo();
+    const payload = getTokenPayload();
 
-    const [post, setPost] = useState<BbsPost | null>(null);
-    const [attachments, setAttachments] = useState<FileInfo[] | undefined>([]);
+    const [post, setPost] = useState<v1.BbsPost | null>(null);
+    const [attachments, setAttachments] = useState<v1.FileInfo[] | undefined>(
+        []
+    );
     const [commentCount, setCommentCount] = useState(0);
-    const [commentList, setCommentList] = useState<BbsComment[] | null>(null);
+    const [commentList, setCommentList] = useState<v1.BbsComment[] | null>(
+        null
+    );
 
     const refresh = useCallback(() => {
         getBbsPost({ board: board, postId: postId }, (result) => {
@@ -165,8 +170,8 @@ function Post() {
                                     목록
                                 </Button>
                                 {post &&
-                                    (userInfo?.uid === post.owner.uid ||
-                                        userInfo?.isDev) && (
+                                    (payload?.uid === post.owner.uid ||
+                                        hasPermissionLevel(Permission.Dev)) && (
                                         <Button
                                             variant="contained"
                                             color="primary"
@@ -180,8 +185,8 @@ function Post() {
                                         </Button>
                                     )}
                                 {post &&
-                                    (userInfo?.uid === post.owner.uid ||
-                                        userInfo?.isDev) && (
+                                    (payload?.uid === post.owner.uid ||
+                                        hasPermissionLevel(Permission.Dev)) && (
                                         <Button
                                             variant="contained"
                                             color="error"
@@ -256,9 +261,11 @@ function Post() {
                                                 <Typography color="gray">
                                                     {comment.createdDate}
                                                 </Typography>
-                                                {(userInfo?.uid ===
+                                                {(payload?.uid ===
                                                     comment.owner.uid ||
-                                                    userInfo?.isDev) && (
+                                                    hasPermissionLevel(
+                                                        Permission.Dev
+                                                    )) && (
                                                     <IconButton
                                                         size="small"
                                                         onClick={() => {

@@ -6,7 +6,7 @@ import { openConfirmDialog, closeWaitDialog, openWaitDialog } from "../popup";
 import { DialogTitle } from "../../utils/Constant";
 import { getPushToken } from "../FirebaseManager";
 import { getPushApproved } from "../../utils/PushManager";
-import { PostLoginResponse } from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import { postLogin } from "../../utils/Api";
 import { IconNavLink } from "../basic/Link";
 import { AccountBox } from "@mui/icons-material";
@@ -28,7 +28,7 @@ const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
     );
 };
 
-const onLoginSuccessed = (result: PostLoginResponse) => {
+const onLoginSuccessed = (result: v1.PostLoginResponse) => {
     localStorage.setItem("access-token", result.accessToken);
     localStorage.setItem("refresh-token", result.refreshToken);
 
@@ -67,7 +67,7 @@ const onLoginSuccessed = (result: PostLoginResponse) => {
     }
 };
 
-const onLoginFailed = (result: PostLoginResponse) => {
+const onLoginFailed = (result: v1.PostLoginResponse) => {
     closeWaitDialog();
     openConfirmDialog(DialogTitle.Info, result.message, () => {});
 };

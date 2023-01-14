@@ -40,26 +40,26 @@ import FixedNavbar from "../../components/navbar";
 import { SpecialroomInfoPanel } from "../../components/panel";
 import PaperTitle from "../../components/PaperTitle";
 import { SubmitButton } from "../../components/button";
-import {
-    LocationInfo,
-    PurposeInfo,
-    UserInfo,
-} from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 
 function Apply() {
-    const [managerInfo, setManagerInfo] = React.useState<UserInfo | null>(null);
-    const [locationInfos, setLocationInfos] = React.useState<LocationInfo[]>(
+    const [managerInfo, setManagerInfo] = React.useState<v1.UserInfo | null>(
+        null
+    );
+    const [locationInfos, setLocationInfos] = React.useState<v1.LocationInfo[]>(
         []
     );
-    const [purposeInfos, setPurposeInfos] = React.useState<PurposeInfo[]>([]);
-    const [studentInfos, setStudentInfos] = React.useState<UserInfo[]>([]);
-    const [teacherInfos, setTeacherInfos] = React.useState<UserInfo[]>([]);
+    const [purposeInfos, setPurposeInfos] = React.useState<v1.PurposeInfo[]>(
+        []
+    );
+    const [studentInfos, setStudentInfos] = React.useState<v1.UserInfo[]>([]);
+    const [teacherInfos, setTeacherInfos] = React.useState<v1.UserInfo[]>([]);
 
     const [when, setWhen] = React.useState(1);
-    const [applicants, setApplicants] = React.useState<UserInfo[]>([]);
-    const [teacher, setTeacher] = React.useState<UserInfo | null>(null);
+    const [applicants, setApplicants] = React.useState<v1.UserInfo[]>([]);
+    const [teacher, setTeacher] = React.useState<v1.UserInfo | null>(null);
 
     const [activeStep, setActiveStep] = React.useState(0);
 
@@ -314,7 +314,10 @@ function Apply() {
             return;
         }
         if (!teacher) {
-            openConfirmDialog(DialogTitle.Alert, "선생님 선택을 하지 않으셨습니다.");
+            openConfirmDialog(
+                DialogTitle.Alert,
+                "선생님 선택을 하지 않으셨습니다."
+            );
             setActiveStep(4);
             return;
         }

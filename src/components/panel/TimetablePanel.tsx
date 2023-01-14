@@ -1,4 +1,4 @@
-import { Timetable, TimetableCell } from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import {
     Box,
     Paper,
@@ -12,13 +12,12 @@ import {
     Input,
     FormControl,
     SxProps,
-    Theme
+    Theme,
 } from "@mui/material";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { getTimetable, putTimetable } from "../../utils/Api";
 import { SubmitButton } from "../button";
-import * as v1 from "@common-jshs/menkakusitsu-lib/v1";
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
@@ -34,7 +33,7 @@ interface TimetableProps {
 }
 
 function TimetablePanel(props: TimetableProps) {
-    const [timetable, setTimetable] = useState<Timetable | null>(null);
+    const [timetable, setTimetable] = useState<v1.Timetable | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     const tableCellSx: SxProps<Theme> = { fontSize: "16px" };

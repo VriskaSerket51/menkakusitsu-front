@@ -34,7 +34,7 @@ import {
     closeWaitDialog,
     openWaitDialog,
 } from "../../components/popup";
-import { SpecialroomInfo } from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 
 const ColorlibConnector = styled(StepConnector)<{ isapproved: number }>(
     ({ theme, isapproved }) => ({
@@ -133,7 +133,7 @@ const steps = ["신청 완료", "승인 대기 중", "승인 완료"];
 
 function Status() {
     const [applyStatus, setApplyStatus] =
-        React.useState<SpecialroomInfo | null>(null);
+        React.useState<v1.SpecialroomInfo | null>(null);
     const [isLoading, setIsLoading] = React.useState(true);
 
     const [when, setWhen] = React.useState(1);
@@ -152,7 +152,10 @@ function Status() {
             DialogTitle.Info,
             "정말 특별실 신청을 취소하시겠습니까?",
             () => {
-                openWaitDialog(DialogTitle.Info, "특별실 신청을 취소 중입니다...");
+                openWaitDialog(
+                    DialogTitle.Info,
+                    "특별실 신청을 취소 중입니다..."
+                );
                 deleteSpecialroomApply({ when: when }, () => {
                     closeWaitDialog();
                     refresh();

@@ -3,7 +3,7 @@ import axios from "axios";
 import { checkTokenExpiration, onLogout } from "./AuthManager";
 import { getPushApproved } from "./PushManager";
 import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
-import * as v1 from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import { closeWaitDialog, openConfirmDialog } from "../components/popup";
 import { DialogTitle } from "./Constant";
 

@@ -1,4 +1,4 @@
-import { BbsComment, BbsPost } from "@common-jshs/menkakusitsu-lib/v1";
+import {v1 } from "@common-jshs/menkakusitsu-lib";
 import {
     Box,
     Button,
@@ -34,7 +34,7 @@ function Edit() {
     const params = useParams();
     const navigate = useNavigate();
 
-    const [post, setPost] = useState<BbsPost | null>(null);
+    const [post, setPost] = useState<v1.BbsPost | null>(null);
     const [headers, setHeaders] = useState<string[]>([]);
 
     const board = params.board!;
