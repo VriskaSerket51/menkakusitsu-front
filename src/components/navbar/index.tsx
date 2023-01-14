@@ -3,7 +3,7 @@ import { NavbarButton, NavbarMenu } from "./NavbarItem";
 import Logo from "./Logo";
 import React from "react";
 import { AccountPanel } from "../panel";
-import { Permission } from "../../utils/Utility";
+import { Permission } from "@common-jshs/menkakusitsu-lib";
 
 const navbarItems = [
     {

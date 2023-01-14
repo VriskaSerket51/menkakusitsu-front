@@ -34,8 +34,8 @@ import {
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { TimetablePanel } from "./components";
 import { getTheme, getThemeType } from "./components/theme";
-import { Permission } from "./utils/Utility";
 import { PrivateRoute, RouteWrapper } from "./components/router";
+import { Permission } from "@common-jshs/menkakusitsu-lib";
 
 const themeType = getThemeType();
 
