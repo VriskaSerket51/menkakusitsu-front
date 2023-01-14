@@ -1,4 +1,4 @@
-import { getUserInfo } from "./Utility";
+import { getTokenPayload } from "./Utility";
 
 export const getPushApproved = () => {
     const hasPushJson = localStorage.getItem("has-push");
@@ -6,11 +6,11 @@ export const getPushApproved = () => {
         localStorage.setItem("has-push", JSON.stringify({}));
         return false;
     }
-    const userInfo = getUserInfo();
-    if (!userInfo) {
+    const payload = getTokenPayload();
+    if (!payload) {
         return false;
     }
-    return JSON.parse(hasPushJson)[userInfo.uid] === true;
+    return JSON.parse(hasPushJson)[payload.uid] === true;
 };
 
 export const setPushApproved = (value: boolean) => {
@@ -18,11 +18,11 @@ export const setPushApproved = (value: boolean) => {
     if (!hasPushJson) {
         hasPushJson = JSON.stringify({});
     }
-    const userInfo = getUserInfo();
-    if (!userInfo) {
+    const payload = getTokenPayload();
+    if (!payload) {
         return;
     }
     const hasPush = JSON.parse(hasPushJson);
-    hasPush[userInfo.uid] = value;
+    hasPush[payload.uid] = value;
     localStorage.setItem("has-push", JSON.stringify(hasPush));
 };
