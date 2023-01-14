@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserInfo } from "../../utils/Utility";
+import { getTokenPayload } from "../../utils/Utility";
 import { NotificationButton, LogoutButton } from "../button";
 
 function AccountPanel() {
@@ -19,7 +19,7 @@ function AccountPanel() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
     const open = Boolean(anchorEl);
-    const userInfo = getUserInfo();
+    const payload = getTokenPayload();
 
     const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -34,7 +34,7 @@ function AccountPanel() {
             <Box>
                 <Tooltip title="계정 설정">
                     <IconButton onClick={openMenu} size="small" sx={{ ml: 2 }}>
-                        <Avatar alt={userInfo?.id} src="-" />
+                        <Avatar alt={payload?.id} src="-" />
                     </IconButton>
                 </Tooltip>
             </Box>
@@ -73,7 +73,7 @@ function AccountPanel() {
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
             >
                 <MenuItem>
-                    <Avatar /> {userInfo?.id}
+                    <Avatar /> {payload?.id}
                 </MenuItem>
                 <Divider />
                 <NotificationButton />
