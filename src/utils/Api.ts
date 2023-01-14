@@ -2,7 +2,6 @@ import { deletePushToken } from "../components/FirebaseManager";
 import axios from "axios";
 import { checkTokenExpiration, onLogout } from "./AuthManager";
 import { getPushApproved } from "./PushManager";
-import { SHA3_512 } from "./Utility";
 import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
 import * as v1 from "@common-jshs/menkakusitsu-lib/v1";
 import { closeWaitDialog, openConfirmDialog } from "../components/popup";
@@ -89,10 +88,7 @@ export const postLogin = (
     onSuccessed: (result: v1.PostLoginResponse) => any,
     onFailed: (result: v1.PostLoginResponse) => any
 ) => {
-    apiPost("/v1/auth/login", {
-        id: props.id,
-        password: SHA3_512(props.password),
-    })
+    apiPost("/v1/auth/login", props)
         .then((resp) => {
             const result: v1.PostLoginResponse = resp.data;
             if (isApiSuccessed(result)) {
