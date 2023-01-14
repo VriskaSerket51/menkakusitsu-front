@@ -1,4 +1,4 @@
-import { BbsPost } from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import {
     Box,
     Button,
@@ -19,7 +19,7 @@ import { POST_LIST_SIZE } from "../../utils/Constant";
 import { getParameter } from "../../utils/Utility";
 
 interface ArticleProps {
-    post: BbsPost;
+    post: v1.BbsPost;
     isNotice?: boolean;
     isHighlighted?: boolean;
     page: number;
@@ -77,7 +77,7 @@ function Article(props: ArticleProps) {
 
 function List() {
     const [postCount, setPostCount] = useState(0);
-    const [postList, setPostList] = useState<BbsPost[] | null>(null);
+    const [postList, setPostList] = useState<v1.BbsPost[] | null>(null);
 
     const params = useParams();
     const navigate = useNavigate();

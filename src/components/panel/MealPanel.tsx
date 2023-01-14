@@ -1,4 +1,4 @@
-import { GetMealResponse } from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import React, { ReactNode } from "react";
 import { getMeal } from "../../utils/Api";
 import dayjs from "dayjs";
@@ -95,7 +95,7 @@ const MealInfo = (props: MealInfoProps) => {
 };
 
 function MealPanel() {
-    const [mealInfo, setMealInfo] = React.useState<GetMealResponse | null>(
+    const [mealInfo, setMealInfo] = React.useState<v1.GetMealResponse | null>(
         null
     );
     const [isLoading, setIsLoading] = React.useState(true);

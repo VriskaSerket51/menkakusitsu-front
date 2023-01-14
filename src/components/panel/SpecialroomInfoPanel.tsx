@@ -10,12 +10,12 @@ import {
 } from "@mui/material";
 import { useCallback } from "react";
 import { getSpecialroomInfo } from "../../utils/Api";
-import { SpecialroomInfo } from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 
 export const drawInfoTable = (
-    information: SpecialroomInfo[] | null,
+    information: v1.SpecialroomInfo[] | null,
     isLoading: boolean,
-    filter?: (specialroomInfo: SpecialroomInfo) => boolean
+    filter?: (specialroomInfo: v1.SpecialroomInfo) => boolean
 ) => {
     return (
         <TableContainer component={Paper}>
@@ -75,9 +75,9 @@ export const drawInfoTable = (
 function SpecialroomInfoPanel({
     filter,
 }: {
-    filter?: (specialroomInfo: SpecialroomInfo) => boolean;
+    filter?: (specialroomInfo: v1.SpecialroomInfo) => boolean;
 }) {
-    const [information, setInformation] = useState<SpecialroomInfo[] | null>(
+    const [information, setInformation] = useState<v1.SpecialroomInfo[] | null>(
         null
     );
     const [isLoading, setIsLoading] = useState(true);

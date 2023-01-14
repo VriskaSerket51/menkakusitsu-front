@@ -15,7 +15,7 @@ import { getParameter } from "../../utils/Utility";
 import { SpecialroomInfoPanel } from "../../components/panel";
 import { getAttendanceList, getSpecialroomInfo } from "../../utils/Api";
 import dayjs from "dayjs";
-import { SpecialroomInfo } from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import { drawInfoTable } from "../../components/panel/SpecialroomInfoPanel";
 import {
     setFooterActive,
@@ -74,7 +74,7 @@ function Download() {
         big: string[][];
         small: string[][];
     } | null>(null);
-    const [information, setInformation] = useState<SpecialroomInfo[] | null>(
+    const [information, setInformation] = useState<v1.SpecialroomInfo[] | null>(
         null
     );
     const [isLoading, setIsLoading] = useState(true);

@@ -4,7 +4,7 @@ import {
     parseJWT,
     redirectToHome,
 } from "./Utility";
-import { PostRefreshResponse } from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 
 export const checkTokenExpiration = async (accessToken: string) => {
     const parsedJWT = parseJWT(accessToken);
@@ -25,7 +25,7 @@ export const checkTokenExpiration = async (accessToken: string) => {
                 Authorization: authHeader,
             },
         });
-        const result = resp.data as PostRefreshResponse;
+        const result = resp.data as v1.PostRefreshResponse;
         if (result.status >= 0) {
             localStorage.setItem("access-token", result.accessToken);
             localStorage.setItem("refresh-token", result.refreshToken);

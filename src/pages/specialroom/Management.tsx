@@ -15,21 +15,21 @@ import {
 import React, { useState, useCallback, useEffect } from "react";
 import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
-import { arrayRemove, getUserInfo } from "../../utils/Utility";
+import { arrayRemove, getTokenPayload } from "../../utils/Utility";
 import {
     closeWaitDialog,
     openWaitDialog,
     SpecialroomInfoPanel,
 } from "../../components";
 import { getSpecialroomInfo, putSpecialroomInfo } from "../../utils/Api";
-import { SpecialroomInfo } from "@common-jshs/menkakusitsu-lib/v1";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import { DialogTitle } from "../../utils/Constant";
 
 function Management() {
-    const [information, setInformation] = useState<SpecialroomInfo[]>([]);
+    const [information, setInformation] = useState<v1.SpecialroomInfo[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    const userInfo = getUserInfo();
+    const payload = getTokenPayload();
 
     interface InfoCellProps {
         state: number;
@@ -38,7 +38,7 @@ function Management() {
     const InfoCell = useCallback(
         (props: InfoCellProps) => {
             let count = 0;
-            const final: SpecialroomInfo[] = [];
+            const final: v1.SpecialroomInfo[] = [];
             const result = (
                 <React.Fragment>
                     <Stack
@@ -186,7 +186,7 @@ function Management() {
         getSpecialroomInfo({}, (result) => {
             setInformation(
                 result.information.filter(
-                    (info) => info.teacher.uid == userInfo?.uid
+                    (info) => info.teacher.uid == payload?.uid
                 )
             );
             setIsLoading(false);
@@ -205,9 +205,7 @@ function Management() {
                     <Box sx={{ padding: "50px 30px 30px 30px" }}>
                         <PaperTitle>특별실 신청 관리</PaperTitle>
                         <SpecialroomInfoPanel
-                            filter={(info) =>
-                                info.teacher.uid == userInfo?.uid
-                            }
+                            filter={(info) => info.teacher.uid == payload?.uid}
                         />
                         <Stack
                             spacing={2}
