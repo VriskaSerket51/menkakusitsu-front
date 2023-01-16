@@ -24,6 +24,3 @@ dist-ssr
 *.sw?
 
 package-lock.json
-.env.development
-.env.production
-.npmrc
