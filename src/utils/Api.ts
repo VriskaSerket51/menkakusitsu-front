@@ -70,7 +70,7 @@ export const postRegister = (
     props: v1.PostRegisterRequest,
     onFinish: (result: v1.PostRegisterResponse) => any
 ) => {
-    apiPost("/v1/auth/register", props)
+    apiPost("/v1/auth/account", props)
         .then((resp) => {
             const result: v1.PostLoginResponse = resp.data;
             if (isApiSuccessed(result)) {
