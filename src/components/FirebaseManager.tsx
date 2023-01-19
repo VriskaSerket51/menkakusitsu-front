@@ -42,6 +42,7 @@ try {
 
 function FirebaseManager() {
     const { enqueueSnackbar } = useSnackbar();
+
     useEffect(() => {
         if (messaging) {
             onMessage(messaging, (payload) => {
@@ -54,6 +55,7 @@ function FirebaseManager() {
             });
         }
     }, [enqueueSnackbar]);
+    
     return <React.Fragment></React.Fragment>;
 }
 
