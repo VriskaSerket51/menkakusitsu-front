@@ -83,6 +83,23 @@ export const postRegister = (
         .catch(onApiError);
 };
 
+export const deleteSecession = (
+    props: v1.DeleteSecessionRequest,
+    onFinish: (result: v1.DeleteSecessionResponse) => any
+) => {
+    apiDelete("/v1/auth/account", props)
+        .then((resp) => {
+            const result: v1.DeleteSecessionResponse = resp.data;
+            if (isApiSuccessed(result)) {
+                onFinish(result);
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(DialogTitle.Alert, result.message);
+            }
+        })
+        .catch(onApiError);
+};
+
 export const postLogin = (
     props: v1.PostLoginRequest,
     onSuccessed: (result: v1.PostLoginResponse) => any,

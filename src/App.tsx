@@ -24,6 +24,7 @@ import {
     Contributors,
     Login,
     Register,
+    UserManagement,
 } from "./pages";
 import {
     Route,
@@ -86,6 +87,13 @@ const router = createBrowserRouter(
                 element={<PrivateRoute permission={Permission.Student} />}
             >
                 <Route index element={<Contributors />} />
+            </Route>
+
+            <Route
+                path="dev"
+                element={<PrivateRoute permission={Permission.Dev} />}
+            >
+                <Route path="user" element={<UserManagement />} />
             </Route>
 
             <Route
