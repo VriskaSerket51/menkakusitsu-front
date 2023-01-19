@@ -287,7 +287,7 @@ function Apply() {
     const onPostApply = (e: React.MouseEvent<HTMLFormElement>) => {
         e.preventDefault();
         const data = new FormData(e.currentTarget);
-        const location = data.get("location");
+        const location = data.get("location")?.toString();
         if (!location) {
             openConfirmDialog(
                 DialogTitle.Alert,
@@ -296,7 +296,7 @@ function Apply() {
             setActiveStep(1);
             return;
         }
-        const purpose = data.get("purpose");
+        const purpose = data.get("purpose")?.toString();
         if (!purpose) {
             openConfirmDialog(
                 DialogTitle.Alert,
@@ -324,8 +324,8 @@ function Apply() {
         openWaitDialog(DialogTitle.Info, "특별실을 신청하는 중입니다...");
         postSpecialroomApply(
             {
-                location: location.toString(),
-                purpose: purpose.toString(),
+                location: location,
+                purpose: purpose,
                 applicants: applicants,
                 teacherUid: teacher.uid,
                 when: when,

@@ -16,6 +16,8 @@ export { default as ChatRandom } from "./chat/RandomChat";
 
 export { default as Contributors } from "./contributors";
 
+export { default as UserManagement } from "./dev/User";
+
 export { default as PlaySnake } from "./playground/snake/SnakeGame";
 
 export { default as SpecialroomApply } from "./specialroom/Apply";
