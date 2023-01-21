@@ -1,5 +1,5 @@
 import React from "react";
-import create from "zustand";
+import { create } from "zustand";
 import { getThemeType, ThemeType } from "../theme";
 import LeafParticle from "./leaf";
 import SakuraParticle from "./sakura";
