@@ -205,7 +205,7 @@ export const postBbsPost = (
         formData.append("data", file);
     }
     apiPost("/v1/bbs/post", formData, {
-        "Content-Type": "multipart/form-data",
+        "Content-Type": "multipart/form-data; charset: UTF-8;",
     })
         .then((resp) => {
             const result: v1.PostBbsPostResponse = resp.data;
