@@ -35,6 +35,7 @@ import {
 import { COMMENT_LIST_SIZE, DialogTitle } from "../../utils/Constant";
 import List from "./List";
 import { Permission } from "@common-jshs/menkakusitsu-lib";
+import { IconLink } from "../../components/basic/Link";
 
 function Post() {
     const params = useParams();
@@ -157,9 +158,10 @@ function Post() {
                                     );
                                 } else {
                                     return (
-                                        <React.Fragment
-                                            key={attachment.downloadLink}
-                                        ></React.Fragment>
+                                        <IconLink
+                                            href={attachment.downloadLink}
+                                            label={attachment.fileName}
+                                        />
                                     );
                                 }
                             })}
