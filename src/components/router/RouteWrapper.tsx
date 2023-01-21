@@ -3,7 +3,7 @@ import { SnackbarProvider } from "notistack";
 import { Outlet } from "react-router-dom";
 import FirebaseManager from "../FirebaseManager";
 import RouteTracker from "../RouteTracker";
-import create from "zustand";
+import { create } from "zustand";
 import FixedNavbar from "../navbar";
 import Footer from "../Footer";
 import {

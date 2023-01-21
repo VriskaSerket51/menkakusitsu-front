@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import create from "zustand";
+import { create } from "zustand";
 
 const useActionStore = create<{
     actions: { [key: string]: Function };
@@ -10,7 +10,7 @@ const useActionStore = create<{
 
 function LazyAction() {
     const { actions, currentKey } = useActionStore();
-    console.log(actions)
+    console.log(actions);
     useEffect(() => {
         if (currentKey && actions[currentKey]) {
             actions[currentKey]();

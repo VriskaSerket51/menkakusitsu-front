@@ -1,12 +1,12 @@
-import create from "zustand";
+import { create } from "zustand";
 import {
     Dialog,
     DialogTitle,
     DialogContent,
     DialogActions,
-    Slide
+    Slide,
 } from "@mui/material";
-import React, { ReactNode } from "react"
+import React, { ReactNode } from "react";
 import { TransitionProps } from "@mui/material/transitions";
 import { DialogProps } from ".";
 
@@ -14,17 +14,19 @@ const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement<any, any>;
     },
-    ref: React.Ref<unknown>,
+    ref: React.Ref<unknown>
 ) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const useWaitDialogStore = create<DialogProps & { isOpened: boolean }>((set) => ({
-    title: "",
-    content: "",
-    isOpened: false,
-    close: () => set({ isOpened: false }),
-}));
+const useWaitDialogStore = create<DialogProps & { isOpened: boolean }>(
+    (set) => ({
+        title: "",
+        content: "",
+        isOpened: false,
+        close: () => set({ isOpened: false }),
+    })
+);
 
 function WaitDialog() {
     const { title, content, isOpened } = useWaitDialogStore();
@@ -33,13 +35,11 @@ function WaitDialog() {
             open={isOpened}
             maxWidth="sm"
             TransitionComponent={Transition}
-            fullWidth>
+            fullWidth
+        >
             <DialogTitle>{title}</DialogTitle>
-            <DialogContent>
-                {content}
-            </DialogContent>
-            <DialogActions>
-            </DialogActions>
+            <DialogContent>{content}</DialogContent>
+            <DialogActions></DialogActions>
         </Dialog>
     );
 }
@@ -50,7 +50,7 @@ export const openWaitDialog = (title: ReactNode, content: ReactNode) => {
     useWaitDialogStore.setState({
         title: title,
         content: content,
-        isOpened: true
+        isOpened: true,
     });
 };
 
@@ -58,6 +58,6 @@ export const closeWaitDialog = () => {
     useWaitDialogStore.setState({
         title: "",
         content: "",
-        isOpened: false
+        isOpened: false,
     });
 };
