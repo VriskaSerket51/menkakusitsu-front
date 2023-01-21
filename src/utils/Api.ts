@@ -27,7 +27,12 @@ const isApiSuccessed = (result: DefaultResponse) => {
     return result.status >= 0;
 };
 
-export const apiRequest = async (method: string, path: string, data?: any) => {
+export const apiRequest = async (
+    method: string,
+    path: string,
+    data?: any,
+    headers?: any
+) => {
     const url = import.meta.env.VITE_API_PREFIX + path;
     let accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
@@ -44,25 +49,34 @@ export const apiRequest = async (method: string, path: string, data?: any) => {
         url: url,
         data: data,
         headers: {
+            ...headers,
             Authorization: accessToken,
         },
     });
 };
 
-export const apiGet = async (path: string) => {
-    return apiRequest("get", path);
+export const apiGet = async (path: string, headers?: any) => {
+    return apiRequest("get", path, null, headers);
 };
 
-export const apiPost = async <T>(path: string, body?: any) => {
-    return apiRequest("post", path, body);
+export const apiPost = async <T>(path: string, body?: any, headers?: any) => {
+    return apiRequest("post", path, body, headers);
 };
 
-export const apiPut = async <T>(path: string, body: any = null) => {
-    return apiRequest("put", path, body);
+export const apiPut = async <T>(
+    path: string,
+    body: any = null,
+    headers?: any
+) => {
+    return apiRequest("put", path, body, headers);
 };
 
-export const apiDelete = async <T>(path: string, body: any = null) => {
-    return apiRequest("delete", path, body);
+export const apiDelete = async <T>(
+    path: string,
+    body: any = null,
+    headers?: any
+) => {
+    return apiRequest("delete", path, body, headers);
 };
 
 //Auth
@@ -182,9 +196,17 @@ export const getBbsPost = (
 
 export const postBbsPost = (
     props: v1.PostBbsPostRequest,
+    data: File[],
     onFinish: (result: v1.PostBbsPostResponse) => any
 ) => {
-    apiPost("/v1/bbs/post", props)
+    const formData = new FormData();
+    formData.append("props", JSON.stringify(props));
+    for (const file of data) {
+        formData.append("data", file);
+    }
+    apiPost("/v1/bbs/post", formData, {
+        "Content-Type": "multipart/form-data",
+    })
         .then((resp) => {
             const result: v1.PostBbsPostResponse = resp.data;
             if (isApiSuccessed(result)) {

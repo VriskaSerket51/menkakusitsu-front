@@ -12,6 +12,8 @@ import {
     Checkbox,
     FormGroup,
     FormControlLabel,
+    Typography,
+    IconButton,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import FixedNavbar from "../../components/navbar";
@@ -25,13 +27,29 @@ import {
     SubmitButton,
 } from "../../components";
 import { DialogTitle } from "../../utils/Constant";
+import { DeleteOutline, UploadFile } from "@mui/icons-material";
 
 function Create() {
     const navigate = useNavigate();
     const params = useParams();
     const [headers, setHeaders] = useState<string[]>([]);
+    const [files, setFiles] = useState<File[]>([]);
 
     const board = params.board!;
+
+    const onFileUpload = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            if (!e.target.files) {
+                return;
+            }
+            setFiles(Array.from(e.target.files));
+        },
+        []
+    );
+
+    const removeFile = (file: File) => {
+        setFiles(files.filter((_file) => _file != file));
+    };
 
     useEffect(() => {
         getBbsPostHeaders({ board: board }, (result) => {
@@ -59,6 +77,7 @@ function Create() {
                     board: board,
                     isPublic: isPublic,
                 },
+                files,
                 (result) => {
                     closeWaitDialog();
                     openConfirmDialog(
@@ -71,7 +90,7 @@ function Create() {
                 }
             );
         },
-        []
+        [files]
     );
 
     return (
@@ -111,7 +130,17 @@ function Create() {
                                         label="말머리"
                                         name="header"
                                         required
+                                        defaultValue=""
                                     >
+                                        <MenuItem
+                                            disabled
+                                            value=""
+                                            sx={{
+                                                display: "none",
+                                            }}
+                                        >
+                                            <em>-</em>
+                                        </MenuItem>
                                         {headers.map((header) => {
                                             return (
                                                 <MenuItem
@@ -136,6 +165,47 @@ function Create() {
                             required
                             inputProps={{ maxLength: 500 }}
                         />
+                        <br />
+                        <br />
+                        <Box
+                            sx={{
+                                textAlign: "center",
+                                borderStyle: "dotted",
+                                borderRadius: 1,
+                                borderColor: "lightgray",
+                                padding: "1em",
+                            }}
+                        >
+                            <Button
+                                component="label"
+                                variant="outlined"
+                                startIcon={<UploadFile />}
+                                sx={{ padding: "1em" }}
+                            >
+                                파일 업로드
+                                <input
+                                    name="data"
+                                    type="file"
+                                    multiple
+                                    hidden
+                                    onChange={onFileUpload}
+                                />
+                            </Button>
+                            {files.map((file) => {
+                                return (
+                                    <Typography key={file.lastModified}>
+                                        {file.name}
+                                        <IconButton
+                                            onClick={() => {
+                                                removeFile(file);
+                                            }}
+                                        >
+                                            <DeleteOutline />
+                                        </IconButton>
+                                    </Typography>
+                                );
+                            })}
+                        </Box>
                         <FormGroup>
                             <FormControlLabel
                                 control={<Checkbox />}

@@ -150,12 +150,17 @@ function Post() {
                                 if (attachment.isImage) {
                                     return (
                                         <img
+                                            key={attachment.downloadLink}
                                             src={attachment.downloadLink}
                                             width="100%"
                                         />
                                     );
                                 } else {
-                                    return <React.Fragment></React.Fragment>;
+                                    return (
+                                        <React.Fragment
+                                            key={attachment.downloadLink}
+                                        ></React.Fragment>
+                                    );
                                 }
                             })}
                         <br />
