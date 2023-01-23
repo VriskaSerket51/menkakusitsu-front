@@ -154,6 +154,7 @@ function Post() {
                                             key={attachment.downloadLink}
                                             src={attachment.downloadLink}
                                             width="100%"
+                                            crossOrigin="anonymous"
                                         />
                                     );
                                 } else {
