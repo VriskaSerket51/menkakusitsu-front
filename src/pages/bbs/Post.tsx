@@ -148,12 +148,12 @@ function Post() {
                         )}
                         {attachments &&
                             attachments.map((attachment) => {
-                                if (attachment.isImage) {
+                                if (attachment.mimeType.startsWith("image")) {
                                     return (
                                         <img
                                             key={attachment.downloadLink}
                                             src={attachment.downloadLink}
-                                            width="100%"
+                                            style={{ width: "100%" }}
                                             crossOrigin="anonymous"
                                         />
                                     );
