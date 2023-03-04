@@ -88,6 +88,7 @@ export const postRegister = (
         .then((resp) => {
             const result: v1.PostLoginResponse = resp.data;
             if (isApiSuccessed(result)) {
+                closeWaitDialog();
                 onFinish(result);
             } else {
                 closeWaitDialog();
