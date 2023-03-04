@@ -4,6 +4,7 @@ import { Container, Typography, Grid, Link } from "@mui/material";
 import {
     setHeaderActive,
 } from "../../components/router/RouteWrapper";
+import RegisterButton from "../../components/button/RegisterButton";
 
 export default function Guest() {
     useEffect(() => {
@@ -40,8 +41,11 @@ export default function Guest() {
                     <Grid item xs={8.5}>
                         <SpecialroomInfoPanel />
                     </Grid>
-                    <Grid item xs={3.5}>
+                    <Grid item xs={1.75}>
                         <LoginButton />
+                    </Grid>
+                    <Grid item xs={1.75}>
+                        <RegisterButton />
                     </Grid>
                     <Grid item xs={12}>
                         <MealPanel />
