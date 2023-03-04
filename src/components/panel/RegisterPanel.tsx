@@ -48,7 +48,7 @@ export default function RegisterPanel() {
                     password: SHA3_512(password),
                 },
                 (result) => {
-                    //closeWaitDialog();
+                    closeWaitDialog();
                     openConfirmDialog(
                         DialogTitle.Info,
                         "회원가입 성공!",
