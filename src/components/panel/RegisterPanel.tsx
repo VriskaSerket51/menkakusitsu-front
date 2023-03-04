@@ -4,6 +4,7 @@ import PaperTitle from "../PaperTitle";
 import { SubmitButton } from "../button";
 import { closeWaitDialog, openConfirmDialog, openWaitDialog } from "../popup";
 import { DialogTitle } from "../../utils/Constant";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import { postRegister } from "../../utils/Api";
 import { SHA3_512 } from "../../utils/Utility";
 import { useNavigate } from "react-router-dom";
@@ -47,7 +48,7 @@ export default function RegisterPanel() {
                     id: id,
                     password: SHA3_512(password),
                 },
-                (result) => {
+                (result: v1.PostRegisterResponse) => {
                     closeWaitDialog();
                     openConfirmDialog(
                         DialogTitle.Info,
