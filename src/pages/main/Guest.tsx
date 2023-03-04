@@ -41,11 +41,8 @@ export default function Guest() {
                     <Grid item xs={8.5}>
                         <SpecialroomInfoPanel />
                     </Grid>
-                    <Grid item xs={1.75}>
+                    <Grid item xs={3.5}>
                         <LoginButton />
-                    </Grid>
-                    <Grid item xs={1.75}>
-                        <RegisterButton />
                     </Grid>
                     <Grid item xs={12}>
                         <MealPanel />
