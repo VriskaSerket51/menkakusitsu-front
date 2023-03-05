@@ -19,7 +19,7 @@ function NotificationButton() {
                 setIsLoading(true);
                 if (isNotificationOn) {
                     unstable_batchedUpdates(() => {
-                        deletePushToken((successed) => {
+                        deletePushToken().then((successed) => {
                             if (successed) {
                                 setPushApproved(false);
                                 setIsNotificationOn(false);
@@ -29,7 +29,7 @@ function NotificationButton() {
                     });
                 } else {
                     unstable_batchedUpdates(() => {
-                        getPushToken((successed) => {
+                        getPushToken().then((successed) => {
                             if (successed) {
                                 setPushApproved(true);
                                 setIsNotificationOn(true);
