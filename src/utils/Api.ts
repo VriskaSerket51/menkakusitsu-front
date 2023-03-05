@@ -89,7 +89,7 @@ export const apiDelete = (path: string, body: any = null, headers?: any) => {
 export const postRegister = (props: v1.PostRegisterRequest) => {
     return new Promise<v1.PostRegisterResponse>((resolve) => {
         apiPost("/v1/auth/account", props).then((resp) => {
-            const result: v1.PostLoginResponse = resp.data;
+            const result: v1.PostRegisterResponse = resp.data;
             resolve(result);
         });
     });
