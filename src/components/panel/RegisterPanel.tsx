@@ -4,10 +4,7 @@ import PaperTitle from "../PaperTitle";
 import { SubmitButton } from "../button";
 import { closeWaitDialog, openConfirmDialog, openWaitDialog } from "../popup";
 import { DialogTitle } from "../../utils/Constant";
-<<<<<<< HEAD
 import { isApiSuccessed, postRegister } from "../../utils/Api";
-=======
->>>>>>> c48e24827dd15c014bcfbd19c72a5643a966e20e
 import { SHA3_512 } from "../../utils/Utility";
 import { useNavigate } from "react-router-dom";
 
