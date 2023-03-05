@@ -18,7 +18,11 @@ import {
 import React, { useCallback, useEffect, useState } from "react";
 import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
-import { getBbsPostHeaders, postBbsPost } from "../../utils/Api";
+import {
+    getBbsPostHeaders,
+    isApiSuccessed,
+    postBbsPost,
+} from "../../utils/Api";
 import { useNavigate, useParams } from "react-router-dom";
 import {
     closeWaitDialog,
@@ -52,7 +56,7 @@ function Create() {
     };
 
     useEffect(() => {
-        getBbsPostHeaders({ board: board }, (result) => {
+        getBbsPostHeaders({ board: board }).then((result) => {
             setHeaders(result.headers);
         });
     }, []);
@@ -77,8 +81,9 @@ function Create() {
                     board: board,
                     isPublic: isPublic,
                 },
-                files,
-                (result) => {
+                files
+            ).then((result) => {
+                if (isApiSuccessed(result)) {
                     closeWaitDialog();
                     openConfirmDialog(
                         DialogTitle.Info,
@@ -87,8 +92,11 @@ function Create() {
                             navigate(`/bbs/${board}/list`);
                         }
                     );
+                } else {
+                    closeWaitDialog();
+                    openConfirmDialog(DialogTitle.Info, result.message);
                 }
-            );
+            });
         },
         [files]
     );

@@ -8,21 +8,58 @@ import {
     Paper,
     TextField,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import {
     closeWaitDialog,
     openWaitDialog,
-    SubmitButton,
 } from "../../components";
 import PaperTitle from "../../components/PaperTitle";
 import { deleteSecession, getSpecialroomStudentInfo } from "../../utils/Api";
 import { DialogTitle } from "../../utils/Constant";
+interface UserBoxProps {
+    user: v1.UserInfo;
+    setUsers: Dispatch<SetStateAction<v1.UserInfo[]>>;
+}
+
+function UserBox(props: UserBoxProps) {
+    const { user, setUsers } = props;
+    return (
+        <Grid item xs={3}>
+            <FormControlLabel
+                label={user.name}
+                control={
+                    <Checkbox
+                        color="secondary"
+                        onChange={(event) => {
+                            if (event.target.checked) {
+                                openWaitDialog(
+                                    DialogTitle.Info,
+                                    "처리 중입니다..."
+                                );
+                                deleteSecession({
+                                    name: user.name,
+                                }).then((result) => {
+                                    closeWaitDialog();
+                                    getSpecialroomStudentInfo({}).then(
+                                        (result) => {
+                                            setUsers(result.studentInfo);
+                                        }
+                                    );
+                                });
+                            }
+                        }}
+                    />
+                }
+            />
+        </Grid>
+    );
+}
 
 export default function UserManagement() {
     const [users, setUsers] = useState<v1.UserInfo[]>([]);
 
     useEffect(() => {
-        getSpecialroomStudentInfo({}, (result) => {
+        getSpecialroomStudentInfo({}).then((result) => {
             setUsers(result.studentInfo);
         });
     }, []);
@@ -48,47 +85,11 @@ export default function UserManagement() {
                             <Grid container spacing={2}>
                                 {users.map((user) => {
                                     return (
-                                        <Grid item xs={3} key={user.name}>
-                                            <FormControlLabel
-                                                label={user.name}
-                                                control={
-                                                    <Checkbox
-                                                        color="secondary"
-                                                        onChange={(event) => {
-                                                            if (
-                                                                event.target
-                                                                    .checked
-                                                            ) {
-                                                                openWaitDialog(
-                                                                    DialogTitle.Info,
-                                                                    "처리 중입니다..."
-                                                                );
-                                                                deleteSecession(
-                                                                    {
-                                                                        name: user.name,
-                                                                    },
-                                                                    (
-                                                                        result
-                                                                    ) => {
-                                                                        closeWaitDialog();
-                                                                        getSpecialroomStudentInfo(
-                                                                            {},
-                                                                            (
-                                                                                result
-                                                                            ) => {
-                                                                                setUsers(
-                                                                                    result.studentInfo
-                                                                                );
-                                                                            }
-                                                                        );
-                                                                    }
-                                                                );
-                                                            }
-                                                        }}
-                                                    />
-                                                }
-                                            />
-                                        </Grid>
+                                        <UserBox
+                                            key={user.name}
+                                            user={user}
+                                            setUsers={setUsers}
+                                        />
                                     );
                                 })}
                             </Grid>

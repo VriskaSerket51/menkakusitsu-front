@@ -82,9 +82,9 @@ function Download() {
     const when = parseInt(getParameter("when", "1"));
 
     useEffect(() => {
-        getAttendanceList({ when: when }, (result) => {
+        getAttendanceList({ when: when }).then((result) => {
             setAttendanceInfo(result.list);
-            getSpecialroomInfo({}, (result) => {
+            getSpecialroomInfo({}).then((result) => {
                 setInformation(result.information);
                 setIsLoading(false);
             });

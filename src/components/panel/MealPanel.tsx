@@ -7,11 +7,8 @@ import {
     Divider,
     Paper,
     Skeleton,
-    SxProps,
-    Theme,
     Typography,
 } from "@mui/material";
-import { dayToString } from "../../utils/Utility";
 
 interface MealInfoProps {
     type: "breakfast" | "lunch" | "dinner";
@@ -102,8 +99,7 @@ function MealPanel() {
     const today = dayjs();
 
     React.useEffect(() => {
-        getMeal(
-            { when: today.startOf("day").format("YYYY-MM-DD") },
+        getMeal({ when: today.startOf("day").format("YYYY-MM-DD") }).then(
             (result) => {
                 setMealInfo(result);
                 setIsLoading(false);

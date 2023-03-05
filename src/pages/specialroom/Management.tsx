@@ -120,22 +120,17 @@ function Management() {
                                             DialogTitle.Info,
                                             "처리 중입니다..."
                                         );
-                                        putSpecialroomInfo(
-                                            {
-                                                information: final.map(
-                                                    (information) => {
-                                                        information.state = 1;
-                                                        return information;
-                                                    }
-                                                ),
-                                            },
-                                            (result) => {
-                                                closeWaitDialog();
-                                                setInformation(
-                                                    result.information
-                                                );
-                                            }
-                                        );
+                                        putSpecialroomInfo({
+                                            information: final.map(
+                                                (information) => {
+                                                    information.state = 1;
+                                                    return information;
+                                                }
+                                            ),
+                                        }).then((result) => {
+                                            closeWaitDialog();
+                                            setInformation(result.information);
+                                        });
                                     }}
                                 >
                                     승인
@@ -149,22 +144,17 @@ function Management() {
                                             DialogTitle.Info,
                                             "처리 중입니다..."
                                         );
-                                        putSpecialroomInfo(
-                                            {
-                                                information: final.map(
-                                                    (information) => {
-                                                        information.state = -1;
-                                                        return information;
-                                                    }
-                                                ),
-                                            },
-                                            (result) => {
-                                                closeWaitDialog();
-                                                setInformation(
-                                                    result.information
-                                                );
-                                            }
-                                        );
+                                        putSpecialroomInfo({
+                                            information: final.map(
+                                                (information) => {
+                                                    information.state = -1;
+                                                    return information;
+                                                }
+                                            ),
+                                        }).then((result) => {
+                                            closeWaitDialog();
+                                            setInformation(result.information);
+                                        });
                                     }}
                                 >
                                     거부
@@ -183,7 +173,7 @@ function Management() {
     );
 
     useEffect(() => {
-        getSpecialroomInfo({}, (result) => {
+        getSpecialroomInfo({}).then((result) => {
             setInformation(
                 result.information.filter(
                     (info) => info.teacher.uid == payload?.uid

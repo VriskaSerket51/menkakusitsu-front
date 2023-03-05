@@ -196,7 +196,7 @@ export const getIdbotChat = async (props: v1.GetIdbotChatRequest) => {
 //Timetable
 export const getMeal = async (props: v1.GetMealRequest) => {
     const resp = await apiGet(`/v1/meal/now`);
-    const result: v1.GetIdbotChatResponse = resp.data;
+    const result: v1.GetMealResponse = resp.data;
     return result;
 };
 
