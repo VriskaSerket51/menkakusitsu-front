@@ -160,7 +160,7 @@ export const deleteBbsPost = async (props: v1.DeleteBbsPostRequest) => {
 
 export const getBbsPostHeaders = async (props: v1.GetBbsPostHeaderRequest) => {
     const resp = await apiGet(`/v1/bbs/post/headers?board=${props.board}`);
-    const result: v1.DeleteBbsPostResponse = resp.data;
+    const result: v1.GetBbsPostHeaderResponse = resp.data;
     return result;
 };
 
