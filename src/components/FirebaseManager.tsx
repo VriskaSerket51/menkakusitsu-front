@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {} from "firebase/functions"
 import { getAnalytics, logEvent } from "firebase/analytics";
 import {
     deleteToken,
@@ -37,7 +36,9 @@ let messaging: Messaging | undefined;
 try {
     messaging = getMessaging();
 } catch (error) {
-    console.log(`Error: Failed to initialize Firebase Messaging for ${error}`);
+    console.error(
+        `Error: Failed to initialize Firebase Messaging for ${error}`
+    );
 }
 
 function FirebaseManager() {
@@ -55,66 +56,62 @@ function FirebaseManager() {
             });
         }
     }, [enqueueSnackbar]);
-    
+
     return <React.Fragment></React.Fragment>;
 }
 
 export default FirebaseManager;
 
-export const getPushToken = (onFinish: (successed: boolean) => any) => {
+export const getPushToken = async (): Promise<boolean> => {
     if (messaging) {
-        getToken(messaging, {
-            vapidKey:
-                "BG_LNhZiWNMNjuR-PTiY8pLm0SJ8itD0lVcEr3cRtkhBEOtzcDbiUVVQ3i5ZERbsmw5Q8kPDqJ1KpvvYF7nKcbk",
-        })
-            .then((token) => {
-                if (token) {
-                    putUserPush(
-                        {
-                            pushToken: token,
-                            deviceId: getDeviceUuid(),
-                        },
-                        () => {}
-                    );
-                    onFinish(true);
-                } else {
-                    onFinish(false);
-                }
-            })
-            .catch((e) => {
-                console.log(e);
-                openConfirmDialog(
-                    DialogTitle.Alert,
-                    "Failed to get FCM token for reason: " + e
-                );
+        try {
+            const token = await getToken(messaging, {
+                vapidKey:
+                    "BG_LNhZiWNMNjuR-PTiY8pLm0SJ8itD0lVcEr3cRtkhBEOtzcDbiUVVQ3i5ZERbsmw5Q8kPDqJ1KpvvYF7nKcbk",
             });
+            if (token) {
+                await putUserPush({
+                    pushToken: token,
+                    deviceId: getDeviceUuid(),
+                });
+                return true;
+            } else {
+                return false;
+            }
+        } catch (e) {
+            console.error(e);
+            openConfirmDialog(
+                DialogTitle.Alert,
+                "Failed to get FCM token for reason: " + e
+            );
+            return false;
+        }
     }
+    return false;
 };
 
-export const deletePushToken = (onFinish: (successed: boolean) => any) => {
+export const deletePushToken = async (): Promise<boolean> => {
     if (messaging) {
-        deleteToken(messaging)
-            .then((result) => {
-                if (result) {
-                    deleteUserPush(
-                        {
-                            devcieId: getDeviceUuid(),
-                        },
-                        () => {}
-                    );
-                    onFinish(true);
-                } else {
-                    onFinish(false);
-                }
-            })
-            .catch((e) => {
-                console.log(e);
-                openConfirmDialog(
-                    DialogTitle.Alert,
-                    "Failed to delete FCM token for reason: " + e
-                );
-            });
+        try {
+            const result = await deleteToken(messaging);
+            if (result) {
+                await deleteUserPush({
+                    devcieId: getDeviceUuid(),
+                });
+                return true;
+            } else {
+                return false;
+            }
+        } catch (e) {
+            console.error(e);
+            openConfirmDialog(
+                DialogTitle.Alert,
+                "Failed to delete FCM token for reason: " + e
+            );
+            return false;
+        }
     }
+    return false;
 };
 
 export const logPageView = () => {

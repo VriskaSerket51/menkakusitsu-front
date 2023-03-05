@@ -86,609 +86,251 @@ export const apiDelete = (path: string, body: any = null, headers?: any) => {
 };
 
 //Auth
-export const postRegister = (props: v1.PostRegisterRequest) => {
-    return new Promise<v1.PostRegisterResponse>((resolve) => {
-        apiPost("/v1/auth/account", props).then((resp) => {
-            const result: v1.PostRegisterResponse = resp.data;
-            resolve(result);
-        });
-    });
+export const postRegister = async (props: v1.PostRegisterRequest) => {
+    const resp = await apiPost("/v1/auth/account", props);
+    const result: v1.PostRegisterResponse = resp.data;
+    return result;
 };
 
-export const deleteSecession = (
-    props: v1.DeleteSecessionRequest,
-    onFinish: (result: v1.DeleteSecessionResponse) => any
-) => {
-    apiDelete("/v1/auth/account", props)
-        .then((resp) => {
-            const result: v1.DeleteSecessionResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const deleteSecession = async (props: v1.DeleteSecessionRequest) => {
+    const resp = await apiDelete("/v1/auth/account", props);
+    const result: v1.DeleteSecessionResponse = resp.data;
+    return result;
 };
 
-export const postLogin = (
-    props: v1.PostLoginRequest,
-    onSuccessed: (result: v1.PostLoginResponse) => any,
-    onFailed: (result: v1.PostLoginResponse) => any
-) => {
-    apiPost("/v1/auth/login", props)
-        .then((resp) => {
-            const result: v1.PostLoginResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onSuccessed(result);
-            } else {
-                onFailed(result);
-            }
-        })
-        .catch(onApiError);
+export const postLogin = async (props: v1.PostLoginRequest) => {
+    const resp = await apiPost("/v1/auth/login", props);
+    const result: v1.PostLoginResponse = resp.data;
+    return result;
 };
 
-export const deleteLogout = (
-    props: v1.DeleteLogoutRequest,
-    onFinish: (result: v1.DeleteLogoutResponse) => any
-) => {
-    const logout = () => {
-        apiDelete("/v1/auth/logout", props)
-            .then((resp) => {
-                const result: v1.DeleteLogoutResponse = resp.data;
-                if (isApiSuccessed(result)) {
-                    onFinish(result);
-                } else {
-                    closeWaitDialog();
-                    openConfirmDialog(DialogTitle.Alert, result.message);
-                }
-            })
-            .catch(onApiError);
-    };
+export const deleteLogout = async (props: v1.DeleteLogoutRequest) => {
     if (getPushApproved()) {
-        deletePushToken(() => {
-            logout();
-        });
-    } else {
-        logout();
+        await deletePushToken();
     }
+    const resp = await apiDelete("/v1/auth/logout", props);
+    const result: v1.DeleteLogoutResponse = resp.data;
+    return result;
 };
 
 //BBS
-export const getBbsPostList = (props: v1.GetBbsPostListRequest) => {
-    return new Promise<v1.GetBbsPostListResponse>((resolve) => {
-        apiGet(
-            `/v1/bbs/post/list?board=${props.board}&postPage=${props.postPage}&postListSize=${props.postListSize}`
-        ).then((resp) => {
-            const result: v1.GetBbsPostListResponse = resp.data;
-            resolve(result);
-        });
-    });
+export const getBbsPostList = async (props: v1.GetBbsPostListRequest) => {
+    const resp = await apiGet(
+        `/v1/bbs/post/list?board=${props.board}&postPage=${props.postPage}&postListSize=${props.postListSize}`
+    );
+    const result: v1.GetBbsPostListResponse = resp.data;
+    return result;
 };
 
-export const getBbsPost = (
-    props: v1.GetBbsPostRequest,
-    onFinish: (result: v1.GetBbsPostResponse) => any
-) => {
-    apiGet(`/v1/bbs/post?board=${props.board}&postId=${props.postId}`)
-        .then((resp) => {
-            const result: v1.GetBbsPostResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message, onFinish);
-            }
-        })
-        .catch(onApiError);
+export const getBbsPost = async (props: v1.GetBbsPostRequest) => {
+    const resp = await apiGet(
+        `/v1/bbs/post?board=${props.board}&postId=${props.postId}`
+    );
+    const result: v1.GetBbsPostResponse = resp.data;
+    return result;
 };
 
-export const postBbsPost = (
+export const postBbsPost = async (
     props: v1.PostBbsPostRequest,
-    data: File[],
-    onFinish: (result: v1.PostBbsPostResponse) => any
+    data: File[]
 ) => {
     const formData = new FormData();
     formData.append("props", JSON.stringify(props));
     for (const file of data) {
         formData.append("data", file);
     }
-    apiPost("/v1/bbs/post", formData, {
+    const resp = await apiPost("/v1/bbs/post", formData, {
         "Content-Type": "multipart/form-data; charset: UTF-8;",
-    })
-        .then((resp) => {
-            const result: v1.PostBbsPostResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+    });
+    const result: v1.PostBbsPostResponse = resp.data;
+    return result;
 };
 
-export const putBbsPost = (
-    props: v1.PutBbsPostRequest,
-    onFinish: (result: v1.PutBbsPostResponse) => any
-) => {
-    apiPut("/v1/bbs/post", props)
-        .then((resp) => {
-            const result: v1.PutBbsPostResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const putBbsPost = async (props: v1.PutBbsPostRequest) => {
+    const resp = await apiPut("/v1/bbs/post", props);
+    const result: v1.PutBbsPostResponse = resp.data;
+    return result;
 };
 
-export const deleteBbsPost = (
-    props: v1.DeleteBbsPostRequest,
-    onFinish: (result: v1.DeleteBbsPostResponse) => any
-) => {
-    apiDelete("/v1/bbs/post", props)
-        .then((resp) => {
-            const result: v1.DeleteBbsPostResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const deleteBbsPost = async (props: v1.DeleteBbsPostRequest) => {
+    const resp = await apiDelete("/v1/bbs/post", props);
+    const result: v1.DeleteBbsPostResponse = resp.data;
+    return result;
 };
 
-export const getBbsPostHeaders = (
-    props: v1.GetBbsPostHeaderRequest,
-    onFinish: (result: v1.GetBbsPostHeaderResponse) => any
-) => {
-    apiGet(`/v1/bbs/post/headers?board=${props.board}`)
-        .then((resp) => {
-            const result: v1.GetBbsPostHeaderResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const getBbsPostHeaders = async (props: v1.GetBbsPostHeaderRequest) => {
+    const resp = await apiGet(`/v1/bbs/post/headers?board=${props.board}`);
+    const result: v1.DeleteBbsPostResponse = resp.data;
+    return result;
 };
 
-export const getBbsCommentList = (
-    props: v1.GetBbsCommentListRequest,
-    onFinish: (result: v1.GetBbsCommentListResponse) => any
-) => {
-    apiGet(
+export const getBbsCommentList = async (props: v1.GetBbsCommentListRequest) => {
+    const resp = await apiGet(
         `/v1/bbs/comment/list?board=${props.board}&postId=${props.postId}&commentPage=${props.commentPage}&commentListSize=${props.commentListSize}`
-    )
-        .then((resp) => {
-            const result: v1.GetBbsCommentListResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+    );
+    const result: v1.GetBbsCommentListResponse = resp.data;
+    return result;
 };
 
-export const postBbsComment = (
-    props: v1.PostBbsCommentRequest,
-    onFinish: (result: v1.PostBbsCommentResponse) => any
-) => {
-    apiPost("/v1/bbs/comment", props)
-        .then((resp) => {
-            const result: v1.PostBbsCommentResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const postBbsComment = async (props: v1.PostBbsCommentRequest) => {
+    const resp = await apiPost("/v1/bbs/comment", props);
+    const result: v1.PostBbsCommentResponse = resp.data;
+    return result;
 };
 
-export const deleteBbsComment = (
-    props: v1.DeleteBbsCommentRequest,
-    onFinish: (result: v1.DeleteBbsCommentResponse) => any
-) => {
-    apiDelete("/v1/bbs/comment", props)
-        .then((resp) => {
-            const result: v1.DeleteBbsCommentResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const deleteBbsComment = async (props: v1.DeleteBbsCommentRequest) => {
+    const resp = await apiDelete("/v1/bbs/comment", props);
+    const result: v1.PostBbsCommentResponse = resp.data;
+    return result;
 };
 
 //Chat
-export const getIdbotChat = (
-    props: v1.GetIdbotChatRequest,
-    onFinish: (result: v1.GetIdbotChatResponse) => any
-) => {
-    apiGet(`/v1/chat/idbot/message?chatInput=${props.chatInput}`)
-        .then((resp) => {
-            const result: v1.GetIdbotChatResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const getIdbotChat = async (props: v1.GetIdbotChatRequest) => {
+    const resp = await apiGet(
+        `/v1/chat/idbot/message?chatInput=${props.chatInput}`
+    );
+    const result: v1.GetIdbotChatResponse = resp.data;
+    return result;
 };
 
 //Timetable
-export const getMeal = (
-    props: v1.GetMealRequest,
-    onFinish: (result: v1.GetMealResponse) => any
-) => {
-    apiGet(`/v1/meal/now`)
-        .then((resp) => {
-            const result: v1.GetMealResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const getMeal = async (props: v1.GetMealRequest) => {
+    const resp = await apiGet(`/v1/meal/now`);
+    const result: v1.GetIdbotChatResponse = resp.data;
+    return result;
 };
 
 //Specialroom
-export const getSpecialroomApply = (
-    props: v1.GetApplyRequest,
-    onFinish: (result: v1.GetApplyResponse) => any
-) => {
-    apiGet(`/v1/specialroom/apply?when=${props.when}`)
-        .then((resp) => {
-            const result: v1.GetApplyResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const getSpecialroomApply = async (props: v1.GetApplyRequest) => {
+    const resp = await apiGet(`/v1/specialroom/apply?when=${props.when}`);
+    const result: v1.GetApplyResponse = resp.data;
+    return result;
 };
 
-export const postSpecialroomApply = (
-    props: v1.PostApplyRequest,
-    onFinish: (result: v1.PostApplyResponse) => any
-) => {
-    apiPost("/v1/specialroom/apply", props)
-        .then((resp) => {
-            const result: v1.PostApplyResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const postSpecialroomApply = async (props: v1.PostApplyRequest) => {
+    const resp = await apiPost("/v1/specialroom/apply", props);
+    const result: v1.PostApplyResponse = resp.data;
+    return result;
 };
 
-export const deleteSpecialroomApply = (
-    props: v1.DeleteApplyRequest,
-    onFinish: (result: v1.DeleteApplyResponse) => any
-) => {
-    apiDelete("/v1/specialroom/apply", props)
-        .then((resp) => {
-            const result: v1.DeleteApplyResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const deleteSpecialroomApply = async (props: v1.DeleteApplyRequest) => {
+    const resp = await apiDelete("/v1/specialroom/apply", props);
+    const result: v1.DeleteApplyResponse = resp.data;
+    return result;
 };
 
-export const getAttendanceInfo = (
-    props: v1.GetAttendanceInfoRequest,
-    onFinish: (result: v1.GetAttendanceInfoResponse) => any
-) => {
-    apiGet("/v1/specialroom/attendance/info")
-        .then((resp) => {
-            const result: v1.GetAttendanceInfoResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const getAttendanceInfo = async (props: v1.GetAttendanceInfoRequest) => {
+    const resp = await apiGet("/v1/specialroom/attendance/info");
+    const result: v1.GetAttendanceInfoResponse = resp.data;
+    return result;
 };
 
-export const getAttendanceList = (
-    props: v1.GetAttendanceListRequest,
-    onFinish: (result: v1.GetAttendanceListResponse) => any
-) => {
-    apiGet(`/v1/specialroom/attendance/list?when=${props.when}`)
-        .then((resp) => {
-            const result: v1.GetAttendanceListResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const getAttendanceList = async (props: v1.GetAttendanceListRequest) => {
+    const resp = await apiGet(
+        `/v1/specialroom/attendance/list?when=${props.when}`
+    );
+    const result: v1.GetAttendanceListResponse = resp.data;
+    return result;
 };
 
-export const getSpecialroomInfo = (
-    props: v1.GetInfoRequest,
-    onFinish: (result: v1.GetInfoResponse) => any
-) => {
-    apiGet("/v1/specialroom/info")
-        .then((resp) => {
-            const result: v1.GetInfoResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const getSpecialroomInfo = async (props: v1.GetInfoRequest) => {
+    const resp = await apiGet("/v1/specialroom/info");
+    const result: v1.GetInfoResponse = resp.data;
+    return result;
 };
 
-export const putSpecialroomInfo = (
-    props: v1.PutInfoRequest,
-    onFinish: (result: v1.PutInfoResponse) => any
-) => {
-    apiPut("/v1/specialroom/info", props)
-        .then((resp) => {
-            const result: v1.PutInfoResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const putSpecialroomInfo = async (props: v1.PutInfoRequest) => {
+    const resp = await apiPut("/v1/specialroom/info", props);
+    const result: v1.PutInfoResponse = resp.data;
+    return result;
 };
 
-export const getSpecialroomManagerInfo = (
-    props: v1.GetManagerRequest,
-    onFinish: (result: v1.GetManagerResponse) => any
+export const getSpecialroomManagerInfo = async (
+    props: v1.GetManagerRequest
 ) => {
-    apiGet(`/v1/specialroom/info/manager/${props.when}`)
-        .then((resp) => {
-            const result: v1.GetManagerResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                onFinish(result);
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+    const resp = await apiGet(`/v1/specialroom/info/manager/${props.when}`);
+    const result: v1.GetManagerResponse = resp.data;
+    return result;
 };
 
-export const getSpecialroomLocationInfo = (
-    props: v1.GetLocationInfoRequest,
-    onFinish: (result: v1.GetLocationInfoResponse) => any
+export const getSpecialroomLocationInfo = async (
+    props: v1.GetLocationInfoRequest
 ) => {
-    apiGet("/v1/specialroom/info/location")
-        .then((resp) => {
-            const result: v1.GetLocationInfoResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+    const resp = await apiGet("/v1/specialroom/info/location");
+    const result: v1.GetLocationInfoResponse = resp.data;
+    return result;
 };
 
-export const getSpecialroomPurposeInfo = (
-    props: v1.GetPurposeInfoRequest,
-    onFinish: (result: v1.GetPurposeInfoResponse) => any
+export const getSpecialroomPurposeInfo = async (
+    props: v1.GetPurposeInfoRequest
 ) => {
-    apiGet("/v1/specialroom/info/purpose")
-        .then((resp) => {
-            const result: v1.GetPurposeInfoResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+    const resp = await apiGet("/v1/specialroom/info/purpose");
+    const result: v1.GetPurposeInfoResponse = resp.data;
+    return result;
 };
 
-export const getSpecialroomStudentInfo = (
-    props: v1.GetStudentInfoRequest,
-    onFinish: (result: v1.GetStudentInfoResponse) => any
+export const getSpecialroomStudentInfo = async (
+    props: v1.GetStudentInfoRequest
 ) => {
-    apiGet("/v1/specialroom/info/student")
-        .then((resp) => {
-            const result: v1.GetStudentInfoResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+    const resp = await apiGet("/v1/specialroom/info/student");
+    const result: v1.GetStudentInfoResponse = resp.data;
+    return result;
 };
 
-export const getSpecialroomTeacherInfo = (
-    props: v1.GetTeacherInfoRequest,
-    onFinish: (result: v1.GetTeacherInfoResponse) => any
+export const getSpecialroomTeacherInfo = async (
+    props: v1.GetTeacherInfoRequest
 ) => {
-    apiGet("/v1/specialroom/info/teacher")
-        .then((resp) => {
-            const result: v1.GetTeacherInfoResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+    const resp = await apiGet("/v1/specialroom/info/teacher");
+    const result: v1.GetTeacherInfoResponse = resp.data;
+    return result;
 };
 
 //Timetable
-export const getTimetable = (
-    props: v1.GetTimetableRequest,
-    onFinish: (result: v1.GetTimetableResponse) => any
-) => {
-    apiGet(`/v1/timetable/${props.when}`)
-        .then((resp) => {
-            const result: v1.GetTimetableResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const getTimetable = async (props: v1.GetTimetableRequest) => {
+    const resp = await apiGet(`/v1/timetable/${props.when}`);
+    const result: v1.GetTimetableResponse = resp.data;
+    return result;
 };
 
-export const putTimetable = (
-    props: v1.PutTimetableRequest,
-    onFinish: (result: v1.PutTimetableResponse) => any
-) => {
-    apiPut(`/v1/timetable/${props.when}`, props)
-        .then((resp) => {
-            const result: v1.GetTimetableResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const putTimetable = async (props: v1.PutTimetableRequest) => {
+    const resp = await apiPut(`/v1/timetable/${props.when}`, props);
+    const result: v1.PutTimetableResponse = resp.data;
+    return result;
 };
 
 //User
-export const postUserPush = (
-    props: v1.PostPushRequest,
-    onFinish: (result: v1.PostPushResponse) => any
-) => {
-    apiPost("/v1/user/push", props)
-        .then((resp) => {
-            const result: v1.PostPushResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const postUserPush = async (props: v1.PostPushRequest) => {
+    const resp = await apiPost("/v1/user/push", props);
+    const result: v1.PostPushResponse = resp.data;
+    return result;
 };
 
-export const putUserPush = (
-    props: v1.PutPushRequest,
-    onFinish: (result: v1.PutPushResponse) => any
-) => {
-    apiPut("/v1/user/push", props)
-        .then((resp) => {
-            const result: v1.PutPushResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const putUserPush = async (props: v1.PutPushRequest) => {
+    const resp = await apiPut("/v1/user/push", props);
+    const result: v1.PutPushResponse = resp.data;
+    return result;
 };
 
-export const deleteUserPush = (
-    props: v1.DeletePushRequest,
-    onFinish: (result: v1.DeletePushResponse) => any
-) => {
-    apiDelete("/v1/user/push", props)
-        .then((resp) => {
-            const result: v1.DeletePushResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const deleteUserPush = async (props: v1.DeletePushRequest) => {
+    const resp = await apiDelete("/v1/user/push", props);
+    const result: v1.DeletePushResponse = resp.data;
+    return result;
 };
 
-export const getMyPrivateInfo = (
-    props: v1.GetMyPrivateInfoRequest,
-    onFinish: (result: v1.GetMyPrivateInfoResponse) => any
-) => {
-    apiGet("/v1/user/me")
-        .then((resp) => {
-            const result: v1.GetMyPrivateInfoResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const getMyPrivateInfo = async (props: v1.GetMyPrivateInfoRequest) => {
+    const resp = await apiGet("/v1/user/me");
+    const result: v1.GetMyPrivateInfoResponse = resp.data;
+    return result;
 };
 
-export const putMyEmail = (
-    props: v1.PutEmailRequest,
-    onFinish: (result: v1.PutEmailResponse) => any
-) => {
-    apiPut("/v1/user/me/email", props)
-        .then((resp) => {
-            const result: v1.PutEmailResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const putMyEmail = async (props: v1.PutEmailRequest) => {
+    const resp = await apiPut("/v1/user/me/email", props);
+    const result: v1.PutEmailResponse = resp.data;
+    return result;
 };
 
-export const putMyPassword = (
-    props: v1.PutPasswordRequest,
-    onFinish: (result: v1.PutPasswordResponse) => any
-) => {
-    apiPut("/v1/user/me/password", props)
-        .then((resp) => {
-            const result: v1.PutPasswordResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+export const putMyPassword = async (props: v1.PutPasswordRequest) => {
+    const resp = await apiPut("/v1/user/me/password", props);
+    const result: v1.PutPasswordResponse = resp.data;
+    return result;
 };
