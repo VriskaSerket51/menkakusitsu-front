@@ -84,7 +84,7 @@ const router = createBrowserRouter(
 
             <Route
                 path="contributors"
-                element={<PrivateRoute permission={Permission.Student} />}
+                element={<PrivateRoute permission={Permission.Guest} />}
             >
                 <Route index element={<Contributors />} />
             </Route>
