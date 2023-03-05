@@ -12,7 +12,7 @@ import { IconNavLink } from "../basic/Link";
 import { AccountBox } from "@mui/icons-material";
 import { SHA3_512 } from "../../utils/Utility";
 
-const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
+const onPostLogin = async (event: React.MouseEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const id = data.get("id")?.toString();
