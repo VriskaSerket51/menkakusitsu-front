@@ -1,5 +1,5 @@
 import { deletePushToken } from "../components/FirebaseManager";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { checkTokenExpiration, onLogout } from "./AuthManager";
 import { getPushApproved } from "./PushManager";
 import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
@@ -8,7 +8,6 @@ import { closeWaitDialog, openConfirmDialog } from "../components/popup";
 import { DialogTitle } from "./Constant";
 
 const onApiError = (e: any) => {
-    console.error(e);
     closeWaitDialog();
     const error = `${e}`;
     if (error.includes("400")) {
@@ -23,7 +22,7 @@ const onApiError = (e: any) => {
     }
 };
 
-const isApiSuccessed = (result: DefaultResponse) => {
+export const isApiSuccessed = (result: DefaultResponse) => {
     return result.status >= 0;
 };
 
@@ -36,7 +35,12 @@ export const apiRequest = async (
     const url = import.meta.env.VITE_API_PREFIX + path;
     let accessToken = localStorage.getItem("access-token");
     if (!accessToken) {
-        return axios({ method: method, url: url, data: data });
+        return axios({
+            method: method,
+            url: url,
+            data: data,
+            headers: headers,
+        });
     }
     if (await checkTokenExpiration(accessToken)) {
         onLogout();
@@ -55,46 +59,40 @@ export const apiRequest = async (
     });
 };
 
-export const apiGet = async (path: string, headers?: any) => {
-    return apiRequest("get", path, null, headers);
+export const apiGet = (path: string, headers?: any) => {
+    return new Promise<AxiosResponse<any, any>>((resolve) => {
+        apiRequest("get", path, null, headers).then(resolve).catch(onApiError);
+    });
 };
 
-export const apiPost = async <T>(path: string, body?: any, headers?: any) => {
-    return apiRequest("post", path, body, headers);
+export const apiPost = (path: string, body?: any, headers?: any) => {
+    return new Promise<AxiosResponse<any, any>>((resolve) => {
+        apiRequest("post", path, body, headers).then(resolve).catch(onApiError);
+    });
 };
 
-export const apiPut = async <T>(
-    path: string,
-    body: any = null,
-    headers?: any
-) => {
-    return apiRequest("put", path, body, headers);
+export const apiPut = (path: string, body: any = null, headers?: any) => {
+    return new Promise<AxiosResponse<any, any>>((resolve) => {
+        apiRequest("put", path, body, headers).then(resolve).catch(onApiError);
+    });
 };
 
-export const apiDelete = async <T>(
-    path: string,
-    body: any = null,
-    headers?: any
-) => {
-    return apiRequest("delete", path, body, headers);
+export const apiDelete = (path: string, body: any = null, headers?: any) => {
+    return new Promise<AxiosResponse<any, any>>((resolve) => {
+        apiRequest("delete", path, body, headers)
+            .then(resolve)
+            .catch(onApiError);
+    });
 };
 
 //Auth
-export const postRegister = (
-    props: v1.PostRegisterRequest,
-    onFinish: (result: v1.PostRegisterResponse) => any
-) => {
-    apiPost("/v1/auth/account", props)
-        .then((resp) => {
+export const postRegister = (props: v1.PostRegisterRequest) => {
+    return new Promise<v1.PostRegisterResponse>((resolve) => {
+        apiPost("/v1/auth/account", props).then((resp) => {
             const result: v1.PostLoginResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+            resolve(result);
+        });
+    });
 };
 
 export const deleteSecession = (
@@ -158,23 +156,15 @@ export const deleteLogout = (
 };
 
 //BBS
-export const getBbsPostList = (
-    props: v1.GetBbsPostListRequest,
-    onFinish: (result: v1.GetBbsPostListResponse) => any
-) => {
-    apiGet(
-        `/v1/bbs/post/list?board=${props.board}&postPage=${props.postPage}&postListSize=${props.postListSize}`
-    )
-        .then((resp) => {
+export const getBbsPostList = (props: v1.GetBbsPostListRequest) => {
+    return new Promise<v1.GetBbsPostListResponse>((resolve) => {
+        apiGet(
+            `/v1/bbs/post/list?board=${props.board}&postPage=${props.postPage}&postListSize=${props.postListSize}`
+        ).then((resp) => {
             const result: v1.GetBbsPostListResponse = resp.data;
-            if (isApiSuccessed(result)) {
-                onFinish(result);
-            } else {
-                closeWaitDialog();
-                openConfirmDialog(DialogTitle.Alert, result.message);
-            }
-        })
-        .catch(onApiError);
+            resolve(result);
+        });
+    });
 };
 
 export const getBbsPost = (

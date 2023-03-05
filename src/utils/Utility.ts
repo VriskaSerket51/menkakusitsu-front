@@ -5,7 +5,7 @@ import { LoadableComponent } from "@loadable/component";
 import { topbar } from "../components/topbar";
 import { Permission, TokenPayload } from "@common-jshs/menkakusitsu-lib";
 
-export const dynamicLoader = (component: LoadableComponent<unknown>) => {
+export const dynamicLoader = async (component: LoadableComponent<unknown>) => {
     topbar.show();
     component.preload();
     topbar.hide();

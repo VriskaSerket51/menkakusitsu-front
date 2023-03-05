@@ -87,13 +87,14 @@ function List() {
     const postId = params.postId;
 
     useEffect(() => {
-        getBbsPostList(
-            { board: board, postPage: page, postListSize: POST_LIST_SIZE },
-            (result) => {
-                setPostCount(result.postCount);
-                setPostList(result.list);
-            }
-        );
+        getBbsPostList({
+            board: board,
+            postPage: page,
+            postListSize: POST_LIST_SIZE,
+        }).then((result) => {
+            setPostCount(result.postCount);
+            setPostList(result.list);
+        });
     }, [page]);
 
     const drawBbsPostList = useCallback(() => {
