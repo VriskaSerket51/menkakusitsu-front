@@ -4,7 +4,10 @@ import PaperTitle from "../PaperTitle";
 import { SubmitButton } from "../button";
 import { closeWaitDialog, openConfirmDialog, openWaitDialog } from "../popup";
 import { DialogTitle } from "../../utils/Constant";
+<<<<<<< HEAD
 import { isApiSuccessed, postRegister } from "../../utils/Api";
+=======
+>>>>>>> c48e24827dd15c014bcfbd19c72a5643a966e20e
 import { SHA3_512 } from "../../utils/Utility";
 import { useNavigate } from "react-router-dom";
 
@@ -39,6 +42,7 @@ export default function RegisterPanel() {
                 return;
             }
             openWaitDialog(DialogTitle.Info, "회원가입 중입니다...");
+<<<<<<< HEAD
             postRegister({
                 name: name,
                 sid: sid,
@@ -47,6 +51,8 @@ export default function RegisterPanel() {
                 password: SHA3_512(password),
             }).then((result) => {
                 if (isApiSuccessed(result)) {
+=======
+>>>>>>> c48e24827dd15c014bcfbd19c72a5643a966e20e
                     closeWaitDialog();
                     openConfirmDialog(
                         DialogTitle.Info,

@@ -4,6 +4,7 @@ import { Container, Typography, Grid, Link } from "@mui/material";
 import {
     setHeaderActive,
 } from "../../components/router/RouteWrapper";
+import RegisterButton from "../../components/button/RegisterButton";
 
 export default function Guest() {
     useEffect(() => {
