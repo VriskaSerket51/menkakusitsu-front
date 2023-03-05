@@ -12,7 +12,7 @@ import { IconNavLink } from "../basic/Link";
 import { AccountBox } from "@mui/icons-material";
 import { SHA3_512 } from "../../utils/Utility";
 
-const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
+const onPostLogin = async (event: React.MouseEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const id = data.get("id")?.toString();
@@ -21,14 +21,21 @@ const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
         return;
     }
     openWaitDialog(DialogTitle.Info, "로그인 중입니다...");
-    postLogin(
-        { id: id, password: SHA3_512(password) },
-        onLoginSuccessed,
-        onLoginFailed
-    );
+    try {
+        const result = await postLogin(
+            { id: id, password: SHA3_512(password) }
+        );
+        if (result.accessToken !== "")
+            onLoginSuccessed(result);
+        else
+            onLoginFailed(result);
+    }
+    catch (err) {
+        console.error(err);
+    }
 };
 
-const onLoginSuccessed = (result: v1.PostLoginResponse) => {
+const onLoginSuccessed = async (result: v1.PostLoginResponse) => {
     localStorage.setItem("access-token", result.accessToken);
     localStorage.setItem("refresh-token", result.refreshToken);
 
@@ -59,9 +66,13 @@ const onLoginSuccessed = (result: v1.PostLoginResponse) => {
     };
 
     if (getPushApproved()) {
-        getPushToken(() => {
+        try {
+            const result = await getPushToken();
             onFinished();
-        });
+        }
+        catch (err) {
+            console.error(err);
+        }
     } else {
         onFinished();
     }
@@ -69,7 +80,7 @@ const onLoginSuccessed = (result: v1.PostLoginResponse) => {
 
 const onLoginFailed = (result: v1.PostLoginResponse) => {
     closeWaitDialog();
-    openConfirmDialog(DialogTitle.Info, result.message, () => {});
+    openConfirmDialog(DialogTitle.Info, result.message, () => { });
 };
 
 export default function LoginPanel() {

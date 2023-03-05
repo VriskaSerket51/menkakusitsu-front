@@ -4,6 +4,7 @@ import PaperTitle from "../PaperTitle";
 import { SubmitButton } from "../button";
 import { closeWaitDialog, openConfirmDialog, openWaitDialog } from "../popup";
 import { DialogTitle } from "../../utils/Constant";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import { isApiSuccessed, postRegister } from "../../utils/Api";
 import { SHA3_512 } from "../../utils/Utility";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +13,7 @@ export default function RegisterPanel() {
     const navigate = useNavigate();
 
     const onPostRegister = useCallback(
-        (event: React.MouseEvent<HTMLFormElement>) => {
+        async (event: React.MouseEvent<HTMLFormElement>) => {
             event.preventDefault();
             const data = new FormData(event.currentTarget);
             const name = data.get("name")?.toString().trim();
@@ -39,14 +40,17 @@ export default function RegisterPanel() {
                 return;
             }
             openWaitDialog(DialogTitle.Info, "회원가입 중입니다...");
-            postRegister({
-                name: name,
-                sid: sid,
-                email: email,
-                id: id,
-                password: SHA3_512(password),
-            }).then((result) => {
-                if (isApiSuccessed(result)) {
+            try {
+                const result = await postRegister(
+                    {
+                        name: name,
+                        sid: sid,
+                        email: email,
+                        id: id,
+                        password: SHA3_512(password),
+                    }
+                );
+                if(isApiSuccessed(result)) {
                     closeWaitDialog();
                     openConfirmDialog(
                         DialogTitle.Info,
@@ -55,11 +59,25 @@ export default function RegisterPanel() {
                             navigate("/");
                         }
                     );
-                } else {
+                }
+                else {
                     closeWaitDialog();
                     openConfirmDialog(DialogTitle.Alert, result.message);
                 }
-            });
+            }
+            catch(err) {
+                console.error(err);
+            }
+            /*(result) => {
+                closeWaitDialog();
+                openConfirmDialog(
+                    DialogTitle.Info,
+                    "회원가입 성공!",
+                    () => {
+                        navigate("/");
+                    }
+                );
+            }*/
         },
         []
     );
