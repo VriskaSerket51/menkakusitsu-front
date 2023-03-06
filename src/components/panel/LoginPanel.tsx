@@ -33,7 +33,7 @@ const onPostLogin = async (event: React.MouseEvent<HTMLFormElement>) => {
 const onLoginSuccessed = async (result: v1.PostLoginResponse) => {
     localStorage.setItem("access-token", result.accessToken);
     localStorage.setItem("refresh-token", result.refreshToken);
-
+    
     if (getPushApproved()) {
         await getPushToken();
     }

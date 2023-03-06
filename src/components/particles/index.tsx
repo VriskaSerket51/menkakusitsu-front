@@ -1,6 +1,8 @@
 import React from "react";
 import { create } from "zustand";
+import { apiGet, apiPost } from "../../utils/Api";
 import { getThemeType, ThemeType } from "../theme";
+import KWoojunParticle from "./k-woojun";
 import LeafParticle from "./leaf";
 import SakuraParticle from "./sakura";
 import SnowParticle from "./snow";
@@ -17,7 +19,11 @@ const useParticleManagerStore = create<ParticleManagerProps>(() => ({
     showParticle: true,
 }));
 
-const getParticle = (themeType: ThemeType) => {
+const getParticle = async (themeType: ThemeType) => {
+    const isMaster = await apiGet("/v1/ismaster");
+    if(isMaster.data[0] == true) {
+        return <KWoojunParticle />;
+    }
     
     switch (themeType) {
         case "spring":
