@@ -7,7 +7,7 @@ import { DialogTitle } from "../../utils/Constant";
 import { getPushToken } from "../FirebaseManager";
 import { getPushApproved } from "../../utils/PushManager";
 import { v1 } from "@common-jshs/menkakusitsu-lib";
-import { isApiSuccessed, postLogin } from "../../utils/Api";
+import { apiGet, isApiSuccessed, postLogin } from "../../utils/Api";
 import { IconNavLink } from "../basic/Link";
 import { AccountBox } from "@mui/icons-material";
 import { SHA3_512 } from "../../utils/Utility";
@@ -28,12 +28,14 @@ const onPostLogin = async (event: React.MouseEvent<HTMLFormElement>) => {
             onLoginFailed(result);
         }
     });
+
 };
 
 const onLoginSuccessed = async (result: v1.PostLoginResponse) => {
     localStorage.setItem("access-token", result.accessToken);
     localStorage.setItem("refresh-token", result.refreshToken);
-    
+    const isMaster = await apiGet("/v1/ismaster");
+    isMaster.data[0] ? localStorage.setItem("is-master", "true") : localStorage.setItem("is-master", "false");
     if (getPushApproved()) {
         await getPushToken();
     }
