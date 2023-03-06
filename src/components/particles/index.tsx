@@ -19,9 +19,8 @@ const useParticleManagerStore = create<ParticleManagerProps>(() => ({
     showParticle: true,
 }));
 
-const getParticle = async (themeType: ThemeType) => {
-    const isMaster = await apiGet("/v1/ismaster");
-    if(isMaster.data[0] == true) {
+const getParticle = (themeType: ThemeType) => {
+    if(localStorage.getItem("is-master") === "true") {
         return <KWoojunParticle />;
     }
     
