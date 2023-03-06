@@ -27,8 +27,8 @@ export default function KWoojunParticle() {
                             images: [
                                 {
                                     src: kwoojun,
-                                    width: 1080,
-                                    height: 1440,
+                                    width: 130,
+                                    height: 173,
                                 },
                             ],
                         },
