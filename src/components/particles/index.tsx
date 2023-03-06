@@ -18,6 +18,7 @@ const useParticleManagerStore = create<ParticleManagerProps>(() => ({
 }));
 
 const getParticle = (themeType: ThemeType) => {
+    
     switch (themeType) {
         case "spring":
             return <SakuraParticle />;

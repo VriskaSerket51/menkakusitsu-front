@@ -10,7 +10,7 @@
         "preview": "vite preview --host --port 3000"
     },
     "dependencies": {
-        "@common-jshs/menkakusitsu-lib": "^1.10.4",
+        "@common-jshs/menkakusitsu-lib": "^1.10.8",
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
         "@loadable/component": "^5.15.2",
