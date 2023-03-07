@@ -34,8 +34,8 @@ const onPostLogin = async (event: React.MouseEvent<HTMLFormElement>) => {
 const onLoginSuccessed = async (result: v1.PostLoginResponse) => {
     localStorage.setItem("access-token", result.accessToken);
     localStorage.setItem("refresh-token", result.refreshToken);
-    const isMaster = await apiGet("/v1/ismaster");
-    isMaster.data[0] ? localStorage.setItem("is-master", "true") : localStorage.setItem("is-master", "false");
+    //const isMaster = await apiGet("/v1/ismaster");
+    //isMaster.data[0] ? localStorage.setItem("is-master", "true") : localStorage.setItem("is-master", "false");
     if (getPushApproved()) {
         await getPushToken();
     }

@@ -1,6 +1,7 @@
 import React from "react";
 import { create } from "zustand";
 import { apiGet, apiPost } from "../../utils/Api";
+import { parseJWT } from "../../utils/Utility";
 import { getThemeType, ThemeType } from "../theme";
 import KWoojunParticle from "./k-woojun";
 import LeafParticle from "./leaf";
@@ -20,10 +21,9 @@ const useParticleManagerStore = create<ParticleManagerProps>(() => ({
 }));
 
 const getParticle = (themeType: ThemeType) => {
-    if(localStorage.getItem("is-master") === "true") {
-        return <KWoojunParticle />;
-    }
-    
+    //if(localStorage.getItem("is-master") === "true") {
+    //    return <KWoojunParticle />;
+    //}
     switch (themeType) {
         case "spring":
             return <SakuraParticle />;
