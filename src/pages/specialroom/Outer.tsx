@@ -47,7 +47,7 @@ import {
     putSpecialroomInfo,
 } from "../../utils/Api";
 import { DialogTitle } from "../../utils/Constant";
-import { SpecialroomInfoPanel } from "../../components/panel";
+import { OuterInfoPanel } from "../../components/panel";
 import { SubmitButton } from "../../components/button";
 import { v1 } from "@common-jshs/menkakusitsu-lib";
 import dayjs from "dayjs";
@@ -240,9 +240,7 @@ function Outer() {
                 <Paper>
                     <Box sx={{ padding: "50px 30px 30px 30px" }}>
                         <PaperTitle>학생 외박 관리</PaperTitle>
-                        <SpecialroomInfoPanel
-                            filter={(info) => info.teacher.uid == payload?.uid}
-                        />
+                        <OuterInfoPanel/>
                         <Stack
                             spacing={2}
                             direction="row"
