@@ -66,7 +66,7 @@ export const drawInfoTable = (
     );
 };
 
-function SpecialroomInfoPanel({
+function OuterInfoPanel({
     filter,
 }: {
     filter?: (specialroomInfo: v1.SpecialroomInfo) => boolean;
@@ -92,4 +92,4 @@ function SpecialroomInfoPanel({
     return drawInfoTable(information, isLoading, filter);
 }
 
-export default SpecialroomInfoPanel;
+export default OuterInfoPanel;

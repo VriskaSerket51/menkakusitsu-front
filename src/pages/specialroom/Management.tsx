@@ -172,16 +172,6 @@ function Management() {
         [information]
     );
 
-    useEffect(() => {
-        getSpecialroomInfo({}).then((result) => {
-            setInformation(
-                result.information.filter(
-                    (info) => info.teacher.uid == payload?.uid
-                )
-            );
-            setIsLoading(false);
-        });
-    }, []);
 
     return (
         <React.Fragment>

@@ -36,6 +36,7 @@ import {
 } from "../../components/popup";
 import {
     getSpecialroomInfo,
+    getOuterInfo,
     getSpecialroomLocationInfo,
     getSpecialroomManagerInfo,
     getSpecialroomPurposeInfo,
@@ -76,7 +77,7 @@ function Outer() {
 }*/
 
 function Outer() {
-    const [information, setInformation] = useState<v1.SpecialroomInfo[]>([]);
+    const [information, setInformation] = useState<v1.OuterInfo[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const payload = getTokenPayload();
@@ -88,7 +89,7 @@ function Outer() {
     const InfoCell = useCallback(
         (props: InfoCellProps) => {
             let count = 0;
-            const final: v1.SpecialroomInfo[] = [];
+            const final: v1.OuterInfo[] = [];
             const result = (
                 <React.Fragment>
                     <Stack
@@ -218,16 +219,6 @@ function Outer() {
         [information]
     );
 
-    useEffect(() => {
-        getSpecialroomInfo({}).then((result) => {
-            setInformation(
-                result.information.filter(
-                    (info) => info.teacher.uid == payload?.uid
-                )
-            );
-            setIsLoading(false);
-        });
-    }, []);
 
     return (
         <React.Fragment>
@@ -240,7 +231,6 @@ function Outer() {
                 <Paper>
                     <Box sx={{ padding: "50px 30px 30px 30px" }}>
                         <PaperTitle>학생 외박 관리</PaperTitle>
-                        <OuterInfoPanel/>
                         <Stack
                             spacing={2}
                             direction="row"
@@ -255,15 +245,10 @@ function Outer() {
                                 alignItems: "center",
                             }}
                         >
-                            <Typography variant="h4">
-                                외출
-                            </Typography>
-                            <br />
-                            {isLoading ? (
-                                <CircularProgress />
-                            ) : (
-                                <InfoCell state={0} />
-                            )}
+                        <Typography variant="h4">
+                            외출/외박 목록
+                        </Typography>
+                        <OuterInfoPanel/>
                         </Box>
                         <Box
                             sx={{
@@ -275,7 +260,7 @@ function Outer() {
                             }}
                         >
                             <Typography variant="h4">
-                                외박
+                                외출/외박 신청
                             </Typography>
                             <br />
                             {isLoading ? (

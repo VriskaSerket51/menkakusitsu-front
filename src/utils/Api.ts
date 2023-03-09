@@ -239,6 +239,12 @@ export const getSpecialroomInfo = async (props: v1.GetInfoRequest) => {
     return result;
 };
 
+export const getOuterInfo = async (props: v1.GetInfoRequest) => {
+    const resp = await apiGet("/v1/specialroom/info");
+    const result: v1.GetInfoResponse = resp.data;
+    return result;
+};
+
 export const putSpecialroomInfo = async (props: v1.PutInfoRequest) => {
     const resp = await apiPut("/v1/specialroom/info", props);
     const result: v1.PutInfoResponse = resp.data;
@@ -284,6 +290,7 @@ export const getSpecialroomTeacherInfo = async (
     const result: v1.GetTeacherInfoResponse = resp.data;
     return result;
 };
+
 
 //Timetable
 export const getTimetable = async (props: v1.GetTimetableRequest) => {
