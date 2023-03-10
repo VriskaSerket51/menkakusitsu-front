@@ -9,13 +9,13 @@ import {
     TableRow,
 } from "@mui/material";
 import { useCallback } from "react";
-import { getSpecialroomInfo } from "../../utils/Api";
+import { getOuterInfo } from "../../utils/Api";
 import { v1 } from "@common-jshs/menkakusitsu-lib";
 
 export const drawInfoTable = (
-    information: v1.SpecialroomInfo[] | null,
+    information: v1.OuterInfo[] | null,
     isLoading: boolean,
-    filter?: (specialroomInfo: v1.SpecialroomInfo) => boolean
+    filter?: (specialroomInfo: v1.OuterInfo) => boolean
 ) => {
     return (
         <TableContainer component={Paper}>
@@ -69,15 +69,15 @@ export const drawInfoTable = (
 function OuterInfoPanel({
     filter,
 }: {
-    filter?: (specialroomInfo: v1.SpecialroomInfo) => boolean;
+    filter?: (specialroomInfo: v1.OuterInfo) => boolean;
 }) {
-    const [information, setInformation] = useState<v1.SpecialroomInfo[] | null>(
+    const [information, setInformation] = useState<v1.OuterInfo[] | null>(
         null
     );
     const [isLoading, setIsLoading] = useState(true);
 
     const updateInformation = useCallback(() => {
-        getSpecialroomInfo({}).then((result) => {
+        getOuterInfo({}).then((result) => {
             setInformation(result.information);
             setIsLoading(false);
         });

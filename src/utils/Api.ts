@@ -240,7 +240,7 @@ export const getSpecialroomInfo = async (props: v1.GetInfoRequest) => {
 };
 
 export const getOuterInfo = async (props: v1.GetInfoRequest) => {
-    const resp = await apiGet("/v1/specialroom/info");
+    const resp = await apiGet("/v1/specialroom/outer");
     const result: v1.GetInfoResponse = resp.data;
     return result;
 };
