@@ -20,7 +20,7 @@ export function Banner() {
                     }
                     spacing={2}
                 >
-                    <a href={BannerDetails1} download="ebsBannerDetails">
+                    <a href={BannerDetails1} target="_blank">
                         <img src={Banner1} alt="W3Schools" width="100%"/ >
                     </a>
                 </Stack>
