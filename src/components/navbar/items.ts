@@ -62,6 +62,18 @@ export const navbarItems = [
     },
     {
         color: "primary.main",
+        title: "분실물",
+        href: "/lostnfound/lnf",
+        permission: Permission.Student,
+    },
+    {
+        color: "primary.main",
+        title: "기상곡",
+        href: "/morning/song",
+        permission: Permission.Student,
+    },
+    {
+        color: "primary.main",
         title: "피드백",
         href: "/bbs/feedback/list",
         permission: Permission.Student,
