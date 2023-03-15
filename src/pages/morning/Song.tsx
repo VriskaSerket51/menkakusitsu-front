@@ -5,27 +5,16 @@ import {
     Paper,
     Stack,
 } from "@mui/material";
-import { getAutoHeightDuration } from "@mui/material/styles/createTransitions";
 import React, { useEffect, useState } from "react";
 //import useWindowDimensions from "../../components/basic/viewport";
-import FixedNavbar from "../../components/navbar";
+//import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
+
 
 //const { heighte, widthe } = useWindowDimensions();
 
-function Song() {
+function Song(this: any) {
     const [outsiders, setOutsiders] = useState([]); 
-    const [width, setWidth]   = useState(window.innerWidth);
-    const [height, setHeight] = useState(window.innerHeight);
-    const updateDimensions = () => {
-        setWidth(window.innerWidth);
-        setHeight(window.innerHeight);
-    }
-    useEffect(() => {
-        window.addEventListener("resize", updateDimensions);
-        return () => window.removeEventListener("resize", updateDimensions);
-    }, []);
-
     return (
         <React.Fragment>
             <Container
@@ -50,7 +39,7 @@ function Song() {
                                     border: 'none',
                                     overflow: 'hidden',
                                     width: '100%',
-                                    height: height*(4/5),
+                                    height: '100vh'
                                 }}
                                 title="example-iframe"
                                 />
