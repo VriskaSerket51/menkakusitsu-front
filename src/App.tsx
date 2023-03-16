@@ -26,7 +26,8 @@ import {
     Register,
     UserManagement,
     Song,
-    LostNFound
+    LostNFound,
+    Test
 } from "./pages";
 import {
     Route,
@@ -69,6 +70,12 @@ const router = createBrowserRouter(
                 element={<PrivateRoute permission={Permission.Student} />}
             >
                 <Route path="song" element={<Song />} />
+            </Route>
+            <Route
+                path="test"
+                element={<PrivateRoute permission={Permission.Student} />}
+            >
+                <Route path="test" element={<Test />} />
             </Route>
             <Route
                 path="lostnfound"
