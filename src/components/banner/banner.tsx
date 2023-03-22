@@ -24,16 +24,16 @@ export function Banner() {
                     }
                     spacing={2}
                 >
-                    <Link
-                    to={BannerDetails1} 
+                    <a
+                    href={BannerDetails1} 
                     target="_blank">
                         <img src={Banner1} alt="ebs" height="120vh"/ >
-                    </Link>
-                    <Link
-                    to={BannerDetails2} 
+                    </a>
+                    <a
+                    href={BannerDetails2} 
                     target="_blank">
                         <img src={Banner2} alt="worldwatter" height="120vh"/ >
-                    </Link>
+                    </a>
                 </Stack>
             </Stack>
             <br />
