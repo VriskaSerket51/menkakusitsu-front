@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 
 export function Banner() {
-    const BannerDetails2 = "https://me.go.kr/home/web/board/read.do?menuId=10392&boardMasterId=713&boardId=1584980";
+    const BannerDetails2 = 'https://me.go.kr/home/web/board/read.do?menuId=10392&boardMasterId=713&boardId=1584980';
     return (
         <React.Fragment>
             <br />
@@ -30,7 +30,7 @@ export function Banner() {
                         <img src={Banner1} alt="ebs" height="120vh"/ >
                     </Link>
                     <Link
-                    href={BannerDetails2} 
+                    to={BannerDetails2} 
                     target="_blank">
                         <img src={Banner2} alt="worldwatter" height="120vh"/ >
                     </Link>
