@@ -33,6 +33,7 @@ function Song(this: any) {
                         justifyContent="center" 
                         height="1800%" 
                         sx={{ padding: "0px 30px 30px 30px" }}>
+                            기능추가예정입니다.
                             <iframe
                                 src="https://jshs-shimpyo-lldut.run.goorm.site/"
                                 style={{

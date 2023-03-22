@@ -22,6 +22,7 @@ function LostNFound() {
                         <PaperTitle>분실물</PaperTitle>
                     </Box>
                 </Paper>
+                기능추가예정입니다.
             </Container>
         </React.Fragment>
     );
