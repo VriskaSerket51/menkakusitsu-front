@@ -30,7 +30,7 @@ export function Banner() {
                         <img src={Banner1} alt="ebs" height="120vh"/ >
                     </Link>
                     <Link
-                    to={BannerDetails2} 
+                    href={BannerDetails2} 
                     target="_blank">
                         <img src={Banner2} alt="worldwatter" height="120vh"/ >
                     </Link>
