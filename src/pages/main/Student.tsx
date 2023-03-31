@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Container } from "@mui/material";
 import FixedNavbar from "../../components/navbar";
-import { MealPanel, PagePanel, TimetablePanel } from "../../components";
+import {Banner, MealPanel, PagePanel, TimetablePanel } from "../../components";
 
 function Student() {
     return (
@@ -15,6 +15,8 @@ function Student() {
                 {/* <TimetablePanel /> */}
                 {/* <br /> */}
                 <MealPanel />
+                <br />
+                <Banner />
                 <br />
             </Container>
         </React.Fragment>

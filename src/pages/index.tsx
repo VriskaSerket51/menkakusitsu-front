@@ -18,6 +18,12 @@ export { default as Contributors } from "./contributors";
 
 export { default as UserManagement } from "./dev/User";
 
+export { default as Song } from "./morning/Song";
+
+export { default as Test } from "./test/Test";
+
+export { default as LostNFound } from "./lostnfound/lnf";
+
 export { default as PlaySnake } from "./playground/snake/SnakeGame";
 
 export { default as SpecialroomApply } from "./specialroom/Apply";
