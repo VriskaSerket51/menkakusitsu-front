@@ -10,6 +10,14 @@ interface ThemeLayoutProps {
 function ThemeAddon(props: ThemeLayoutProps) {
     const { type } = props;
 
+    if (type == "april-fools") {
+        const body = document.body;
+        body.setAttribute(
+            "style",
+            "transform:rotate(180deg); -ms-transform:rotate(180deg); -webkit-transform:rotate(180deg);"
+        );
+    }
+
     switch (type) {
         case "christmas":
             return (
