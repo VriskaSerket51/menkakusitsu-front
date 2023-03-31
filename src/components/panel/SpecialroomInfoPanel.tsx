@@ -28,6 +28,7 @@ export const drawInfoTable = (
                         <TableCell>목적</TableCell>
                         <TableCell>명단</TableCell>
                         <TableCell>승인</TableCell>
+                        <TableCell>지도교사</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -60,6 +61,7 @@ export const drawInfoTable = (
                                         <TableCell>
                                             {row.state === 1 ? "O" : "X"}
                                         </TableCell>
+                                        <TableCell>{row.teacher.name}</TableCell>
                                     </TableRow>
                                 );
                             } else {
