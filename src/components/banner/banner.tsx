@@ -1,14 +1,8 @@
 import React from "react";
-import { Box, Divider, Stack } from "@mui/material";
-import Banner1 from "../../assets/ebsbanner2023.png";
-import Banner2 from "../../assets/water_banner.jpg";
-import BannerDetails1 from "../../assets/ebsBanner2023Details.pdf";
+import { Divider, Stack } from "@mui/material";
+import { banners } from "./info";
 
-import { Link } from "react-router-dom";
-
-
-export function Banner() {
-    const BannerDetails2 = 'https://me.go.kr/home/web/board/read.do?menuId=10392&boardMasterId=713&boardId=1584980';
+function Banner() {
     return (
         <React.Fragment>
             <br />
@@ -24,20 +18,26 @@ export function Banner() {
                     }
                     spacing={2}
                 >
-                    <a
-                    href={BannerDetails1} 
-                    target="_blank">
-                        <img src={Banner1} alt="ebs" height="120vh"/ >
-                    </a>
-                    <a
-                    href={BannerDetails2} 
-                    target="_blank">
-                        <img src={Banner2} alt="worldwatter" height="120vh"/ >
-                    </a>
+                    {banners.map((banner) => {
+                        return (
+                            <a
+                                href={banner.link}
+                                target="_blank"
+                                rel="noopener"
+                            >
+                                <img
+                                    src={banner.img}
+                                    alt={banner.alt}
+                                    height="120vh"
+                                />
+                            </a>
+                        );
+                    })}
                 </Stack>
             </Stack>
             <br />
         </React.Fragment>
     );
-    
 }
+
+export default Banner;
