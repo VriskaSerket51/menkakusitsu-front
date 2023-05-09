@@ -2,13 +2,7 @@ import { v1 } from "@common-jshs/menkakusitsu-lib";
 import React, { ReactNode } from "react";
 import { getMeal } from "../../utils/Api";
 import dayjs from "dayjs";
-import {
-    Box,
-    Divider,
-    Paper,
-    Skeleton,
-    Typography,
-} from "@mui/material";
+import { Box, Divider, Paper, Skeleton, Typography } from "@mui/material";
 
 interface MealInfoProps {
     type: "breakfast" | "lunch" | "dinner";
@@ -73,7 +67,7 @@ const MealInfo = (props: MealInfoProps) => {
                 meals.map((meal) => {
                     return (
                         <Typography key={meal} variant="h6">
-                            - {meal}
+                            - <div dangerouslySetInnerHTML={{ __html: meal }} />
                         </Typography>
                     );
                 })
