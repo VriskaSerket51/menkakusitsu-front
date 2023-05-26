@@ -200,7 +200,7 @@ export default function App() {
 
     return (
         <ThemeContext.Provider value={{ style, toggleStyle }}>
-            <ThemeProvider theme={getTheme(themeType)}>
+            <ThemeProvider theme={getTheme(themeType, style == "dark")}>
                 <CssBaseline />
                 <RouterProvider router={router} />
             </ThemeProvider>

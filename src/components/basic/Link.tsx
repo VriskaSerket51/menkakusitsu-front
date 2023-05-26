@@ -1,4 +1,4 @@
-import { Box, Link } from "@mui/material";
+import { Box, Link, useTheme } from "@mui/material";
 import { Link as NavLink } from "react-router-dom";
 import LinkIcon from "@mui/icons-material/Link";
 import React, { ReactNode } from "react";
@@ -12,6 +12,7 @@ interface IconLinkProps {
 
 export function IconLink(props: IconLinkProps) {
     const { href, icon, label, newTab } = props;
+    const theme = useTheme();
 
     return (
         <Link
@@ -19,13 +20,13 @@ export function IconLink(props: IconLinkProps) {
             underline="hover"
             target={newTab ? "_blank" : ""}
             rel={newTab ? "noopener" : ""}
-            color="black"
         >
             <Box
                 sx={{
                     display: "flex",
                     alignItems: "center",
                     flexWrap: "wrap",
+                    color: theme.palette.text.primary,
                 }}
             >
                 {icon || <LinkIcon />} {label}
@@ -42,6 +43,7 @@ interface IconNavLinkProps {
 
 export function IconNavLink(props: IconNavLinkProps) {
     const { to, icon, label } = props;
+    const theme = useTheme();
 
     return (
         <NavLink color="inherit" to={to} style={{ textDecoration: "none" }}>
@@ -50,7 +52,7 @@ export function IconNavLink(props: IconNavLinkProps) {
                     display: "flex",
                     alignItems: "center",
                     flexWrap: "wrap",
-                    color: "black",
+                    color: theme.palette.text.primary,
                     "&:hover": {
                         textDecoration: "underline #000000",
                     },
