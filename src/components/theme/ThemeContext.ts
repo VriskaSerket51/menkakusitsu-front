@@ -5,4 +5,7 @@ type ThemeContextType = {
     toggleStyle: Function;
 };
 
-export const ThemeContext = createContext<ThemeContextType | null>(null);
+export const ThemeContext = createContext<ThemeContextType>({
+    style: "light",
+    toggleStyle: () => {},
+});
