@@ -6,6 +6,7 @@ import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
 import { v1 } from "@common-jshs/menkakusitsu-lib";
 import { closeWaitDialog, openConfirmDialog } from "../components/popup";
 import { DialogTitle } from "./Constant";
+import { getAccessToken } from "./StorageManager";
 
 const onApiError = (e: any) => {
     closeWaitDialog();
@@ -33,7 +34,7 @@ export const apiRequest = async (
     headers?: any
 ) => {
     const url = import.meta.env.VITE_API_PREFIX + path;
-    let accessToken = localStorage.getItem("access-token");
+    let accessToken = getAccessToken();
     if (!accessToken) {
         return axios({
             method: method,
@@ -46,7 +47,7 @@ export const apiRequest = async (
         onLogout();
         throw new Error("Token expired.");
     }
-    accessToken = localStorage.getItem("access-token");
+    accessToken = getAccessToken();
     accessToken = `Bearer ${accessToken}`;
     return axios({
         method: method,

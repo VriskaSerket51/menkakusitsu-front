@@ -21,9 +21,6 @@ const useParticleManagerStore = create<ParticleManagerProps>(() => ({
 }));
 
 const getParticle = (themeType: ThemeType) => {
-    //if(localStorage.getItem("is-master") === "true") {
-    //    return <KWoojunParticle />;
-    //}
     switch (themeType) {
         case "spring":
             return <SakuraParticle />;

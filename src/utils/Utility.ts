@@ -4,6 +4,7 @@ import { Buffer } from "buffer";
 import { LoadableComponent } from "@loadable/component";
 import { topbar } from "../components/topbar";
 import { Permission, TokenPayload } from "@common-jshs/menkakusitsu-lib";
+import { getAccessToken } from "./StorageManager";
 
 export const dynamicLoader = async (component: LoadableComponent<unknown>) => {
     topbar.show();
@@ -55,15 +56,6 @@ export const validateEmail = (email: string): boolean => {
     return regex.test(email);
 };
 
-export const getDeviceUuid = (): string => {
-    const deviceUUid = localStorage.getItem("device-id");
-    if (!deviceUUid) {
-        localStorage.setItem("device-id", uuid());
-        return getDeviceUuid();
-    }
-    return deviceUUid;
-};
-
 export const getParameter = (
     key: string,
     defaultValue: string = ""
@@ -97,7 +89,7 @@ export const hasPermissionLevel = (permission: number) => {
 };
 
 export const isLogined = () => {
-    return Boolean(localStorage.getItem("access-token"));
+    return Boolean(getAccessToken());
 };
 
 export const parseJWT = (token: string): TokenPayload | null => {
@@ -115,7 +107,7 @@ export const parseJWT = (token: string): TokenPayload | null => {
 };
 
 export const getTokenPayload = (): TokenPayload | null => {
-    const accessToken = localStorage.getItem("access-token");
+    const accessToken = getAccessToken();
     if (!accessToken) {
         return null;
     }
@@ -124,11 +116,6 @@ export const getTokenPayload = (): TokenPayload | null => {
 
 export const redirectToHome = () => {
     window.location.href = "/";
-};
-
-export const clearTokens = () => {
-    localStorage.setItem("access-token", "");
-    localStorage.setItem("refresh-token", "");
 };
 
 export const SHA3_512 = (input: string) => {
