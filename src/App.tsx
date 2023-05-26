@@ -36,12 +36,12 @@ import {
     createRoutesFromElements,
     RouterProvider,
 } from "react-router-dom";
-import { CssBaseline, PaletteMode, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { TimetablePanel } from "./components";
 import { getTheme, getThemeType } from "./components/theme";
 import { PrivateRoute, RouteWrapper } from "./components/router";
 import { Permission } from "@common-jshs/menkakusitsu-lib";
-import { ThemeContext } from "@emotion/react";
+import { ThemeContext } from "./components/theme/ThemeContext";
 
 const themeType = getThemeType();
 
