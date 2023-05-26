@@ -23,7 +23,7 @@ export const navbarItems = [
             {
                 title: "학생 외박 관리",
                 href: "/specialroom/outer",
-                permission: Permission.Teacher,
+                permission: Permission.Dev,
             },
             // {
             //     title: "학생활동실 사용 신청",
@@ -64,13 +64,13 @@ export const navbarItems = [
         color: "primary.main",
         title: "분실물",
         href: "/lostnfound/lnf",
-        permission: Permission.Student,
+        permission: Permission.Dev,
     },
     {
         color: "primary.main",
         title: "기상곡",
         href: "/morning/song",
-        permission: Permission.Student,
+        permission: Permission.Dev,
     },
     {
         color: "primary.main",
