@@ -1,5 +1,7 @@
+import { createContext, useContext } from "react";
 import dayjs from "dayjs";
-import { christmasTheme, defaultTheme } from "./themes";
+import { christmasTheme, darkTheme, defaultTheme } from "./themes";
+import { ThemeContext } from "./ThemeContext";
 
 export type ThemeType =
     | "spring"
@@ -41,6 +43,12 @@ export const getThemeType = () => {
 };
 
 export const getTheme = (type: ThemeType) => {
+    const { style } = useContext(ThemeContext)!;
+
+    if (style == "dark") {
+        return darkTheme;
+    }
+    
     switch (type) {
         case "spring":
         case "summer":
