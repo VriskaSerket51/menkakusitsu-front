@@ -37,3 +37,11 @@ export const christmasTheme = responsiveFontSizes(
         },
     })
 );
+
+export const darkTheme = responsiveFontSizes(
+    createTheme({
+        palette: {
+            mode: "dark",
+        },
+    })
+);
