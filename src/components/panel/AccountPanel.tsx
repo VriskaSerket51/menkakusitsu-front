@@ -13,6 +13,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTokenPayload } from "../../utils/Utility";
 import { NotificationButton, LogoutButton } from "../button";
+import DarkModeButton from "../button/DarkModeButton";
 
 function AccountPanel() {
     const navigate = useNavigate();
@@ -76,6 +77,7 @@ function AccountPanel() {
                     <Avatar /> {payload?.id}
                 </MenuItem>
                 <Divider />
+                <DarkModeButton />
                 <NotificationButton />
                 <MenuItem
                     onClick={() => {
