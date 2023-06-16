@@ -18,14 +18,14 @@ function DarkModeButton() {
                     <ListItemIcon>
                         <LightMode fontSize="small" />
                     </ListItemIcon>
-                    Light Mode
+                    라이트모드
                 </React.Fragment>
             ) : (
                 <React.Fragment>
                     <ListItemIcon>
                         <DarkMode fontSize="small" />
                     </ListItemIcon>
-                    Dark Mode
+                    다크모드
                 </React.Fragment>
             )}
         </MenuItem>
