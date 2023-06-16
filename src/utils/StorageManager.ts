@@ -59,7 +59,7 @@ export const getCommentListSize = (): number => {
 };
 
 export const getUseDarkMode = (): boolean => {
-    return localStorage.getItem("use-dark-mode") == "dark";
+    return localStorage.getItem("use-dark-mode") == "true";
 };
 
 export const setUseDarkMode = (useDarkMode: boolean): void => {
