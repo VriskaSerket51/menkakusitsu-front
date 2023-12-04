@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Container, Paper, Stack, Typography } from "@mui/material";
 import { contributors } from "./members";
 import PaperTitle from "../../components/PaperTitle";
 import { IconLink } from "../../components/basic/Link";
 import { GitHub } from "@mui/icons-material";
+import { getPermissionLevel } from "../../utils/Utility";
+import { Permission } from "@common-jshs/menkakusitsu-lib";
+import { setHeaderActive } from "../../components/router/RouteWrapper";
 
 export default function Contributors() {
+    useEffect(() => {
+        if (getPermissionLevel() <= Permission.Guest) {
+            setHeaderActive(false);
+            return () => {
+                setHeaderActive(true);
+            };
+        }
+    }, []);
+
     return (
         <React.Fragment>
             <Container

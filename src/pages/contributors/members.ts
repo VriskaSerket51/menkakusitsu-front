@@ -10,7 +10,7 @@ const contributors: Member[] = [
     {
         name: "23기 고승한",
         description: "뉴디저디 기획 및 프론트/백 엔드 개발을 했습니다.",
-        period: "2022 ~ 2023.02.21.",
+        period: "2022 ~ 2023.03.05.",
         profile: "https://avatars.githubusercontent.com/VriskaSerket51",
         homepage: "https://github.com/VriskaSerket51",
     },
