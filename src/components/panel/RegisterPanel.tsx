@@ -4,7 +4,7 @@ import PaperTitle from "../PaperTitle";
 import { SubmitButton } from "../button";
 import { closeWaitDialog, openConfirmDialog, openWaitDialog } from "../popup";
 import { DialogTitle } from "../../utils/Constant";
-import { postRegister } from "../../utils/Api";
+import { isApiSuccessed, postRegister } from "../../utils/Api";
 import { SHA3_512 } from "../../utils/Utility";
 import { useNavigate } from "react-router-dom";
 
@@ -39,16 +39,14 @@ export default function RegisterPanel() {
                 return;
             }
             openWaitDialog(DialogTitle.Info, "회원가입 중입니다...");
-            postRegister(
-                {
-                    name: name,
-                    sid: sid,
-                    email: email,
-                    id: id,
-                    password: SHA3_512(password),
-                },
-                (result) => {
-                    closeWaitDialog();
+            postRegister({
+                name: name,
+                sid: sid,
+                email: email,
+                id: id,
+                password: SHA3_512(password),
+            }).then((result) => {
+                if (isApiSuccessed(result)) {
                     openConfirmDialog(
                         DialogTitle.Info,
                         "회원가입 성공!",
@@ -56,8 +54,11 @@ export default function RegisterPanel() {
                             navigate("/");
                         }
                     );
+                } else {
+                    closeWaitDialog();
+                    openConfirmDialog(DialogTitle.Alert, result.message);
                 }
-            );
+            });
         },
         []
     );
