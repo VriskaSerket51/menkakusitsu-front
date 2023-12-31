@@ -4,6 +4,16 @@ import { LoadableComponent } from "@loadable/component";
 import { topbar } from "../components/topbar";
 import { Permission, TokenPayload } from "@common-jshs/menkakusitsu-lib";
 import { getAccessToken } from "./StorageManager";
+import dayjs from "dayjs";
+
+export const getDayInfo = () => {
+    const day = dayjs();
+    return {
+        year: day.year(),
+        month: day.month() + 1,
+        date: day.date(),
+    };
+};
 
 export const dynamicLoader = async (component: LoadableComponent<unknown>) => {
     topbar.show();

@@ -1,4 +1,7 @@
 import React from "react";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 import {
     Autocomplete,
     Box,
@@ -37,13 +40,10 @@ import {
     postUserPush,
 } from "../../utils/Api";
 import { DialogTitle } from "../../utils/Constant";
-import FixedNavbar from "../../components/navbar";
 import { SpecialroomInfoPanel } from "../../components/panel";
 import PaperTitle from "../../components/PaperTitle";
 import { SubmitButton } from "../../components/button";
-import { v1 } from "@common-jshs/menkakusitsu-lib";
-import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
+import { getDayInfo } from "../../utils/Utility";
 
 function Apply() {
     const [managerInfo, setManagerInfo] = React.useState<v1.UserInfo | null>(
@@ -65,6 +65,7 @@ function Apply() {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const today = dayjs();
+    const { year, month, date } = getDayInfo();
     const navigate = useNavigate();
 
     const steps = [
@@ -73,8 +74,7 @@ function Apply() {
             content: (
                 <React.Fragment>
                     <Typography>
-                        {today.year()}년 {today.month() + 1}월 {today.date()}
-                        일의 생활 지도 선생님은 &lt;
+                        {year}년 {month}월 {date}일의 생활 지도 선생님은 &lt;
                         {(managerInfo && managerInfo.value) || "???"}
                         &gt;이십니다.
                     </Typography>

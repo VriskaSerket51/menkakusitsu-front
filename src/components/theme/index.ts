@@ -1,5 +1,5 @@
-import dayjs from "dayjs";
 import { christmasTheme, darkTheme, defaultTheme } from "./themes";
+import { getDayInfo } from "../../utils/Utility";
 
 export type ThemeType =
     | "spring"
@@ -11,10 +11,7 @@ export type ThemeType =
     | "none";
 
 export const getThemeType = () => {
-    const day = dayjs();
-
-    const month = day.month() + 1;
-    const date = day.date();
+    const { month, date } = getDayInfo();
 
     if (month === 4 && date === 1) {
         return "april-fools";

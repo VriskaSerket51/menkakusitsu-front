@@ -11,9 +11,8 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { getParameter } from "../../utils/Utility";
+import { getDayInfo, getParameter } from "../../utils/Utility";
 import { getAttendanceList, getSpecialroomInfo } from "../../utils/Api";
-import dayjs from "dayjs";
 import { v1 } from "@common-jshs/menkakusitsu-lib";
 import { drawInfoTable } from "../../components/panel/SpecialroomInfoPanel";
 import {
@@ -105,10 +104,7 @@ function Download() {
         }
     }, [isLoading]);
 
-    const today = dayjs();
-    const year = today.year();
-    const month = today.month() + 1;
-    const date = today.date();
+    const { year, month, date } = getDayInfo();
 
     return (
         <React.Fragment>
