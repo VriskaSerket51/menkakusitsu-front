@@ -1,92 +1,92 @@
-import React, { useCallback } from "react";
-import Particles from "react-tsparticles";
+import { useEffect, useState } from "react";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadFull } from "tsparticles";
-import { Container, Engine } from "tsparticles-engine";
 
 import leaf from "../../../assets/particles/fall/leaf.png";
 
 export default function LeafParticle() {
-    const particlesInit = useCallback(async (engine: Engine) => {
-        await loadFull(engine);
+    const [init, setInit] = useState(false);
+
+    useEffect(() => {
+        initParticlesEngine(async (engine) => {
+            await loadFull(engine, false);
+        }).then(() => {
+            setInit(true);
+        });
     }, []);
 
-    const particlesLoaded = useCallback(
-        async (container: Container | undefined) => {},
-        []
-    );
-
     return (
-        <Particles
-            init={particlesInit}
-            loaded={particlesLoaded}
-            options={{
-                particles: {
-                    shape: {
-                        type: "images",
-                        options: {
-                            images: [
-                                {
-                                    src: leaf,
-                                    width: 128,
-                                    height: 117,
-                                },
-                            ],
+        init && (
+            <Particles
+                options={{
+                    particles: {
+                        shape: {
+                            type: "images",
+                            options: {
+                                images: [
+                                    {
+                                        src: leaf,
+                                        width: 128,
+                                        height: 117,
+                                    },
+                                ],
+                            },
                         },
-                    },
-                    move: {
-                        direction: "bottom-right",
-                        enable: true,
-                        random: false,
-                        straight: false,
-                        speed: 5,
-                    },
-                    rotate: {
-                        value: {
-                            min: 0,
-                            max: 360,
-                        },
-                        direction: "random",
-                        move: true,
-                        animation: {
+                        move: {
+                            direction: "bottom-right",
                             enable: true,
-                            speed: 10,
+                            random: false,
+                            straight: false,
+                            speed: 5,
                         },
-                    },
-                    tilt: {
-                        direction: "random",
-                        enable: true,
-                        move: true,
-                        value: {
-                            min: 0,
-                            max: 360,
+                        rotate: {
+                            value: {
+                                min: 0,
+                                max: 360,
+                            },
+                            direction: "random",
+                            move: true,
+                            animation: {
+                                enable: true,
+                                speed: 10,
+                            },
                         },
-                        animation: {
+                        tilt: {
+                            direction: "random",
                             enable: true,
-                            speed: 30,
+                            move: true,
+                            value: {
+                                min: 0,
+                                max: 360,
+                            },
+                            animation: {
+                                enable: true,
+                                speed: 30,
+                            },
                         },
-                    },
-                    roll: {
-                        darken: {
+                        roll: {
+                            darken: {
+                                enable: true,
+                                value: 25,
+                            },
                             enable: true,
-                            value: 25,
+                            speed: {
+                                min: 5,
+                                max: 15,
+                            },
                         },
-                        enable: true,
-                        speed: {
-                            min: 5,
-                            max: 15,
+                        opacity: {
+                            value: { min: 0.5, max: 0.7 },
+                        },
+                        size: {
+                            value: { min: 15, max: 20 },
+                        },
+                        number: {
+                            value: 15,
                         },
                     },
-                    opacity: {
-                        value: { min: 0.5, max: 0.7 },
-                    },
-                    size: {
-                        value: { min: 15, max: 20 },
-                    },
-                    number: {
-                        max: 15,
-                    },
-                },
-            }}
-        />
+                }}
+            />
+        )
     );
 }
