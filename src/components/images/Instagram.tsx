@@ -1,4 +1,3 @@
-import React from "react";
 import instagramIcon from "../../assets/img/instagram_logo.svg";
 
 export function InstagramLogo() {
