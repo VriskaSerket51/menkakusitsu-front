@@ -22,7 +22,7 @@ export default function LoginButton() {
                     openCancelableDialog("", <LoginPanel />);
                 }}
             >
-                이디저디 LOGIN
+                {import.meta.env.VITE_WEB_TITLE} LOGIN
             </SubmitButton>
         </Box>
     );
