@@ -8,7 +8,7 @@ import {
     onMessage,
     Messaging,
 } from "firebase/messaging";
-import { getDeviceUuid } from "../utils/Utility";
+import { getDeviceUuid } from "../utils/StorageManager";
 import React, { useEffect } from "react";
 import { useSnackbar } from "notistack";
 import { DefaultSnackbar } from "./snackbar";

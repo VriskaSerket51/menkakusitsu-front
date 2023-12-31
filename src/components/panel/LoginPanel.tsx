@@ -11,6 +11,7 @@ import { isApiSuccessed, postLogin } from "../../utils/Api";
 import { IconNavLink } from "../basic/Link";
 import { AccountBox } from "@mui/icons-material";
 import { SHA3_512 } from "../../utils/Utility";
+import { saveTokens } from "../../utils/StorageManager";
 
 const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,8 +32,7 @@ const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
 };
 
 const onLoginSuccessed = async (result: v1.PostLoginResponse) => {
-    localStorage.setItem("access-token", result.accessToken);
-    localStorage.setItem("refresh-token", result.refreshToken);
+    saveTokens(result.accessToken, result.refreshToken);
 
     if (getPushApproved()) {
         await getPushToken();

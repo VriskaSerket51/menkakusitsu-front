@@ -1,28 +1,21 @@
+import { getPushList, savePushList } from "./StorageManager";
 import { getTokenPayload } from "./Utility";
 
 export const getPushApproved = () => {
-    const hasPushJson = localStorage.getItem("has-push");
-    if (!hasPushJson) {
-        localStorage.setItem("has-push", JSON.stringify({}));
-        return false;
-    }
+    const pushList = getPushList();
     const payload = getTokenPayload();
     if (!payload) {
         return false;
     }
-    return JSON.parse(hasPushJson)[payload.uid] === true;
+    return pushList[payload.uid] === true;
 };
 
 export const setPushApproved = (value: boolean) => {
-    let hasPushJson = localStorage.getItem("has-push");
-    if (!hasPushJson) {
-        hasPushJson = JSON.stringify({});
-    }
     const payload = getTokenPayload();
     if (!payload) {
         return;
     }
-    const hasPush = JSON.parse(hasPushJson);
-    hasPush[payload.uid] = value;
-    localStorage.setItem("has-push", JSON.stringify(hasPush));
+    const pushList = getPushList();
+    pushList[payload.uid] = value;
+    savePushList(pushList);
 };

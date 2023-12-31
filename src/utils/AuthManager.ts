@@ -1,10 +1,7 @@
 import axios from "axios";
-import {
-    clearTokens,
-    parseJWT,
-    redirectToHome,
-} from "./Utility";
+import { parseJWT, redirectToHome } from "./Utility";
 import { v1 } from "@common-jshs/menkakusitsu-lib";
+import { clearTokens, getRefreshToken, saveTokens } from "./StorageManager";
 
 export const checkTokenExpiration = async (accessToken: string) => {
     const parsedJWT = parseJWT(accessToken);
@@ -13,7 +10,8 @@ export const checkTokenExpiration = async (accessToken: string) => {
     }
     const exp: number = parsedJWT.exp;
     if (exp - Date.now() / 1000 < 60) {
-        const refreshToken = localStorage.getItem("refresh-token");
+        const refreshToken = getRefreshToken();
+
         if (!refreshToken || !parseJWT(refreshToken)) {
             return true;
         }
@@ -27,8 +25,7 @@ export const checkTokenExpiration = async (accessToken: string) => {
         });
         const result = resp.data as v1.PostRefreshResponse;
         if (result.status >= 0) {
-            localStorage.setItem("access-token", result.accessToken);
-            localStorage.setItem("refresh-token", result.refreshToken);
+            saveTokens(result.accessToken, result.refreshToken);
             return false;
         } else {
             // console.error(result.message);
