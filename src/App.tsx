@@ -33,12 +33,13 @@ import {
     createRoutesFromElements,
     RouterProvider,
 } from "react-router-dom";
-import { CssBaseline, PaletteMode, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { TimetablePanel } from "./components";
 import { getTheme, getThemeType } from "./components/theme";
 import { PrivateRoute, RouteWrapper } from "./components/router";
 import { Permission } from "@common-jshs/menkakusitsu-lib";
-import { ThemeContext } from "@emotion/react";
+import { ThemeContext } from "./components/theme/ThemeContext";
+import { getUseDarkMode, setUseDarkMode } from "./utils/StorageManager";
 
 const themeType = getThemeType();
 
@@ -168,15 +169,16 @@ const router = createBrowserRouter(
 );
 
 export default function App() {
-    const [style, setStyle] = React.useState("light");
+    const [style, setStyle] = React.useState(getUseDarkMode() ? "dark" : "light");
 
     function toggleStyle() {
+        setUseDarkMode(style === "light");
         setStyle((style) => (style === "light" ? "dark" : "light"));
     }
 
     return (
         <ThemeContext.Provider value={{ style, toggleStyle }}>
-            <ThemeProvider theme={getTheme(themeType)}>
+           <ThemeProvider theme={getTheme(themeType, style == "dark")}>
                 <CssBaseline />
                 <RouterProvider router={router} />
             </ThemeProvider>

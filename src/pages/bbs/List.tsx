@@ -5,10 +5,13 @@ import {
     Container,
     Pagination,
     Paper,
+    Stack,
     Typography,
+    useTheme,
+    darken,
+    lighten,
 } from "@mui/material";
-import { Stack } from "@mui/system";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import PaperTitle from "../../components/PaperTitle";
 import { getBbsPostList } from "../../utils/Api";
 import ArticleIcon from "@mui/icons-material/Article";
@@ -17,7 +20,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { POST_LIST_SIZE } from "../../utils/Constant";
 import { getParameter } from "../../utils/Utility";
-
+import { ThemeContext } from "../../components/theme/ThemeContext";
 interface ArticleProps {
     post: v1.BbsPost;
     isNotice?: boolean;
@@ -28,6 +31,9 @@ interface ArticleProps {
 function Article(props: ArticleProps) {
     const { post, isNotice, isHighlighted, page } = props;
 
+    const theme = useTheme();
+    const { style } = useContext(ThemeContext);
+
     return (
         <Link
             to={`/bbs/${post.board}/${post.id}?page=${page}`}
@@ -36,7 +42,11 @@ function Article(props: ArticleProps) {
                 textDecoration: "none",
                 fontSize: "0.9em",
                 padding: "0.4em",
-                backgroundColor: isHighlighted ? "lightgray" : "white",
+                backgroundColor: isHighlighted
+                    ? style == "light"
+                        ? darken(theme.palette.background.paper, 0.2)
+                        : lighten(theme.palette.background.paper, 0.2)
+                    : "",
             }}
             onClick={() => {
                 window.scrollTo(0, 0);

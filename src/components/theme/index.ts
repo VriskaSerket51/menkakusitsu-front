@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import { christmasTheme, defaultTheme } from "./themes";
+import { christmasTheme, darkTheme, defaultTheme } from "./themes";
 
 export type ThemeType =
     | "spring"
@@ -40,7 +40,11 @@ export const getThemeType = () => {
     return "none";
 };
 
-export const getTheme = (type: ThemeType) => {
+export const getTheme = (type: ThemeType, isDarkTheme: boolean) => {
+    if (isDarkTheme) {
+        return darkTheme;
+    }
+
     switch (type) {
         case "spring":
         case "summer":
