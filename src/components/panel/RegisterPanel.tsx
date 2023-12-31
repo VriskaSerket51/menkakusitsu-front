@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import { Fragment, useCallback } from "react";
 import { Box, Container, Paper, TextField } from "@mui/material";
 import PaperTitle from "../PaperTitle";
 import { SubmitButton } from "../button";
@@ -68,7 +68,7 @@ export default function RegisterPanel() {
     );
 
     return (
-        <React.Fragment>
+        <Fragment>
             <Container
                 maxWidth="md"
                 sx={{
@@ -153,6 +153,6 @@ export default function RegisterPanel() {
                     </Box>
                 </Paper>
             </Container>
-        </React.Fragment>
+        </Fragment>
     );
 }
