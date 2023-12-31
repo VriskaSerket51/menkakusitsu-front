@@ -67,7 +67,7 @@ const MealInfo = (props: MealInfoProps) => {
                 meals.map((meal) => {
                     return (
                         <Typography key={meal} variant="h6">
-                            - {meal}
+                            - <div dangerouslySetInnerHTML={{ __html: meal }} />
                         </Typography>
                     );
                 })
