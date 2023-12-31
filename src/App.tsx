@@ -2,7 +2,7 @@ import "./index.css";
 import "./styles/Fonts.css";
 import "./styles/NProgress.css";
 
-import React, { createContext } from "react";
+import { useState } from "react";
 import {
     Main,
     AttendanceDownload,
@@ -167,7 +167,7 @@ const router = createBrowserRouter(
 );
 
 export default function App() {
-    const [style, setStyle] = React.useState(getUseDarkMode() ? "dark" : "light");
+    const [style, setStyle] = useState(getUseDarkMode() ? "dark" : "light");
 
     function toggleStyle() {
         setUseDarkMode(style === "light");
@@ -176,7 +176,7 @@ export default function App() {
 
     return (
         <ThemeContext.Provider value={{ style, toggleStyle }}>
-           <ThemeProvider theme={getTheme(themeType, style == "dark")}>
+            <ThemeProvider theme={getTheme(themeType, style == "dark")}>
                 <CssBaseline />
                 <RouterProvider router={router} />
             </ThemeProvider>
