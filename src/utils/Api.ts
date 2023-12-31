@@ -1,5 +1,5 @@
 import { deletePushToken } from "../components/FirebaseManager";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { checkTokenExpiration, onLogout } from "./AuthManager";
 import { getPushApproved } from "./PushManager";
 import { DefaultResponse } from "@common-jshs/menkakusitsu-lib";
@@ -8,18 +8,37 @@ import { closeWaitDialog, openConfirmDialog } from "../components/popup";
 import { DialogTitle } from "./Constant";
 import { getAccessToken } from "./StorageManager";
 
-const onApiError = (e: any) => {
+const onApiError = (e: AxiosError) => {
     closeWaitDialog();
-    const error = `${e}`;
-    if (error.includes("400")) {
-        openConfirmDialog(DialogTitle.Alert, "데이터 형식이 잘못되었습니다.");
-    } else if (error.includes("403")) {
-        openConfirmDialog(DialogTitle.Alert, "권한이 부족합니다.");
-    } else if (error.includes("500")) {
+    if (e.code == "ECONNABORTED") {
+        openConfirmDialog(DialogTitle.Alert, "서버와 통신에 실패하였습니다.");
+        return;
+    }
+    if (e.code == "ERR_NETWORK") {
+        openConfirmDialog(
+            DialogTitle.Alert,
+            "서버와 통신에 실패하였습니다.\n인터넷 연결 상태를 확인해주세요."
+        );
+        return;
+    }
+    if (e.code == "ERR_BAD_REQUEST") {
+        if (e.response?.status == 400) {
+            openConfirmDialog(
+                DialogTitle.Alert,
+                "데이터 형식이 잘못되었습니다."
+            );
+            return;
+        } else if (e.response?.status == 403) {
+            openConfirmDialog(DialogTitle.Alert, "권한이 부족합니다.");
+            return;
+        }
+    }
+    if (e.code == "ERR_BAD_RESPONSE") {
         openConfirmDialog(
             DialogTitle.Alert,
             "데이터 처리 중 에러가 발생했습니다."
         );
+        return;
     }
 };
 
@@ -41,6 +60,7 @@ export const apiRequest = async (
             url: url,
             data: data,
             headers: headers,
+            timeout: 5000,
         });
     }
     if (await checkTokenExpiration(accessToken)) {
@@ -57,6 +77,7 @@ export const apiRequest = async (
             ...headers,
             Authorization: accessToken,
         },
+        timeout: 5000,
     });
 };
 
