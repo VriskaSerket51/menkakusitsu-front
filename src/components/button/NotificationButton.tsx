@@ -18,24 +18,20 @@ function NotificationButton() {
                 }
                 setIsLoading(true);
                 if (isNotificationOn) {
-                    unstable_batchedUpdates(() => {
-                        deletePushToken().then((successed) => {
-                            if (successed) {
-                                setPushApproved(false);
-                                setIsNotificationOn(false);
-                            }
-                            setIsLoading(false);
-                        });
+                    deletePushToken().then((successed) => {
+                        if (successed) {
+                            setPushApproved(false);
+                            setIsNotificationOn(false);
+                        }
+                        setIsLoading(false);
                     });
                 } else {
-                    unstable_batchedUpdates(() => {
-                        getPushToken().then((successed) => {
-                            if (successed) {
-                                setPushApproved(true);
-                                setIsNotificationOn(true);
-                            }
-                            setIsLoading(false);
-                        });
+                    getPushToken().then((successed) => {
+                        if (successed) {
+                            setPushApproved(true);
+                            setIsNotificationOn(true);
+                        }
+                        setIsLoading(false);
                     });
                 }
             }}
