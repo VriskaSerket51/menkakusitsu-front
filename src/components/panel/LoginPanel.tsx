@@ -1,13 +1,13 @@
 import "../../styles/LoginForm.css";
 
 import React from "react";
-import { Box, Button, Grid, TextField, Typography } from "@mui/material";
+import { Box, Button, Grid, Link, TextField, Typography } from "@mui/material";
 import { openConfirmDialog, closeWaitDialog, openWaitDialog } from "../popup";
 import { DialogTitle } from "../../utils/Constant";
 import { getPushToken } from "../FirebaseManager";
 import { getPushApproved } from "../../utils/PushManager";
 import { v1 } from "@common-jshs/menkakusitsu-lib";
-import { postLogin } from "../../utils/Api";
+import { isApiSuccessed, postLogin } from "../../utils/Api";
 import { IconNavLink } from "../basic/Link";
 import { AccountBox } from "@mui/icons-material";
 import { SHA3_512 } from "../../utils/Utility";
@@ -21,55 +21,51 @@ const onPostLogin = (event: React.MouseEvent<HTMLFormElement>) => {
         return;
     }
     openWaitDialog(DialogTitle.Info, "로그인 중입니다...");
-    postLogin(
-        { id: id, password: SHA3_512(password) },
-        onLoginSuccessed,
-        onLoginFailed
-    );
+    postLogin({ id: id, password: SHA3_512(password) }).then((result) => {
+        if (isApiSuccessed(result)) {
+            onLoginSuccessed(result);
+        } else {
+            onLoginFailed(result);
+        }
+    });
 };
 
-const onLoginSuccessed = (result: v1.PostLoginResponse) => {
+const onLoginSuccessed = async (result: v1.PostLoginResponse) => {
     localStorage.setItem("access-token", result.accessToken);
     localStorage.setItem("refresh-token", result.refreshToken);
 
-    const onFinished = () => {
-        if (result.callbacks) {
-            if (result.callbacks.includes("needChangePw")) {
-                openConfirmDialog(
-                    DialogTitle.Alert,
-                    "기존 4자리 학번을 비밀번호로 사용하시는 경우, 비밀번호를 바꾸셔야합니다.",
-                    () => {
-                        window.location.href = "/setting";
-                    }
-                );
-                return;
-            }
-            if (result.callbacks.includes("needChangeEmail")) {
-                openConfirmDialog(
-                    DialogTitle.Alert,
-                    "비밀번호 복구 등의 서비스를 이용하시려면 이메일을 추가하셔야합니다.",
-                    () => {
-                        window.location.href = "/setting";
-                    }
-                );
-                return;
-            }
-        }
-        window.location.reload();
-    };
-
     if (getPushApproved()) {
-        getPushToken(() => {
-            onFinished();
-        });
-    } else {
-        onFinished();
+        await getPushToken();
     }
+
+    if (result.callbacks) {
+        if (result.callbacks.includes("needChangePw")) {
+            openConfirmDialog(
+                DialogTitle.Alert,
+                "기존 4자리 학번을 비밀번호로 사용하시는 경우, 비밀번호를 바꾸셔야합니다.",
+                () => {
+                    window.location.href = "/setting";
+                }
+            );
+            return;
+        }
+        if (result.callbacks.includes("needChangeEmail")) {
+            openConfirmDialog(
+                DialogTitle.Alert,
+                "비밀번호 복구 등의 서비스를 이용하시려면 이메일을 추가하셔야합니다.",
+                () => {
+                    window.location.href = "/setting";
+                }
+            );
+            return;
+        }
+    }
+    window.location.reload();
 };
 
 const onLoginFailed = (result: v1.PostLoginResponse) => {
     closeWaitDialog();
-    openConfirmDialog(DialogTitle.Info, result.message, () => {});
+    openConfirmDialog(DialogTitle.Info, result.message);
 };
 
 export default function LoginPanel() {
@@ -141,18 +137,21 @@ export default function LoginPanel() {
                     LOGIN
                 </Button>
                 <Grid container>
-                    {/* <Grid item xs>
+                    <Grid item xs>
                         <Link
                             href="#"
                             onClick={() => {
-                                openConfirmDialog(TITLE.Info, "미구현");
+                                openConfirmDialog(
+                                    DialogTitle.Info,
+                                    "현재 제공되지 않는 기능입니다."
+                                );
                             }}
                             variant="body2"
                             underline="none"
                         >
                             비밀번호를 잊어버리셨나요?
                         </Link>
-                    </Grid> */}
+                    </Grid>
                     <Grid item>
                         <IconNavLink
                             to="/auth/register"

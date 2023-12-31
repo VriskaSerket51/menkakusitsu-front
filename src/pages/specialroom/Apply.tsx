@@ -32,6 +32,7 @@ import {
     getSpecialroomPurposeInfo,
     getSpecialroomStudentInfo,
     getSpecialroomTeacherInfo,
+    isApiSuccessed,
     postSpecialroomApply,
     postUserPush,
 } from "../../utils/Api";
@@ -262,19 +263,18 @@ function Apply() {
     };
 
     React.useEffect(() => {
-        getSpecialroomManagerInfo(
-            { when: today.format("YYYY-MM-DD") },
+        getSpecialroomManagerInfo({ when: today.format("YYYY-MM-DD") }).then(
             (result) => {
                 if (result.status >= 0) {
                     setManagerInfo(result.manager);
                 }
-                getSpecialroomLocationInfo({}, (result) => {
+                getSpecialroomLocationInfo({}).then((result) => {
                     setLocationInfos(result.locationInfo);
-                    getSpecialroomPurposeInfo({}, (result) => {
+                    getSpecialroomPurposeInfo({}).then((result) => {
                         setPurposeInfos(result.purposeInfo);
-                        getSpecialroomStudentInfo({}, (result) => {
+                        getSpecialroomStudentInfo({}).then((result) => {
                             setStudentInfos(result.studentInfo);
-                            getSpecialroomTeacherInfo({}, (result) => {
+                            getSpecialroomTeacherInfo({}).then((result) => {
                                 setTeacherInfos(result.teacherInfo);
                             });
                         });
@@ -322,15 +322,14 @@ function Apply() {
             return;
         }
         openWaitDialog(DialogTitle.Info, "특별실을 신청하는 중입니다...");
-        postSpecialroomApply(
-            {
-                location: location,
-                purpose: purpose,
-                applicants: applicants,
-                teacherUid: teacher.uid,
-                when: when,
-            },
-            () => {
+        postSpecialroomApply({
+            location: location,
+            purpose: purpose,
+            applicants: applicants,
+            teacherUid: teacher.uid,
+            when: when,
+        }).then((result) => {
+            if (isApiSuccessed(result)) {
                 closeWaitDialog();
                 openYesNoDialog(
                     DialogTitle.Info,
@@ -339,21 +338,21 @@ function Apply() {
                         navigate("/specialroom/status");
                     }
                 );
-                postUserPush(
-                    {
-                        targetUid: teacher.uid,
-                        notification: {
-                            title: "학생들이 특별실을 신청했습니다.",
-                            body: purpose.toString(),
-                            link: `${
-                                import.meta.env.VITE_WEB_PREFIX
-                            }/specialroom/management`,
-                        },
+                postUserPush({
+                    targetUid: teacher.uid,
+                    notification: {
+                        title: "학생들이 특별실을 신청했습니다.",
+                        body: purpose.toString(),
+                        link: `${
+                            import.meta.env.VITE_WEB_PREFIX
+                        }/specialroom/management`,
                     },
-                    () => {}
-                );
+                });
+            } else {
+                closeWaitDialog();
+                openConfirmDialog(DialogTitle.Info, result.message);
             }
-        );
+        });
     };
 
     return (

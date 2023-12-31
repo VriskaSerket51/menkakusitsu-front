@@ -2,16 +2,7 @@ import { v1 } from "@common-jshs/menkakusitsu-lib";
 import React, { ReactNode } from "react";
 import { getMeal } from "../../utils/Api";
 import dayjs from "dayjs";
-import {
-    Box,
-    Divider,
-    Paper,
-    Skeleton,
-    SxProps,
-    Theme,
-    Typography,
-} from "@mui/material";
-import { dayToString } from "../../utils/Utility";
+import { Box, Divider, Paper, Skeleton, Typography } from "@mui/material";
 
 interface MealInfoProps {
     type: "breakfast" | "lunch" | "dinner";
@@ -102,8 +93,7 @@ function MealPanel() {
     const today = dayjs();
 
     React.useEffect(() => {
-        getMeal(
-            { when: today.startOf("day").format("YYYY-MM-DD") },
+        getMeal({ when: today.startOf("day").format("YYYY-MM-DD") }).then(
             (result) => {
                 setMealInfo(result);
                 setIsLoading(false);

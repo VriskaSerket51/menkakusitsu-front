@@ -18,7 +18,11 @@ import {
     StepIconProps,
 } from "@mui/material";
 import { SpecialroomInfoPanel } from "../../components";
-import { deleteSpecialroomApply, getSpecialroomApply } from "../../utils/Api";
+import {
+    deleteSpecialroomApply,
+    getSpecialroomApply,
+    isApiSuccessed,
+} from "../../utils/Api";
 import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
 import { styled } from "@mui/material/styles";
@@ -140,7 +144,7 @@ function Status() {
 
     const refresh = useCallback(() => {
         setIsLoading(true);
-        getSpecialroomApply({ when: when }, (result) => {
+        getSpecialroomApply({ when: when }).then((result) => {
             setApplyStatus(result.specialroomInfo);
             setIsLoading(false);
         });
@@ -156,9 +160,15 @@ function Status() {
                     DialogTitle.Info,
                     "특별실 신청을 취소 중입니다..."
                 );
-                deleteSpecialroomApply({ when: when }, () => {
-                    closeWaitDialog();
-                    refresh();
+                deleteSpecialroomApply({ when: when }).then((result) => {
+                    if (isApiSuccessed(result)) {
+                        closeWaitDialog();
+                        refresh();
+                    } else {
+                        closeWaitDialog();
+                        openConfirmDialog(DialogTitle.Info, result.message);
+                        refresh();
+                    }
                 });
             },
             () => {}

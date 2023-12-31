@@ -2,18 +2,24 @@ import { Box, TextField, Typography } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import {
     closeWaitDialog,
+    openConfirmDialog,
     openWaitDialog,
     SubmitButton,
 } from "../../../components";
 import { SHA3_512, validateEmail } from "../../../utils/Utility";
-import { getMyPrivateInfo, putMyEmail, putMyPassword } from "../../../utils/Api";
+import {
+    getMyPrivateInfo,
+    isApiSuccessed,
+    putMyEmail,
+    putMyPassword,
+} from "../../../utils/Api";
 import { DialogTitle } from "../../../utils/Constant";
 
 function AccountSetting() {
     const [email, setEmail] = useState<string | null>(null);
 
     useEffect(() => {
-        getMyPrivateInfo({}, (result) => {
+        getMyPrivateInfo({}).then((result) => {
             setEmail(result.private.email!);
         });
     }, []);
@@ -43,11 +49,18 @@ function AccountSetting() {
                         return;
                     }
                     openWaitDialog(DialogTitle.Info, "잠시만 기다려주세요...");
-                    putMyEmail(
-                        { oldEmail: email, newEmail: newEmail },
+                    putMyEmail({ oldEmail: email, newEmail: newEmail }).then(
                         (result) => {
-                            closeWaitDialog();
-                            setEmail(result.newEmail);
+                            if (isApiSuccessed(result)) {
+                                closeWaitDialog();
+                                setEmail(result.newEmail);
+                            } else {
+                                closeWaitDialog();
+                                openConfirmDialog(
+                                    DialogTitle.Info,
+                                    result.message
+                                );
+                            }
                         }
                     );
                 }}
@@ -99,16 +112,18 @@ function AccountSetting() {
                         return;
                     }
                     openWaitDialog(DialogTitle.Info, "잠시만 기다려주세요...");
-                    putMyPassword(
-                        {
-                            oldPassword: SHA3_512(oldPassword),
-                            newPassword: SHA3_512(newPassword),
-                        },
-                        (result) => {
+                    putMyPassword({
+                        oldPassword: SHA3_512(oldPassword),
+                        newPassword: SHA3_512(newPassword),
+                    }).then((result) => {
+                        if (isApiSuccessed(result)) {
                             closeWaitDialog();
                             window.location.reload();
+                        } else {
+                            closeWaitDialog();
+                            openConfirmDialog(DialogTitle.Info, result.message);
                         }
-                    );
+                    });
                 }}
                 sx={{ width: "50%" }}
             >

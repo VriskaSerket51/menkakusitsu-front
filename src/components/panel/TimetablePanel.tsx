@@ -39,13 +39,12 @@ function TimetablePanel(props: TimetableProps) {
     const tableCellSx: SxProps<Theme> = { fontSize: "16px" };
 
     useEffect(() => {
-        getTimetable(
-            { when: dayjs().startOf("day").format("YYYY-MM-DD") },
-            (result) => {
-                setTimetable(result.timetable);
-                setIsLoading(false);
-            }
-        );
+        getTimetable({
+            when: dayjs().startOf("day").format("YYYY-MM-DD"),
+        }).then((result) => {
+            setTimetable(result.timetable);
+            setIsLoading(false);
+        });
     }, []);
 
     const onPutTimetable = (event: React.FormEvent<HTMLFormElement>) => {
@@ -59,15 +58,12 @@ function TimetablePanel(props: TimetableProps) {
             }
             timetableCells.push({ key: key, value: value.toString() });
         }
-        putTimetable(
-            {
-                timetableInfo: timetableCells,
-                when: dayjs().startOf("day").format("YYYY-MM-DD"),
-            },
-            (result) => {
-                console.log("fin");
-            }
-        );
+        putTimetable({
+            timetableInfo: timetableCells,
+            when: dayjs().startOf("day").format("YYYY-MM-DD"),
+        }).then((result) => {
+            console.log("fin");
+        });
     };
 
     return (

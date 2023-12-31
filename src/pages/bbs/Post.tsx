@@ -18,6 +18,7 @@ import {
     deleteBbsPost,
     getBbsCommentList,
     getBbsPost,
+    isApiSuccessed,
     postBbsComment,
 } from "../../utils/Api";
 import { useNavigate, useParams } from "react-router-dom";
@@ -58,25 +59,22 @@ function Post() {
     );
 
     const refresh = useCallback(() => {
-        getBbsPost({ board: board, postId: postId }, (result) => {
-            if (!result) {
-                navigate(`/bbs/${board}/list`);
-                return;
-            }
-            setPost(result.post);
-            setAttachments(result.attachments);
-            getBbsCommentList(
-                {
+        getBbsPost({ board: board, postId: postId }).then((result) => {
+            if (isApiSuccessed(result)) {
+                setPost(result.post);
+                setAttachments(result.attachments);
+                getBbsCommentList({
                     board: board,
                     postId: postId,
                     commentPage: commentPage,
                     commentListSize: COMMENT_LIST_SIZE,
-                },
-                (result) => {
+                }).then((result) => {
                     setCommentCount(result.commentCount);
                     setCommentList(result.list);
-                }
-            );
+                });
+            } else {
+                navigate(`/bbs/${board}/list`);
+            }
         });
     }, [commentPage, params]);
 
@@ -89,16 +87,22 @@ function Post() {
                 return;
             }
             openWaitDialog(DialogTitle.Info, "작성 중입니다...");
-            postBbsComment(
-                { board: board, postId: post.id, content: comment },
-                (result) => {
+            postBbsComment({
+                board: board,
+                postId: post.id,
+                content: comment,
+            }).then((result) => {
+                if (isApiSuccessed(result)) {
                     if (commentRef?.current) {
                         commentRef.current.value = "";
                     }
                     closeWaitDialog();
                     refresh();
+                } else {
+                    closeWaitDialog();
+                    openConfirmDialog(DialogTitle.Info, result.message);
                 }
-            );
+            });
         },
         [post, commentRef]
     );
@@ -203,23 +207,20 @@ function Post() {
                                                     DialogTitle.Alert,
                                                     "정말 피드백을 삭제하실 건가요?",
                                                     () => {
-                                                        deleteBbsPost(
-                                                            {
-                                                                board: board,
-                                                                postId: post.id,
-                                                            },
-                                                            (result) => {
-                                                                openConfirmDialog(
-                                                                    DialogTitle.Info,
-                                                                    "피드백이 삭제되었습니다.",
-                                                                    () => {
-                                                                        navigate(
-                                                                            `/bbs/${post.board}/list`
-                                                                        );
-                                                                    }
-                                                                );
-                                                            }
-                                                        );
+                                                        deleteBbsPost({
+                                                            board: board,
+                                                            postId: post.id,
+                                                        }).then((result) => {
+                                                            openConfirmDialog(
+                                                                DialogTitle.Info,
+                                                                "피드백이 삭제되었습니다.",
+                                                                () => {
+                                                                    navigate(
+                                                                        `/bbs/${post.board}/list`
+                                                                    );
+                                                                }
+                                                            );
+                                                        });
                                                     }
                                                 );
                                             }}
@@ -287,7 +288,8 @@ function Post() {
                                                                             postId: postId,
                                                                             commentId:
                                                                                 comment.id,
-                                                                        },
+                                                                        }
+                                                                    ).then(
                                                                         (
                                                                             result
                                                                         ) => {

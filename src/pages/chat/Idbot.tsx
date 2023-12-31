@@ -64,7 +64,7 @@ function Idbot() {
                     avatar: "https://cdn-icons-png.flaticon.com/512/1177/1177594.png",
                     username: "나",
                 });
-                getIdbotChat({ chatInput: response.value }, (result) => {
+                getIdbotChat({ chatInput: response.value }).then((result) => {
                     addBotMessage(result.chatOutput);
                 });
             }

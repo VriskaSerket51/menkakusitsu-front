@@ -83,7 +83,7 @@ function SpecialroomInfoPanel({
     const [isLoading, setIsLoading] = useState(true);
 
     const updateInformation = useCallback(() => {
-        getSpecialroomInfo({}, (result) => {
+        getSpecialroomInfo({}).then((result) => {
             setInformation(result.information);
             setIsLoading(false);
         });

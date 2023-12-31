@@ -1,4 +1,4 @@
-import {v1 } from "@common-jshs/menkakusitsu-lib";
+import { v1 } from "@common-jshs/menkakusitsu-lib";
 import {
     Box,
     Button,
@@ -9,18 +9,19 @@ import {
     FormGroup,
     Grid,
     InputLabel,
-    Link,
     MenuItem,
     Paper,
     Select,
     TextField,
-    Typography,
 } from "@mui/material";
-import { Stack } from "@mui/system";
 import React, { useCallback, useEffect, useState } from "react";
-import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
-import { getBbsPost, getBbsPostHeaders, putBbsPost } from "../../utils/Api";
+import {
+    getBbsPost,
+    getBbsPostHeaders,
+    isApiSuccessed,
+    putBbsPost,
+} from "../../utils/Api";
 import { useNavigate, useParams } from "react-router-dom";
 import {
     closeWaitDialog,
@@ -41,15 +42,15 @@ function Edit() {
     const postId = parseInt(params.postId!);
 
     useEffect(() => {
-        getBbsPost({ board: board, postId: postId }, (result) => {
-            if (!result) {
+        getBbsPost({ board: board, postId: postId }).then((result) => {
+            if (isApiSuccessed(result)) {
+                setPost(result.post);
+                getBbsPostHeaders({ board: board }).then((result) => {
+                    setHeaders(result.headers);
+                });
+            } else {
                 navigate(`/bbs/${board}/list`);
-                return;
             }
-            setPost(result.post);
-            getBbsPostHeaders({ board: board }, (result) => {
-                setHeaders(result.headers);
-            });
         });
     }, []);
 
@@ -65,16 +66,15 @@ function Edit() {
                 return;
             }
             openWaitDialog(DialogTitle.Info, "수정 중입니다...");
-            putBbsPost(
-                {
-                    postId: parseInt(params.postId!),
-                    board: params.board!,
-                    title: title,
-                    content: content,
-                    header: header,
-                    isPublic: isPublic,
-                },
-                (result) => {
+            putBbsPost({
+                postId: parseInt(params.postId!),
+                board: params.board!,
+                title: title,
+                content: content,
+                header: header,
+                isPublic: isPublic,
+            }).then((result) => {
+                if (isApiSuccessed(result)) {
                     closeWaitDialog();
                     openConfirmDialog(
                         DialogTitle.Info,
@@ -83,8 +83,11 @@ function Edit() {
                             navigate(`/bbs/${board}/${params.postId}`);
                         }
                     );
+                } else {
+                    closeWaitDialog();
+                    openConfirmDialog(DialogTitle.Info, result.message);
                 }
-            );
+            });
         },
         []
     );
