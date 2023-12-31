@@ -4,7 +4,6 @@ import {
     Paper,
 } from "@mui/material";
 import React, { useState } from "react";
-import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
 
 function Outer() {

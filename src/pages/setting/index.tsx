@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { ManageAccounts, MoreHoriz } from "@mui/icons-material";
 import React, { ReactNode, useState } from "react";
-import FixedNavbar from "../../components/navbar";
 import { AccountSetting, EtcSetting } from "./sidebar";
 
 interface SidebarItem {

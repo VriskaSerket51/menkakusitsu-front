@@ -1,6 +1,5 @@
 import React from "react";
-import { Container, Paper } from "@mui/material";
-import FixedNavbar from "../../components/navbar";
+import { Container } from "@mui/material";
 import { MealPanel, TimetablePanel } from "../../components/panel";
 
 function Teacher() {

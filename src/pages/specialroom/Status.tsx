@@ -23,7 +23,6 @@ import {
     getSpecialroomApply,
     isApiSuccessed,
 } from "../../utils/Api";
-import FixedNavbar from "../../components/navbar";
 import PaperTitle from "../../components/PaperTitle";
 import { styled } from "@mui/material/styles";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
