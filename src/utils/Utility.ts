@@ -1,5 +1,4 @@
 import { SHA3 } from "sha3";
-import uuid from "react-uuid";
 import { Buffer } from "buffer";
 import { LoadableComponent } from "@loadable/component";
 import { topbar } from "../components/topbar";

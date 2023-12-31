@@ -1,4 +1,4 @@
-import uuid from "react-uuid";
+import { v4 as uuid } from "uuid";
 
 export const getDeviceUuid = (): string => {
     let deviceUUid = localStorage.getItem("device-id");
