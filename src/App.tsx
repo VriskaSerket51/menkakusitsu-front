@@ -2,6 +2,7 @@ import "./index.css";
 import "./styles/Fonts.css";
 import "./styles/NProgress.css";
 
+import React, { createContext } from "react";
 import {
     Main,
     AttendanceDownload,
@@ -32,11 +33,12 @@ import {
     createRoutesFromElements,
     RouterProvider,
 } from "react-router-dom";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { CssBaseline, PaletteMode, ThemeProvider } from "@mui/material";
 import { TimetablePanel } from "./components";
 import { getTheme, getThemeType } from "./components/theme";
 import { PrivateRoute, RouteWrapper } from "./components/router";
 import { Permission } from "@common-jshs/menkakusitsu-lib";
+import { ThemeContext } from "@emotion/react";
 
 const themeType = getThemeType();
 
@@ -166,10 +168,18 @@ const router = createBrowserRouter(
 );
 
 export default function App() {
+    const [style, setStyle] = React.useState("light");
+
+    function toggleStyle() {
+        setStyle((style) => (style === "light" ? "dark" : "light"));
+    }
+
     return (
-        <ThemeProvider theme={getTheme(themeType)}>
-            <CssBaseline />
-            <RouterProvider router={router} />
-        </ThemeProvider>
+        <ThemeContext.Provider value={{ style, toggleStyle }}>
+            <ThemeProvider theme={getTheme(themeType)}>
+                <CssBaseline />
+                <RouterProvider router={router} />
+            </ThemeProvider>
+        </ThemeContext.Provider>
     );
 }
