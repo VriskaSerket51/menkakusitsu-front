@@ -12,7 +12,6 @@ import {
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { getParameter } from "../../utils/Utility";
-import { SpecialroomInfoPanel } from "../../components/panel";
 import { getAttendanceList, getSpecialroomInfo } from "../../utils/Api";
 import dayjs from "dayjs";
 import { v1 } from "@common-jshs/menkakusitsu-lib";
@@ -31,6 +30,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
         border: 0,
     },
 }));
+
+function Row(props: any) {
+
+}
 
 const parseAttendanceList = (list: string[][]) => {
     return (
@@ -70,10 +73,8 @@ const parseAttendanceList = (list: string[][]) => {
 };
 
 function Download() {
-    const [attendanceInfo, setAttendanceInfo] = useState<{
-        big: string[][];
-        small: string[][];
-    } | null>(null);
+    const [attendanceInfo, setAttendanceInfo] =
+        useState<v1.AttendanceList | null>(null);
     const [information, setInformation] = useState<v1.SpecialroomInfo[] | null>(
         null
     );
@@ -89,6 +90,7 @@ function Download() {
                 setIsLoading(false);
             });
         });
+
         setHeaderActive(false);
         setFooterActive(false);
         setParticleActive(false);
@@ -106,6 +108,9 @@ function Download() {
     }, [isLoading]);
 
     const today = dayjs();
+    const year = today.year();
+    const month = today.month() + 1;
+    const date = today.date();
 
     return (
         <React.Fragment>
@@ -124,9 +129,7 @@ function Download() {
                         fontWeight: 200,
                     }}
                 >
-                    {`${today.year()}년 ${
-                        today.month() + 1
-                    }월 ${today.date()}일 ${when}차 면학 출석부`}
+                    {`${year}년 ${month}월 ${date}일 ${when}차 면학 출석부`}
                 </Typography>
                 <Box sx={{ paddingBottom: "192px" }}>
                     <Typography
