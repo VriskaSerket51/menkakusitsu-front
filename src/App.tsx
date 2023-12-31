@@ -8,7 +8,6 @@ import {
     AttendanceDownload,
     AttendanceInfo,
     ChatIdbot,
-    ChatRandom,
     SpecialroomApply,
     SpecialroomStatus,
     SpecialroomManagement,
@@ -82,7 +81,6 @@ const router = createBrowserRouter(
             >
                 <Route index element={<NotFound />} />
                 <Route path="idbot" element={<ChatIdbot />} />
-                <Route path="random" element={<ChatRandom />} />
             </Route>
 
             <Route
