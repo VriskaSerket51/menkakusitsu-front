@@ -12,7 +12,7 @@ export default function RegisterPanel() {
     const navigate = useNavigate();
 
     const onPostRegister = useCallback(
-        (event: React.MouseEvent<HTMLFormElement>) => {
+        async (event: React.MouseEvent<HTMLFormElement>) => {
             event.preventDefault();
             const data = new FormData(event.currentTarget);
             const name = data.get("name")?.toString().trim();
@@ -39,14 +39,16 @@ export default function RegisterPanel() {
                 return;
             }
             openWaitDialog(DialogTitle.Info, "회원가입 중입니다...");
-            postRegister({
-                name: name,
-                sid: sid,
-                email: email,
-                id: id,
-                password: SHA3_512(password),
-            }).then((result) => {
+            try {
+                const result = await postRegister({
+                    name: name,
+                    sid: sid,
+                    email: email,
+                    id: id,
+                    password: SHA3_512(password),
+                });
                 if (isApiSuccessed(result)) {
+                    closeWaitDialog();
                     openConfirmDialog(
                         DialogTitle.Info,
                         "회원가입 성공!",
@@ -58,7 +60,9 @@ export default function RegisterPanel() {
                     closeWaitDialog();
                     openConfirmDialog(DialogTitle.Alert, result.message);
                 }
-            });
+            } catch (err) {
+                console.error(err);
+            }
         },
         []
     );
