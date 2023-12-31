@@ -11,6 +11,7 @@ import {
 import { useCallback } from "react";
 import { getSpecialroomInfo } from "../../utils/Api";
 import { v1 } from "@common-jshs/menkakusitsu-lib";
+import { SPECIALROOM_INFO_INTERVAL } from "../../utils/Constant";
 
 export const drawInfoTable = (
     information: v1.SpecialroomInfo[] | null,
@@ -91,7 +92,7 @@ function SpecialroomInfoPanel({
 
     useEffect(() => {
         updateInformation();
-        const interval = setInterval(updateInformation, 10000);
+        const interval = setInterval(updateInformation, SPECIALROOM_INFO_INTERVAL);
         return () => clearInterval(interval);
     }, [updateInformation]);
 
