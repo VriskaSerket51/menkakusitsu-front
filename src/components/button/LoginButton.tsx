@@ -4,7 +4,7 @@ import { openCancelableDialog } from "../popup";
 import { SubmitButton } from "../button";
 import { LoginPanel } from "../panel";
 
-export default function LogiButton() {
+export default function LoginButton() {
     return (
         <Box
             sx={{
