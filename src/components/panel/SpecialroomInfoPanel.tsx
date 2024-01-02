@@ -13,10 +13,12 @@ import { getSpecialroomInfo } from "../../utils/Api";
 import { v1 } from "@common-jshs/menkakusitsu-lib";
 import { SPECIALROOM_INFO_INTERVAL } from "../../utils/Constant";
 
+type FilterFunction = (specialroomInfo: v1.SpecialroomInfo) => boolean;
+
 export const drawInfoTable = (
     information: v1.SpecialroomInfo[] | null,
     isLoading: boolean,
-    filter?: (specialroomInfo: v1.SpecialroomInfo) => boolean
+    filter?: FilterFunction
 ) => {
     return (
         <TableContainer component={Paper}>
@@ -63,8 +65,6 @@ export const drawInfoTable = (
                                         </TableCell>
                                     </TableRow>
                                 );
-                            } else {
-                                return <React.Fragment></React.Fragment>;
                             }
                         })}
                 </TableBody>
@@ -73,11 +73,13 @@ export const drawInfoTable = (
     );
 };
 
-function SpecialroomInfoPanel({
-    filter,
-}: {
-    filter?: (specialroomInfo: v1.SpecialroomInfo) => boolean;
-}) {
+interface SpecialroomInfoPanelProps {
+    filter?: FilterFunction;
+}
+
+function SpecialroomInfoPanel(props: SpecialroomInfoPanelProps) {
+    const { filter } = props;
+
     const [information, setInformation] = useState<v1.SpecialroomInfo[] | null>(
         null
     );
@@ -92,7 +94,10 @@ function SpecialroomInfoPanel({
 
     useEffect(() => {
         updateInformation();
-        const interval = setInterval(updateInformation, SPECIALROOM_INFO_INTERVAL);
+        const interval = setInterval(
+            updateInformation,
+            SPECIALROOM_INFO_INTERVAL
+        );
         return () => clearInterval(interval);
     }, [updateInformation]);
 
