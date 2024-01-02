@@ -111,6 +111,7 @@ const router = createBrowserRouter(
             >
                 <Route index element={<TimetablePanel />} />
             </Route>
+            
             <Route
                 path="management"
                 element={<PrivateRoute permission={Permission.Teacher} />}
