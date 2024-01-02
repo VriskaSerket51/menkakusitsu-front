@@ -20,11 +20,11 @@ export const navbarItems = [
                 href: "/specialroom/management",
                 permission: Permission.Teacher,
             },
-            {
-                title: "학생 외박 관리",
-                href: "/specialroom/outer",
-                permission: Permission.Teacher,
-            },
+            // {
+            //     title: "학생 외박 관리",
+            //     href: "/specialroom/outer",
+            //     permission: Permission.Teacher,
+            // },
             // {
             //     title: "학생활동실 사용 신청",
             //     href: "/",
